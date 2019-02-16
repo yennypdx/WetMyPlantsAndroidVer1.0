@@ -1,6 +1,25 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @ypurwantopdx Sign out
+2,742
+79,029 37,834 github/gitignore
+ Code  Pull requests 74  Projects 0  Insights
+gitignore/Android.gitignore
+042be9d  20 days ago
+@shiftkey shiftkey Merge pull request #2927 from Yousha/master
+@shiftkey @arcresu @tral @friederbluemle @callingshotgun @AdrianVovk @wRorsjakz @malhobayyeb @Zarkopafilis @Yousha @whoshuu @evorion @szpssky @aslamanver @SamWhited @esaalii @exarus @neetrath @Neargye @mquigley @kevinmost @vitorprado @jsoref @jshou @HIPERCUBE @jschmid
+     
+81 lines (63 sloc)  1.2 KB
 # Built application files
 *.apk
 *.ap_
+*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -41,16 +60,20 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/caches
+# Android Studio 3 in .gitignore file.
+.idea/caches/build_file_checksums.ser
+.idea/modules.xml
 
 # Keystore files
-# Uncomment the following line if you do not want to check your keystore files in.
+# Uncomment the following lines if you do not want to check your keystore files in.
 #*.jks
+#*.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+# google-services.json
 
 # Freeline
 freeline.py
@@ -63,3 +86,26 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# Version control
+vcs.xml
+
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+# lint/reports/
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Press h to open a hovercard with more details.
