@@ -27,5 +27,16 @@ public class User {
     @SerializedName("pass")
     @Expose
     private String Password;
+
+    public User(){}
+
+    public User(String inFname, String inLname, String inPhone, String inEmail, String inPass)
+    {
+        this.FirstName = inFname;
+        this.LastName = inLname;
+        this.PhoneNumber = inPhone;
+        this.Email = inEmail;
+        this.Password = inPass;
+    }
 }
 

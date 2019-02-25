@@ -40,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEmail = ((EditText) findViewById(R.id.email_field)).toString();
         mPassword = ((EditText) findViewById(R.id.password_field)).toString();
 
+        //TODO: continue with creating an object w/o const
         final User newUser = new User(mFirstName, mLastName, mPhone, mEmail, mPassword);
         //TODO: create the dashboard form to turn this red to white
         //mDashboardView = findViewById(R.id.dashboard_form);
