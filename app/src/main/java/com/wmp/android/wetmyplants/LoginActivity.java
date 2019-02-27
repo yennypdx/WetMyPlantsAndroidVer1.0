@@ -96,11 +96,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mRegisterUserButton = (Button) findViewById(R.id.register_user_button);
+        Button mRegisterUserButton = (Button) findViewById(R.id.reg_user_button);
         mRegisterUserButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(getBaseContext(), RegisterActivity.class));
             }
         });
 
