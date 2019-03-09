@@ -38,5 +38,24 @@ public class User {
         this.Email = inEmail;
         this.Password = inPass;
     }
+
+    public int getId() { return id; }
+    public void setId(int inId) { this.id = inId;}
+
+    public String getFirstName() { return FirstName; }
+    public void setFirstName(String inFName) { this.FirstName = inFName; }
+
+    public String getLastName(){ return LastName; }
+    public void setLastName(String inLName) { LastName = inLName; }
+
+    public String getPhoneNumber(){ return PhoneNumber; }
+    public void setPhoneNumber(String inPhone) { PhoneNumber = inPhone; }
+
+    public String getEmail(){ return Email; }
+    public void setEmail(String inEmail) { Email = inEmail; }
+
+    public String getPassword(){ return Password; }
+    public void setPassword(String inPass) { Password = inPass; }
+
 }
 
