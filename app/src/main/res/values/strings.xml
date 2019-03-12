@@ -14,4 +14,10 @@
         completions."
     </string>
     <string name="top_label">Registration Form</string>
+    <string name="action_setting">Settings"</string>
+    <string name="add">ADD</string>
+    <string name="delete">DELETE</string>
+    <string name="update">UPDATE</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_newpass">Create New Password</string>
 </resources>
