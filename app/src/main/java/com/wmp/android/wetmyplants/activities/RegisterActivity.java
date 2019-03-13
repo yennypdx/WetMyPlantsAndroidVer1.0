@@ -1,4 +1,4 @@
-package com.wmp.android.wetmyplants;
+package com.wmp.android.wetmyplants.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.model.User;
 import com.wmp.android.wetmyplants.model.UserService;
 

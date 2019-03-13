@@ -1,4 +1,4 @@
-package com.wmp.android.wetmyplants;
+package com.wmp.android.wetmyplants.helperClasses;
 
 import android.content.ContentValues;
 import android.content.Context;

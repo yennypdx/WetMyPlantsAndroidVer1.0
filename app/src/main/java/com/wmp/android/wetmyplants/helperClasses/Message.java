@@ -1,4 +1,4 @@
-package com.wmp.android.wetmyplants;
+package com.wmp.android.wetmyplants.helperClasses;
 
 import android.content.Context;
 import android.widget.Toast;

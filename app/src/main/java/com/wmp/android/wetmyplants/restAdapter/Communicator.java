@@ -1,8 +1,10 @@
-package com.wmp.android.wetmyplants.RestAdapter;
+package com.wmp.android.wetmyplants.restAdapter;
 
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
+import com.wmp.android.wetmyplants.interfaces.LoginInterface;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -15,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Communicator {
 
     private static final String TAG = "Communicator";
-    private static final String SERVER_URL = "http://127.0.0.1/retrofit";
+    private static final String SERVER_URL = "http://localhost:28262/api";
 
     public void loginPost(String inEmail, String inPass){
         //Here a logging interceptor is created
@@ -34,18 +36,18 @@ public class Communicator {
                 .build();
 
         LoginInterface service = retrofit.create(LoginInterface.class);
-        Call<ServerResponse> call = service.post("login", inEmail, inPass);
-        call.enqueue(new Callback<ServerResponse>(){
+        Call<JsonObject> call = service.post(inEmail, inPass);
+        call.enqueue(new Callback<JsonObject>(){
 
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 // response.isSuccessful() is true if the response code is 2xx
-                BusProvider.getInstance().post(new ServerEvent(response.body()));
+                //BusProvider.getInstance().post(new ServerEvent(response.body()));
                 Log.e(TAG, "Success");
             }
 
             @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t){
+            public void onFailure(Call<JsonObject> call, Throwable t){
                 BusProvider.getInstance().post(new ErrorEvent(-2, t.getMessage()));
             }
         });

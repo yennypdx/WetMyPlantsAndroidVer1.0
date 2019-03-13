@@ -1,7 +1,9 @@
-package com.wmp.android.wetmyplants;
+package com.wmp.android.wetmyplants.activities;
 
 import android.os.Bundle;
 import android.app.Activity;
+
+import com.wmp.android.wetmyplants.R;
 
 public class DashboardActivity extends Activity {
 

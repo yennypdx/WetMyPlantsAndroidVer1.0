@@ -1,4 +1,4 @@
-package com.wmp.android.wetmyplants.RestAdapter;
+package com.wmp.android.wetmyplants.restAdapter;
 
 import com.google.gson.annotations.SerializedName;
 

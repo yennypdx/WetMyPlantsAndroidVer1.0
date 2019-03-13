@@ -29,14 +29,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-import com.wmp.android.wetmyplants.RestAdapter.BusProvider;
-import com.wmp.android.wetmyplants.RestAdapter.Communicator;
-import com.wmp.android.wetmyplants.RestAdapter.ErrorEvent;
-import com.wmp.android.wetmyplants.RestAdapter.ServerEvent;
+import com.wmp.android.wetmyplants.activities.RegisterActivity;
+import com.wmp.android.wetmyplants.restAdapter.BusProvider;
+import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
 import java.util.ArrayList;
 import java.util.List;
