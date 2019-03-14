@@ -71,6 +71,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         communicator = new Communicator();
 
+        /**ONLY for connection testing purpose. DELETE when done.*/
+        //communicator.loginPost("test@test.test", "password");
+
         // Set up the login form.
         mEmailInput = findViewById(R.id.email);
         populateAutoComplete();

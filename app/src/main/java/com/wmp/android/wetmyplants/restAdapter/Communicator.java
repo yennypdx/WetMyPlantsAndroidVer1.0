@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Communicator {
 
     private static final String TAG = "Communicator";
-    private static final String SERVER_URL = "http://localhost:28262/api";
+    private static final String SERVER_URL = "http://192.168.1.6:5000/api/";
 
     public void loginPost(String inEmail, String inPass){
         //Here a logging interceptor is created

@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface RegisterInterface {
 
     @FormUrlEncoded
-    @POST("/user/register")
+    @POST("user/register")
     Call<JsonObject> post(
             @Field("first_name_field") String first_name,
             @Field("last_name_field") String last_name,
@@ -22,7 +22,7 @@ public interface RegisterInterface {
             @Field("password_field") String password
     );
 
-    @GET("api/users/all")
+    @GET("users/all")
     Call<JsonObject> get(
             @Query("first_name_field") String first_name,
             @Query("last_name_field") String last_name,

@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface LoginInterface {
 
     @FormUrlEncoded
-    @POST("/login")
+    @POST("login")
     Call<JsonObject> post(
             @Field("email") String email,
             @Field("password") String password
