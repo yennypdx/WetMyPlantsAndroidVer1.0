@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
 import com.wmp.android.wetmyplants.interfaces.LoginInterface;
+import com.wmp.android.wetmyplants.interfaces.RegisterInterface;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -37,6 +38,38 @@ public class Communicator {
 
         LoginInterface service = retrofit.create(LoginInterface.class);
         Call<JsonObject> call = service.post(inEmail, inPass);
+        call.enqueue(new Callback<JsonObject>(){
+
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                // response.isSuccessful() is true if the response code is 2xx
+                //BusProvider.getInstance().post(new ServerEvent(response.body()));
+                Log.e(TAG, "Success");
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t){
+                BusProvider.getInstance().post(new ErrorEvent(-2, t.getMessage()));
+            }
+        });
+    }
+
+    public void registerPost(String inFname, String inLname, String inPhone, String inEmail,
+                             String inPass){
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(SERVER_URL)
+                .build();
+
+        RegisterInterface service = retrofit.create(RegisterInterface.class);
+        Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
         call.enqueue(new Callback<JsonObject>(){
 
             @Override
