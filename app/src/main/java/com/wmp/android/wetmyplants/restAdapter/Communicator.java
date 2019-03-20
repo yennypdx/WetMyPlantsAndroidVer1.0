@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
 import com.wmp.android.wetmyplants.interfaces.LoginInterface;
 import com.wmp.android.wetmyplants.interfaces.RegisterInterface;
+import com.wmp.android.wetmyplants.viewModel.RegisterViewModel;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -56,6 +57,8 @@ public class Communicator {
 
     public void registerPost(String inFname, String inLname, String inPhone, String inEmail,
                              String inPass){
+
+        RegisterViewModel rvm = new RegisterViewModel(inFname, inLname, inPhone, inEmail, inPass);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -69,7 +72,7 @@ public class Communicator {
                 .build();
 
         RegisterInterface service = retrofit.create(RegisterInterface.class);
-        Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
+        Call<JsonObject> call = service.post(rvm);
         call.enqueue(new Callback<JsonObject>(){
 
             @Override
