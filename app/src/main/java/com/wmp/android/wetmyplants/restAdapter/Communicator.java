@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
 import com.wmp.android.wetmyplants.interfaces.LoginInterface;
 import com.wmp.android.wetmyplants.interfaces.RegisterInterface;
-import com.wmp.android.wetmyplants.viewModel.RegisterViewModel;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,8 +19,9 @@ public class Communicator {
 
     private static final String TAG = "Communicator";
     private static final String SERVER_URL = "http://192.168.1.6:5000/api/";
+    private static Retrofit retrofit;
 
-    public void loginPost(String inEmail, String inPass){
+    public static Retrofit getRetrofitInstance(){
         //Here a logging interceptor is created
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -31,12 +31,18 @@ public class Communicator {
         httpClient.addInterceptor(logging);
 
         //The Retrofit builder will have the client attached, to get connection logs
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(SERVER_URL)
-                .build();
+        if (retrofit == null){
+            retrofit = new Retrofit.Builder()
+                    .client(httpClient.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(SERVER_URL)
+                    .build();
+        }
+        return retrofit;
+    }
 
+    public void loginPost(String inEmail, String inPass){
+        getRetrofitInstance();
         LoginInterface service = retrofit.create(LoginInterface.class);
         Call<JsonObject> call = service.post(inEmail, inPass);
         call.enqueue(new Callback<JsonObject>(){
@@ -55,24 +61,11 @@ public class Communicator {
         });
     }
 
-    public void registerPost(String inFname, String inLname, String inPhone, String inEmail,
-                             String inPass){
-
-        RegisterViewModel rvm = new RegisterViewModel(inFname, inLname, inPhone, inEmail, inPass);
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(SERVER_URL)
-                .build();
-
+    public void registerPost(String inFname, String inLname, String inPhone,
+                                                            String inEmail, String inPass){
+        getRetrofitInstance();
         RegisterInterface service = retrofit.create(RegisterInterface.class);
-        Call<JsonObject> call = service.post(rvm);
+        Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
         call.enqueue(new Callback<JsonObject>(){
 
             @Override

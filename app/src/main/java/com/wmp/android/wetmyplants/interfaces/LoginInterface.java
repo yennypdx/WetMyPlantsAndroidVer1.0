@@ -15,7 +15,7 @@ public interface LoginInterface {
     @FormUrlEncoded
     @POST("login")
     Call<JsonObject> post(
-            @Field("email") String email,
-            @Field("password") String password
+            @Field("Email") String Email,
+            @Field("Password") String Password
     );
 }
