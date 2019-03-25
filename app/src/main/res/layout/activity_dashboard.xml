@@ -1,9 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/tableLayout"
+    android:stretchColumns="1,2"
+    android:padding="5dp"
     tools:context=".activities.DashboardActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <!-- tableRow0 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow0">
+
+        <TextView
+            android:id="@+id/dashboardTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:layout_weight="1"
+            android:background="@color/dodger_blue"
+            android:gravity="center"
+            android:text="@string/title_activity_dashboard"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </TableRow>
+
+    <!-- tableRow1 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow1"
+        android:paddingTop="25dp">
+        <ImageView
+            android:id="@+id/accountImageView"
+            android:contentDescription="@string/account_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/user"
+            android:layout_gravity="center"
+            android:layout_span="1"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/plantImageView"
+            android:contentDescription="@string/plants_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/plants"
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <!-- tableRow2 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow2"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/accTexView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/plantsTexView"
+            android:layout_width="wrap_content"
+            android:text="@string/plants_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"/>
+    </TableRow>
+
+    <!-- tableRow3 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow3"
+        android:paddingTop="40dp">
+        <ImageView
+            android:id="@+id/sensorImageView"
+            android:contentDescription="@string/sensor_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/sensor"
+            android:layout_gravity="center"
+            android:layout_span="1"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/notificationImageView"
+            android:contentDescription="@string/notification_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/mssg"
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <!-- tableRow4 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow4"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/sensorTexView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sensor_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/notificationTexView"
+            android:layout_width="wrap_content"
+            android:text="@string/notification_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"/>
+    </TableRow>
+
+    <!-- tableRow5 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow5"
+        android:paddingTop="40dp">
+        <ImageView
+            android:id="@+id/settingImageView"
+            android:contentDescription="@string/sensor_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/setting"
+            android:layout_gravity="center"
+            android:layout_span="1"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/logoutImageView"
+            android:contentDescription="@string/logout_icon"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/leave"
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <!-- tableRow6 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow6"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/settingTexView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/logoutTexView"
+            android:layout_width="wrap_content"
+            android:text="@string/logout_icon"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center"/>
+    </TableRow>
+
+</TableLayout>

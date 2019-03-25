@@ -78,8 +78,16 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="35dp"
                 android:text="@string/action_register"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/forgot_password_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/action_forgot_password"
                 android:textStyle="bold" />
 
         </LinearLayout>

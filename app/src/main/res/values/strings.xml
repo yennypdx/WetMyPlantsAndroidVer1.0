@@ -6,6 +6,7 @@
     <string name="action_sign_in">Log in</string>
     <string name="action_sign_in_short">Log in</string>
     <string name="action_register">Register</string>
+    <string name="action_forgot_password">Forgot Password</string>
     <string name="error_invalid_phone">This phone number is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -21,4 +22,11 @@
     <string name="update">UPDATE</string>
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_newpass">Create New Password</string>
+    <string name="account_icon">My Account</string>
+    <string name="plants_icon">My Plants</string>
+    <string name="add_plant_icon">Add Plant</string>
+    <string name="sensor_icon">Sensors</string>
+    <string name="logout_icon">Log Out</string>
+    <string name="notification_icon">Notification</string>
+    <string name="setting_icon">Setting</string>
 </resources>

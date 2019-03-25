@@ -31,6 +31,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
+import com.wmp.android.wetmyplants.activities.DashboardActivity;
+import com.wmp.android.wetmyplants.activities.NewpassActivity;
 import com.wmp.android.wetmyplants.activities.RegisterActivity;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**Keep track of the login task to ensure we can cancel it if requested. */
     private UserLoginTask mAuthTask = null;
+    private String tokenFromWebApi = null;
 
     /**Declaring related classes*/
     private Communicator communicator;
@@ -57,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordInput;
     private View mProgressView;
     private View mLoginFormView;
-    private View mRegisterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         communicator = new Communicator();
 
         /**ONLY for connection testing purpose. DELETE when done.*/
-        communicator.loginPost("test@test.test", "password");
+        //communicator.loginPost("test@test.test", "password");
 
         // Set up the login form.
         mEmailInput = findViewById(R.id.email);
@@ -102,9 +104,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button mNewPasswordButton = findViewById(R.id.forgot_password_button);
+        mNewPasswordButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(getBaseContext(), NewpassActivity.class));
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        mRegisterView = findViewById(R.id.registration_form);
     }
 
     private void populateAutoComplete()
@@ -366,7 +375,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success)
             {
-                finish();
+                Intent intentToDashboard = new Intent(
+                                LoginActivity.this, DashboardActivity.class);
+                startActivity(intentToDashboard);
             }
             else
             {

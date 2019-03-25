@@ -16,8 +16,6 @@ import com.wmp.android.wetmyplants.model.UserService;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
-import retrofit2.Call;
-
 public class RegisterActivity extends AppCompatActivity {
 
     /**Declaring related classes*/
@@ -32,8 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPhoneInput;
     private EditText mEmailInput;
     private EditText mPasswordInput;
-    private View mDashboardView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -51,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEmailInput = findViewById(R.id.email_field);
         mPasswordInput = findViewById(R.id.password_field);
 
-        Button mRegisterUserButton = (Button) findViewById(R.id.register_user_button);
+        Button mRegisterUserButton = findViewById(R.id.register_user_button);
         mRegisterUserButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -163,7 +159,9 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success)
         {
             if (success) {
-                finish();
+                Intent intentToDashboard = new Intent(
+                                RegisterActivity.this, DashboardActivity.class);
+                startActivity(intentToDashboard);
             }
             else {
                 mPasswordInput.setError(getString(R.string.error_incorrect_password));
