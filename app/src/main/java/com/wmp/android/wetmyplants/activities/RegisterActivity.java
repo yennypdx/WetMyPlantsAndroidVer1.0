@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         communicator = new Communicator();
 
         /**ONLY for connection testing purpose. DELETE when done.*/
-        communicator.registerPost("test", "test", "5037654321", "test@test.test", "password");
+        //communicator.registerPost("test", "test", "5037654321", "test@test.test", "password");
 
         //set up the register form
         mFirstNameInput = findViewById(R.id.first_name_field);
@@ -105,6 +105,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (cancel)
         {
             focusView.requestFocus();
+        }
+        else{
+            UserRegisterTask registerTask = new UserRegisterTask(first_name,last_name, phone_number,
+                                                email_addy, pass_word);
+            //UserRegisterTask registerTask = new UserRegisterTask("first", "last", "phone", "email", "pass");
+                //registerTask.execute();
         }
 
     }

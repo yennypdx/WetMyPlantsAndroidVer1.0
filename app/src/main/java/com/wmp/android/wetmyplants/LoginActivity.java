@@ -364,7 +364,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private void usePost(String inEmail, String inPass)
         {
-            communicator.loginPost(inEmail, inPass);
+            //communicator.loginPost(inEmail, inPass);
+            communicator.loginPost("test@test.com", "password");
         }
 
         @Override
