@@ -11,8 +11,8 @@ import android.widget.EditText;
 
 import com.squareup.otto.Bus;
 import com.wmp.android.wetmyplants.R;
+import com.wmp.android.wetmyplants.helperClasses.DbAdapter;
 import com.wmp.android.wetmyplants.model.User;
-import com.wmp.android.wetmyplants.model.UserService;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
@@ -20,9 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**Declaring related classes*/
     private Communicator communicator;
-    private final static String TAG = "RegisterActivity";
-    public static Bus bus;
-    private UserService userService;
+    private User user;
 
     /**UI references*/
     private EditText mFirstNameInput;
@@ -36,9 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         communicator = new Communicator();
-
-        /**ONLY for connection testing purpose. DELETE when done.*/
-        //communicator.registerPost("test", "test", "5037654321", "test@test.test", "password");
 
         //set up the register form
         mFirstNameInput = findViewById(R.id.first_name_field);
@@ -159,6 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
         private void regPost(String fn, String ln, String ph, String ema, String pas)
         {
             communicator.registerPost(fn, ln, ph, ema, pas);
+            user = new User(fn, ln, ph, ema, pas);
         }
 
         @Override

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WetMyPlants</string>
-    <!-- Strings related to login -->
+
+    <!-- Strings related to Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log in</string>
@@ -15,13 +16,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="top_label">Registration Form</string>
+
+    <!-- Strings related to Register -->
+    <string name="title_activity_registration">User Registration</string>
+
+    <!-- Strings related to Dashboard -->
     <string name="action_setting">Settings"</string>
-    <string name="add">ADD</string>
-    <string name="delete">DELETE</string>
-    <string name="update">UPDATE</string>
     <string name="title_activity_dashboard">Dashboard</string>
-    <string name="title_activity_newpass">Create New Password</string>
     <string name="account_icon">My Account</string>
     <string name="plants_icon">My Plants</string>
     <string name="add_plant_icon">Add Plant</string>
@@ -29,4 +30,22 @@
     <string name="logout_icon">Log Out</string>
     <string name="notification_icon">Notification</string>
     <string name="setting_icon">Setting</string>
+
+    <!-- Strings related to Account -->
+    <string name="title_activity_account">My Account</string>
+    <string name="edit_icon">Edit Account</string>
+    <string name="profile_pic">User Profile</string>
+    <string name="update_icon">Update</string>
+    <string name="first_text">First Name:</string>
+    <string name="last_text">Last Name:</string>
+    <string name="phone_text">Phone:</string>
+    <string name="email_text">Email:</string>
+    <string name="pass_text">Password:</string>
+
+    <!-- Strings related to Editaccount -->
+    <string name="title_activity_edit_account">Edit User Account</string>
+
+    <!-- Strings related to New Password -->
+    <string name="title_activity_newpass">Create New Password</string>
+    <string name="update_password">Update Password</string>
 </resources>

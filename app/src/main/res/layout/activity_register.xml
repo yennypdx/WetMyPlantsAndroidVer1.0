@@ -11,15 +11,6 @@
     android:paddingBottom="16dp"
     tools:context=".activities.RegisterActivity">
 
-    <TextView
-        android:id="@+id/register_form_title"
-        android:textSize="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/top_label"
-        android:gravity="center_horizontal"/>
-
     <LinearLayout
         android:id="@+id/registration_form"
         android:layout_width="match_parent"

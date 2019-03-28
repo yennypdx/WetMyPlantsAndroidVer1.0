@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/tableLayout"
+    android:id="@+id/dashboardTableLayout"
     android:stretchColumns="1,2"
     android:padding="5dp"
     tools:context=".activities.DashboardActivity">

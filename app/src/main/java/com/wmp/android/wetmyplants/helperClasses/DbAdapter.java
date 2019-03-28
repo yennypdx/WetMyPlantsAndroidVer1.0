@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbAdapter {
 
     DbHelper dbhelper;
+    SQLiteDatabase dtb = dbhelper.getWritableDatabase();
 
     public DbAdapter(Context context){
 
@@ -62,6 +63,88 @@ public class DbAdapter {
         return buffer.toString();
     }
 
+    /*---------------------------RETRIEVE USER INFO-----------------------------*/
+
+    public String[] getTableColumn(){
+        String[] tableColumns =
+                {
+                        DbHelper.UID,
+                        DbHelper.FNAME,
+                        DbHelper.LNAME,
+                        DbHelper.PHN,
+                        DbHelper.EMAIL,
+                        DbHelper.PASSWORD
+                };
+        return tableColumns;
+    }
+
+    public String getUserFirstName(){
+        String[] tableColumn = getTableColumn();
+        String firstNameToDisplay = null;
+        Cursor cursor = dtb.query(DbHelper.USER_TABLE, tableColumn, null, null,
+                null, null, null );
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            firstNameToDisplay = cursor.getString(cursor.getColumnIndex(DbHelper.FNAME));
+        }
+        return firstNameToDisplay;
+    }
+
+    public String getUserLastName(){
+        String[] tableColumn = getTableColumn();
+        String lastNameToDisplay = null;
+        Cursor cursor = dtb.query(DbHelper.USER_TABLE, tableColumn, null, null,
+                null, null, null );
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            lastNameToDisplay = cursor.getString(cursor.getColumnIndex(DbHelper.LNAME));
+        }
+        return lastNameToDisplay;
+    }
+
+    public String getUserPhoneNumber(){
+        String[] tableColumn = getTableColumn();
+        String phoneNumberToDisplay = null;
+        Cursor cursor = dtb.query(DbHelper.USER_TABLE, tableColumn, null, null,
+                null, null, null );
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            phoneNumberToDisplay = cursor.getString(cursor.getColumnIndex(DbHelper.PHN));
+        }
+        return phoneNumberToDisplay;
+    }
+
+    public String getUserEmailAddress(){
+        String[] tableColumn = getTableColumn();
+        String emailAddressToDisplay = null;
+        Cursor cursor = dtb.query(DbHelper.USER_TABLE, tableColumn, null, null,
+                null, null, null );
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            emailAddressToDisplay = cursor.getString(cursor.getColumnIndex(DbHelper.EMAIL));
+        }
+        return emailAddressToDisplay;
+    }
+
+    public String getUserPassword(){
+        String[] tableColumn = getTableColumn();
+        String passwordToDisplay = null;
+        Cursor cursor = dtb.query(DbHelper.USER_TABLE, tableColumn, null, null,
+                null, null, null );
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            passwordToDisplay = cursor.getString(cursor.getColumnIndex(DbHelper.PASSWORD));
+        }
+        return passwordToDisplay;
+    }
+
+    /*---------------------------DELETE USER INFO-----------------------------*/
+
     public void deleteUser(String inEmail){
 
         SQLiteDatabase dtb = dbhelper.getWritableDatabase();
@@ -70,35 +153,37 @@ public class DbAdapter {
         dtb.delete(DbHelper.USER_TABLE, DbHelper.EMAIL+" ?", inArgs);
     }
 
-    public void UpdateUserInfoFirstname(){
+    /*---------------------------UPDATE/EDIT USER INFO-----------------------------*/
+
+    public void UpdateUserInfoFirstname(String newVal){
 
         SQLiteDatabase dtb = dbhelper.getWritableDatabase();
         ContentValues cValues = new ContentValues();
+    }
 
+    public void UpdateUserInfoLastname(String newVal){
+
+        SQLiteDatabase dtb = dbhelper.getWritableDatabase();
+        ContentValues cValues = new ContentValues();
+    }
+
+    public void UpdateUserInfoPhone(String newVal){
+
+        SQLiteDatabase dtb = dbhelper.getWritableDatabase();
+        ContentValues cValues = new ContentValues();
+    }
+
+    public void UpdateUserInfoEmail(String newVal){
+
+        SQLiteDatabase dtb = dbhelper.getWritableDatabase();
+        ContentValues cValues = new ContentValues();
 
     }
 
-    public void UpdateUserInfoLastname(){
+    public void UpdateUserInfoPassword(String newVal){
 
         SQLiteDatabase dtb = dbhelper.getWritableDatabase();
         ContentValues cValues = new ContentValues();
-
-
-    }
-
-    public void UpdateUserInfoPhone(){
-
-        SQLiteDatabase dtb = dbhelper.getWritableDatabase();
-        ContentValues cValues = new ContentValues();
-
-
-    }
-
-    public void UpdateUserInfoEmail(){
-
-        SQLiteDatabase dtb = dbhelper.getWritableDatabase();
-        ContentValues cValues = new ContentValues();
-
 
     }
 
@@ -107,7 +192,7 @@ public class DbAdapter {
     static class DbHelper extends SQLiteOpenHelper {
 
         /*DataBase*/
-        private static final String DATABASE_NAME = "wmpLiteDb";      // Database Name
+        private static final String DATABASE_NAME = "wmpLiteDb";        // Database Name
         private static final int DATABASE_Version = 1;                  // Database Version
 
         /*user table*/
