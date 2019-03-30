@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,31 +30,30 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.squareup.otto.Bus;
 import com.wmp.android.wetmyplants.activities.DashboardActivity;
 import com.wmp.android.wetmyplants.activities.NewpassActivity;
 import com.wmp.android.wetmyplants.activities.RegisterActivity;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
+import com.wmp.android.wetmyplants.restAdapter.ErrorEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**Keep track of the login task to ensure we can cancel it if requested. */
-    private UserLoginTask mAuthTask = null;
-    private String tokenFromWebApi = null;
-
-    /**Declaring related classes*/
     private Communicator communicator;
-    private final static String TAG = "LoginActivity";
-    public static Bus bus;
 
     /** UI references.*/
     private AutoCompleteTextView mEmailInput;
@@ -68,10 +68,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         communicator = new Communicator();
 
-        /**ONLY for connection testing purpose. DELETE when done.*/
-        //communicator.loginPost("test@test.test", "password");
-
-        // Set up the login form.
         mEmailInput = findViewById(R.id.email);
         populateAutoComplete();
 
@@ -79,8 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL)
-                {
+                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -118,8 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void populateAutoComplete()
     {
-        if (!mayRequestContacts())
-        {
+        if (!mayRequestContacts()) {
             return;
         }
 
@@ -128,12 +122,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean mayRequestContacts()
     {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS))
@@ -146,9 +138,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
                         }
                     });
-        }
-        else
-        {
+        } else {
             requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
         }
 
@@ -160,8 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults)
     {
-        if (requestCode == REQUEST_READ_CONTACTS)
-        {
+        if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
                 populateAutoComplete();
@@ -169,18 +158,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    /** Attempts to sign in or register the account specified by the login form.
-      * If there are form errors (invalid email, missing fields, etc.), the
-      * errors are presented and no actual login attempt is made. */
     private void attemptLogin()
     {
-        String email = mEmailInput.getText().toString();
-        String password = mPasswordInput.getText().toString();
-
-        if (mAuthTask != null)
-        {
-            return;
-        }
+        final String email = mEmailInput.getText().toString();
+        final String password = mPasswordInput.getText().toString();
 
         /**Reset errors.*/
         mEmailInput.setError(null);
@@ -190,40 +171,55 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         /**Check for a valid password, if the user entered one.*/
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password))
-        {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordInput.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordInput;
             cancel = true;
         }
 
         /**Check for a valid email address.*/
-        if (TextUtils.isEmpty(email))
-        {
+        if (TextUtils.isEmpty(email)) {
             mEmailInput.setError(getString(R.string.error_field_required));
             focusView = mEmailInput;
             cancel = true;
         }
-        else if (!isEmailValid(email))
-        {
+        else if (!isEmailValid(email)) {
             mEmailInput.setError(getString(R.string.error_invalid_email));
             focusView = mEmailInput;
             cancel = true;
         }
 
-        if (cancel)
-        {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
+        if (cancel) {
             focusView.requestFocus();
+
         }
-        else
-        {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+        else {
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            communicator.loginPost(email, password, new Callback<JsonObject>(){
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                    //Pass the emailKey to Dashboard
+                    //Intent key = new Intent(
+                     //       LoginActivity.this, DashboardActivity.class);
+                    //key.putExtra("emailKey", email);
+                    //startActivity(key);
+
+                    //Route to Dashboard
+                    Intent intentToDashboard = new Intent(
+                            LoginActivity.this, DashboardActivity.class);
+                    startActivity(intentToDashboard);
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Login Failed.",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+            showProgress(false);
+            mEmailInput.getText().clear();
+            mPasswordInput.getText().clear();
         }
     }
 
@@ -232,15 +228,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
     /** Shows the progress UI and hides the login form. */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show)
     {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
         {
@@ -263,11 +257,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
-        }
-        else
-        {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
+        } else  {
+
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -286,8 +277,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     " = ?", new String[]{ContactsContract.CommonDataKinds.Email
             .CONTENT_ITEM_TYPE},
 
-            // Show primary email addresses first. Note that there won't be
-            // a primary email address if the user hasn't specified one.
             ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
@@ -296,8 +285,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     {
         List<String> emails = new ArrayList<>();
         cursor.moveToFirst();
-        while (!cursor.isAfterLast())
-        {
+        while (!cursor.isAfterLast()) {
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
@@ -306,9 +294,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
+    public void onLoaderReset(Loader<Cursor> cursorLoader) { }
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection)
     {
@@ -322,77 +308,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private interface ProfileQuery
     {
-        String[] PROJECTION =
-        {
+        String[] PROJECTION = {
             ContactsContract.CommonDataKinds.Email.ADDRESS,
             ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
-    }
-
-    /** Represents an asynchronous login task used to authenticate the user. */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean>
-    {
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password)
-        {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params)
-        {
-            try
-            {
-                // Simulate network access.
-                Thread.sleep(2000);
-            }
-            catch (InterruptedException e)
-            {
-                return false;
-            }
-
-            /**proceed to send the HTTP request*/
-            usePost(mEmail, mPassword);
-            return true;
-        }
-
-        private void usePost(String inEmail, String inPass)
-        {
-            //communicator.loginPost(inEmail, inPass);
-            communicator.loginPost("test@test.com", "password");
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success)
-        {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success)
-            {
-                Intent intentToDashboard = new Intent(
-                                LoginActivity.this, DashboardActivity.class);
-                startActivity(intentToDashboard);
-            }
-            else
-            {
-                mPasswordInput.setError(getString(R.string.error_incorrect_password));
-                mPasswordInput.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled()
-        {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 
     @Override
@@ -406,6 +328,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onPause();
         BusProvider.getInstance().unregister(this);
     }
-
 }
 

@@ -1,53 +1,44 @@
 package com.wmp.android.wetmyplants.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wmp.android.wetmyplants.R;
-import com.wmp.android.wetmyplants.helperClasses.DbAdapter;
-import com.wmp.android.wetmyplants.model.User;
-import com.wmp.android.wetmyplants.restAdapter.Communicator;
+import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 
 public class AccountActivity extends AppCompatActivity {
 
-    /**Declaring related classes*/
-    private Communicator communicator;
-    private User user;
-
-    /**UI references*/
-    private TextView outFirstName;
-    private TextView outLastName;
-    private TextView outPhone;
-    private TextView outEmail;
-    private TextView outPassword;
-
+    private TextView firstNameDisplay;
+    private TextView lastNameDisplay;
+    private TextView phoneDisplay;
+    private TextView emailDisplay;
+    private TextView passwordDisplay;
+    LoadAccountTask loadAccountTask;
+    String emailToCompare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        communicator = new Communicator();
-        user = new User();
+        firstNameDisplay = findViewById(R.id.firstTextView);
+        lastNameDisplay = findViewById(R.id.lastTextView);
+        phoneDisplay = findViewById(R.id.phoneTextView);
+        emailDisplay = findViewById(R.id.emailTextView);
+        passwordDisplay = findViewById(R.id.passTextView);
 
-        outFirstName = findViewById(R.id.firstTextView);
-        outFirstName.setText(user.getFirstName());
+        Intent extractKey = getIntent();
+        emailToCompare = extractKey.getExtras().getString("emailKey");
 
-        outLastName = findViewById(R.id.lastTextView);
-        outLastName.setText(user.getLastName());
-
-        outPhone = findViewById(R.id.phoneTextView);
-        outPhone.setText(user.getPhoneNumber());
-
-        outEmail = findViewById(R.id.emailTextView);
-        outEmail.setText(user.getEmail());
-
-        outPassword = findViewById(R.id.passTextView);
-        outPassword.setText(user.getPassword());
+        loadAccountTask = new LoadAccountTask();
+        loadAccountTask.execute();
 
         ImageView editAccountButton = findViewById(R.id.userEditImageView);
         editAccountButton.setOnClickListener(new View.OnClickListener()
@@ -60,6 +51,41 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intentToEditAccount);
             }
         });
+    }
+
+    private class LoadAccountTask extends AsyncTask<Object, Object, Cursor>
+    {
+        DatabaseConnector databaseConnector =
+                new DatabaseConnector(AccountActivity.this);
+
+        @Override
+        protected Cursor doInBackground(Object... params)
+        {
+            databaseConnector.open();
+            return databaseConnector.loadOneUser(emailToCompare);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor result)
+        {
+            super.onPostExecute(result);
+            result.moveToFirst();
+
+            int firstNameIndex = result.getColumnIndex("FirstName");
+            int lastNameIndex = result.getColumnIndex("LastName");
+            int phoneIndex = result.getColumnIndex("PhoneNumber");
+            int emailIndex = result.getColumnIndex("Email");
+            int passwordIndex = result.getColumnIndex("Password");
+
+            firstNameDisplay.setText(result.getString(firstNameIndex));
+            lastNameDisplay.setText(result.getString(lastNameIndex));
+            phoneDisplay.setText(result.getString(phoneIndex));
+            emailDisplay.setText(result.getString(emailIndex));
+            passwordDisplay.setText(result.getString(passwordIndex));
+
+            result.close();
+            databaseConnector.close();
+        }
     }
 
 }

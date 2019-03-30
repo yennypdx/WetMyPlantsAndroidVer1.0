@@ -16,6 +16,7 @@
         android:layout_marginTop="10dp">
         <ImageView
             android:id="@+id/userImageView"
+            android:contentDescription="@string/title_activity_account"
             android:layout_width="45dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
@@ -30,21 +31,11 @@
         android:paddingTop="25dp">
         <TextView
             android:id="@+id/firstLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/first_text"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            style="@style/AccountTextView"/>
         <TextView
             android:id="@+id/firstTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            style="@style/AccountTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount2-->
@@ -55,21 +46,11 @@
         android:paddingTop="10dp">
         <TextView
             android:id="@+id/lastLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/last_text"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            style="@style/AccountTextView"/>
         <TextView
             android:id="@+id/lastTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            style="@style/AccountTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount3-->
@@ -80,21 +61,11 @@
         android:paddingTop="10dp">
         <TextView
             android:id="@+id/phoneLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/phone_text"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            style="@style/AccountTextView"/>
         <TextView
             android:id="@+id/phoneTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            style="@style/AccountTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount4-->
@@ -105,21 +76,11 @@
         android:paddingTop="10dp">
         <TextView
             android:id="@+id/emailLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/email_text"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            style="@style/AccountTextView"/>
         <TextView
             android:id="@+id/emailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            style="@style/AccountTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount5-->
@@ -130,21 +91,11 @@
         android:paddingTop="10dp">
         <TextView
             android:id="@+id/passLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/pass_text"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            style="@style/AccountTextView"/>
         <TextView
             android:id="@+id/passTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            style="@style/AccountTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount6 -->
@@ -157,8 +108,8 @@
         android:paddingEnd="10dp">
         <ImageView
             android:id="@+id/userEditImageView"
-            android:layout_width="60dp"
-            android:layout_height="80dp"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_span="1"
             android:layout_weight="1"
@@ -178,7 +129,7 @@
             android:layout_height="wrap_content"
             android:text="@string/edit_icon"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:gravity="center"
             android:layout_column="2"
             android:layout_weight="1"

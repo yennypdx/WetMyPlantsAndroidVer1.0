@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.model.Sensor;
@@ -15,11 +16,9 @@ import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    /**Declaring related classes*/
-    private Communicator communicator;
-    private final static String TAG = "DashboardActivity";
-
     /**UI references*/
+    private String emailKeyBox;
+    private TextView emailPlaceholder;
     private ImageView mAccountButton;
     private ImageView mMyPlantsButton;
     private ImageView mSensorsButton;
@@ -27,16 +26,24 @@ public class DashboardActivity extends AppCompatActivity {
     private ImageView mSettingButton;
     private ImageView mLogoutButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        //extract key from
+        Intent extractEmailForPlaceholder = getIntent();
+        emailKeyBox = extractEmailForPlaceholder.getExtras().getString("emailKey");
+        emailPlaceholder = findViewById(R.id.emailPlaceholder);
+        emailPlaceholder.setText(emailKeyBox);
 
         mAccountButton = findViewById(R.id.accountImageView);
         mAccountButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
+                //TODO: pass the emailKey
                 Intent intentToAccount = new Intent(
                         DashboardActivity.this, AccountActivity.class);
                 startActivity(intentToAccount);
@@ -48,6 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                //TODO: pass the emailKey
                 Intent intentToPlants = new Intent(
                         DashboardActivity.this, PlantsActivity.class);
                 startActivity(intentToPlants);
@@ -59,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                //TODO: pass the emailKey
                 Intent intentToSensors = new Intent(
                         DashboardActivity.this, SensorsActivity.class);
                 startActivity(intentToSensors);
@@ -70,6 +79,7 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                //TODO: pass the emailKey
                 Intent intentToNotification = new Intent(
                         DashboardActivity.this, NotificationActivity.class);
                 startActivity(intentToNotification);
@@ -81,6 +91,7 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                //TODO: pass the emailKey
                 Intent intentToSetting = new Intent(
                         DashboardActivity.this, SettingActivity.class);
                 startActivity(intentToSetting);

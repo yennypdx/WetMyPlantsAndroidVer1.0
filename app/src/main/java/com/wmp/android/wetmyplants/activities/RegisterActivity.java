@@ -5,22 +5,28 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.squareup.otto.Bus;
+import com.google.gson.JsonObject;
 import com.wmp.android.wetmyplants.R;
-import com.wmp.android.wetmyplants.helperClasses.DbAdapter;
+import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 import com.wmp.android.wetmyplants.model.User;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
     /**Declaring related classes*/
     private Communicator communicator;
-    private User user;
+    private DatabaseConnector databaseConnector;
 
     /**UI references*/
     private EditText mFirstNameInput;
@@ -34,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         communicator = new Communicator();
+        databaseConnector = new DatabaseConnector(RegisterActivity.this);
 
         //set up the register form
         mFirstNameInput = findViewById(R.id.first_name_field);
@@ -46,8 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterUserButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 attemptRegister(mFirstNameInput, mLastNameInput, mPhoneInput,
                                     mEmailInput, mPasswordInput);
             }
@@ -60,12 +66,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void attemptRegister(EditText infname, EditText inlname, EditText inphone,
                                  EditText inemail, EditText inpass)
     {
-        String first_name = infname.getText().toString();
-        String last_name = inlname.getText().toString();
-        String phone_number = inphone.getText().toString();
-        String email_addy = inemail.getText().toString();
-        String pass_word = inpass.getText().toString();
-        final User newUser = new User(first_name, last_name, phone_number, email_addy, pass_word);
+        final String first_name = infname.getText().toString();
+        final String last_name = inlname.getText().toString();
+        final String phone_number = inphone.getText().toString();
+        final String email_addy = inemail.getText().toString();
+        final String pass_word = inpass.getText().toString();
 
         mPhoneInput.setError(null);
         mEmailInput.setError(null);
@@ -101,13 +106,37 @@ public class RegisterActivity extends AppCompatActivity {
         {
             focusView.requestFocus();
         }
-        else{
-            UserRegisterTask registerTask = new UserRegisterTask(first_name,last_name, phone_number,
-                                                email_addy, pass_word);
-            //UserRegisterTask registerTask = new UserRegisterTask("first", "last", "phone", "email", "pass");
-                //registerTask.execute();
-        }
+        else {
+            communicator.registerPost(first_name, last_name, phone_number, email_addy, pass_word,
+                    new Callback<JsonObject>(){
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                    //Insert New User to Db
+                    databaseConnector.open();
+                    databaseConnector.insertUser(first_name, last_name, phone_number, email_addy, pass_word);
+                    databaseConnector.close();
 
+                    //Pass the emailKey to Dashboard
+                    Intent key = new Intent(
+                            RegisterActivity.this, DashboardActivity.class);
+                    key.putExtra("emailKey", email_addy);
+
+                    //Route to Dashboard
+                    Intent intentToDashboard = new Intent(
+                            RegisterActivity.this, DashboardActivity.class);
+
+                    startActivity(key);
+                    startActivity(intentToDashboard);
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Registration Failed.",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
     }
 
     private boolean isPhoneValid(String phone) { return phone.length() > 7; }
@@ -120,57 +149,6 @@ public class RegisterActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    public class UserRegisterTask extends AsyncTask<Void, Void, Boolean>
-    {
-        private final String mFirstN;
-        private final String mLastN;
-        private final String mPhone;
-        private final String mEmail;
-        private final String mPass;
-
-        UserRegisterTask(String fn, String ln, String ph, String ema, String pas) {
-            mFirstN = fn;
-            mLastN = ln;
-            mPhone = ph;
-            mEmail = ema;
-            mPass = pas;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params)
-        {
-            try {
-                Thread.sleep(2000);
-            }
-            catch (InterruptedException e) {
-                return false;
-            }
-
-            /**proceed to send the HTTP request*/
-            regPost(mFirstN, mLastN, mPhone, mEmail, mPass);
-            return true;
-        }
-
-        private void regPost(String fn, String ln, String ph, String ema, String pas)
-        {
-            communicator.registerPost(fn, ln, ph, ema, pas);
-            user = new User(fn, ln, ph, ema, pas);
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success)
-        {
-            if (success) {
-                Intent intentToDashboard = new Intent(
-                                RegisterActivity.this, DashboardActivity.class);
-                startActivity(intentToDashboard);
-            }
-            else {
-                mPasswordInput.setError(getString(R.string.error_incorrect_password));
-                mPasswordInput.requestFocus();
-            }
-        }
-    }
 
     @Override
     public void onResume() {

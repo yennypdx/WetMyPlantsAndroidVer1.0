@@ -41,45 +41,19 @@ public class Communicator {
         return retrofit;
     }
 
-    public void loginPost(String inEmail, String inPass){
+    public void loginPost(String inEmail, String inPass, Callback<JsonObject> callback){
         getRetrofitInstance();
         LoginInterface service = retrofit.create(LoginInterface.class);
         Call<JsonObject> call = service.post(inEmail, inPass);
-        call.enqueue(new Callback<JsonObject>(){
-
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
-                // response.isSuccessful() is true if the response code is 2xx
-                //BusProvider.getInstance().post(new ServerEvent(response.body()));
-                Log.e(TAG, "Success");
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
-                BusProvider.getInstance().post(new ErrorEvent(-2, t.getMessage()));
-            }
-        });
+        call.enqueue(callback);
     }
 
-    public void registerPost(String inFname, String inLname, String inPhone,
-                                                            String inEmail, String inPass){
+    public void registerPost(String inFname, String inLname, String inPhone,String inEmail, String inPass,
+                             Callback<JsonObject> callback){
         getRetrofitInstance();
         RegisterInterface service = retrofit.create(RegisterInterface.class);
         Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
-        call.enqueue(new Callback<JsonObject>(){
-
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
-                // response.isSuccessful() is true if the response code is 2xx
-                //BusProvider.getInstance().post(new ServerEvent(response.body()));
-                Log.e(TAG, "Success");
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
-                BusProvider.getInstance().post(new ErrorEvent(-2, t.getMessage()));
-            }
-        });
+        call.enqueue(callback);
     }
 
     @Produce
