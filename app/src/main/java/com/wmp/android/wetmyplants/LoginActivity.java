@@ -197,12 +197,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             communicator.loginPost(email, password, new Callback<JsonObject>(){
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
+                {
                     //Pass the emailKey to Dashboard
-                    //Intent key = new Intent(
-                     //       LoginActivity.this, DashboardActivity.class);
-                    //key.putExtra("emailKey", email);
-                    //startActivity(key);
+                    Intent key = new Intent(
+                            LoginActivity.this, DashboardActivity.class);
+                    key.putExtra("emailKey", email);
+                    startActivity(key);
 
                     //Route to Dashboard
                     Intent intentToDashboard = new Intent(
