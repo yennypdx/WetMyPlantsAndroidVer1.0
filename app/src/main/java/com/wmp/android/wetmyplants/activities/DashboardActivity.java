@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wmp.android.wetmyplants.LoginActivity;
 import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.model.Sensor;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
@@ -43,10 +44,11 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                //TODO: pass the emailKey
-                Intent intentToAccount = new Intent(
+                //Pass the emailKey to Dashboard
+                Intent key = new Intent(
                         DashboardActivity.this, AccountActivity.class);
-                startActivity(intentToAccount);
+                key.putExtra("emailKey", emailKeyBox);
+                startActivity(key);
             }
         });
 

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.wmp.android.wetmyplants.LoginActivity;
 import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 import com.wmp.android.wetmyplants.model.User;
@@ -111,29 +112,34 @@ public class RegisterActivity extends AppCompatActivity {
                     new Callback<JsonObject>(){
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
-                    //Insert New User to Db
-                    databaseConnector.open();
-                    databaseConnector.insertUser(first_name, last_name, phone_number, email_addy, pass_word);
-                    databaseConnector.close();
-
-                    //Pass the emailKey to Dashboard
-                    Intent key = new Intent(
-                            RegisterActivity.this, DashboardActivity.class);
-                    key.putExtra("emailKey", email_addy);
-
-                    //Route to Dashboard
-                    Intent intentToDashboard = new Intent(
-                            RegisterActivity.this, DashboardActivity.class);
-
-                    startActivity(key);
-                    startActivity(intentToDashboard);
+                    if(response.isSuccessful()) {
+                        //Pass the emailKey to Dashboard
+                        Intent key = new Intent(
+                                RegisterActivity.this, DashboardActivity.class);
+                        key.putExtra("emailKey", email_addy);
+                        startActivity(key);
+                    }
+                    else
+                    {
+                        Log.e("Error Code", String.valueOf(response.code()));
+                        Log.e("Error Body", response.errorBody().toString());
+                        Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to Server. Please try again later.",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t){
-                    Toast toast = Toast.makeText(getApplicationContext(), "Registration Failed.",
+                    Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);
                     toast.show();
+
+                    //reroute User to Login page
+                    //TODO: Upgrade to having this Intent to pulled the email above to Login UI
+                    Intent backToLogin = new Intent(
+                            RegisterActivity.this, LoginActivity.class);
+                    startActivity(backToLogin);
                 }
             });
         }

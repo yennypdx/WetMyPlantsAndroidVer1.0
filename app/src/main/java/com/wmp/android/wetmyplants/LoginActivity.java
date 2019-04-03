@@ -199,23 +199,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
                 {
-                    //Pass the emailKey to Dashboard
-                    Intent key = new Intent(
-                            LoginActivity.this, DashboardActivity.class);
-                    key.putExtra("emailKey", email);
-                    startActivity(key);
-
-                    //Route to Dashboard
-                    Intent intentToDashboard = new Intent(
-                            LoginActivity.this, DashboardActivity.class);
-                    startActivity(intentToDashboard);
+                    if(response.isSuccessful()) {
+                        //Pass the emailKey to Dashboard
+                        Intent key = new Intent(
+                                LoginActivity.this, DashboardActivity.class);
+                        key.putExtra("emailKey", email);
+                        startActivity(key);
+                    }
+                    else
+                    {
+                        Log.e("Error Code", String.valueOf(response.code()));
+                        Log.e("Error Body", response.errorBody().toString());
+                        Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to Server. Please try again later.",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t){
-                    Toast toast = Toast.makeText(getApplicationContext(), "Login Failed.",
+                    Log.w("Error", t.getMessage());
+                    Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);
                     toast.show();
+
                 }
             });
             showProgress(false);

@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Communicator {
 
     private static final String TAG = "Communicator";
-    private static final String SERVER_URL = "http://192.168.1.6:5000/api/";
+    private static final String SERVER_URL = "https://ypwmptest.azurewebsites.net/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitInstance(){
