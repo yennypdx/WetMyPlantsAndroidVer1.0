@@ -37,6 +37,7 @@ import com.squareup.otto.Bus;
 import com.wmp.android.wetmyplants.activities.DashboardActivity;
 import com.wmp.android.wetmyplants.activities.NewpassActivity;
 import com.wmp.android.wetmyplants.activities.RegisterActivity;
+import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 import com.wmp.android.wetmyplants.restAdapter.ErrorEvent;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private static final int REQUEST_READ_CONTACTS = 0;
     private Communicator communicator;
+    private DatabaseConnector databaseConnector;
 
     /** UI references.*/
     private AutoCompleteTextView mEmailInput;
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         communicator = new Communicator();
+        databaseConnector = new DatabaseConnector(LoginActivity.this);
 
         mEmailInput = findViewById(R.id.email);
         populateAutoComplete();
@@ -130,7 +133,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS))
         {
-            Snackbar.make(mEmailInput, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mEmailInput, R.string.permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -200,6 +204,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
                 {
                     if(response.isSuccessful()) {
+                        //get token from webapi and save it to dblite
+                        response.body();
+                        String token = response.body().getAsJsonObject().toString();
+                        databaseConnector.open();
+                        databaseConnector.insertUserToken(token, email);
+                        databaseConnector.close();
+
                         //Pass the emailKey to Dashboard
                         Intent key = new Intent(
                                 LoginActivity.this, DashboardActivity.class);
@@ -210,7 +221,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     {
                         Log.e("Error Code", String.valueOf(response.code()));
                         Log.e("Error Body", response.errorBody().toString());
-                        Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to Server. Please try again later.",
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Unable to connect to Server. Please try again later.",
                                 Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -225,9 +237,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 }
             });
-            showProgress(false);
-            mEmailInput.getText().clear();
-            mPasswordInput.getText().clear();
         }
     }
 

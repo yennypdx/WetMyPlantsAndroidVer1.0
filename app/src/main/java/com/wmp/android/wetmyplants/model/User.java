@@ -4,58 +4,45 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("id")
+    @SerializedName("Id")
     @Expose
-    private int id;
+    private Integer Id;
 
-    @SerializedName("fname")
+    @SerializedName("FirstName")
     @Expose
     private String FirstName;
 
-    @SerializedName("lname")
+    @SerializedName("LastName")
     @Expose
     private String LastName;
 
-    @SerializedName("phn")
+    @SerializedName("PhoneNumber")
     @Expose
     private String PhoneNumber;
 
-    @SerializedName("email")
+    @SerializedName("Email")
     @Expose
     private String Email;
 
-    @SerializedName("pass")
+    @SerializedName("Password")
     @Expose
     private String Password;
 
-    public User(){}
-
-    public User(String inFname, String inLname, String inPhone, String inEmail, String inPass)
-    {
-        this.FirstName = inFname;
-        this.LastName = inLname;
-        this.PhoneNumber = inPhone;
-        this.Email = inEmail;
-        this.Password = inPass;
-    }
-
-    public int getId() { return id; }
-    public void setId(int inId) { this.id = inId;}
+    public Integer getId() { return Id; }
+    public void setId(Integer inId) { this.Id = inId;}
 
     public String getFirstName() { return FirstName; }
     public void setFirstName(String inFName) { this.FirstName = inFName; }
 
-    public String getLastName(){ return LastName; }
-    public void setLastName(String inLName) { LastName = inLName; }
+    public String getLastName() { return LastName; }
+    public void setLastName(String inLName) { this.LastName = inLName; }
 
-    public String getPhoneNumber(){ return PhoneNumber; }
-    public void setPhoneNumber(String inPhone) { PhoneNumber = inPhone; }
+    public String getPhoneNumber() { return PhoneNumber; }
+    public void setPhoneNumber(String inPhone) { this.PhoneNumber = inPhone; }
 
-    public String getEmail(){ return Email; }
-    public void setEmail(String inEmail) { Email = inEmail; }
+    public String getEmail() { return Email; }
+    public void setEmail(String inEmail) { this.Email = inEmail; }
 
-    public String getPassword(){ return Password; }
-    public void setPassword(String inPass) { Password = inPass; }
-
+    public String getPassword() { return Password; }
+    public void setPassword(String inPass) { this.Password = inPass; }
 }
-

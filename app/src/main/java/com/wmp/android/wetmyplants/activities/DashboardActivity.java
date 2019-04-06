@@ -2,18 +2,13 @@ package com.wmp.android.wetmyplants.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wmp.android.wetmyplants.LoginActivity;
 import com.wmp.android.wetmyplants.R;
-import com.wmp.android.wetmyplants.model.Sensor;
-import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -47,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
                 //Pass the emailKey to Dashboard
                 Intent key = new Intent(
                         DashboardActivity.this, AccountActivity.class);
-                key.putExtra("emailKey", emailKeyBox);
+                //key.putExtra("emailKey", emailKeyBox);
                 startActivity(key);
             }
         });
@@ -105,6 +100,9 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                Intent logoutToLogin = new Intent(
+                        DashboardActivity.this, LoginActivity.class);
+                startActivity(logoutToLogin);
                 finish();
             }
         });

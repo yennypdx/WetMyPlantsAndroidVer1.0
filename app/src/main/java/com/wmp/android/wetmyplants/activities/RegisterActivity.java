@@ -1,7 +1,6 @@
 package com.wmp.android.wetmyplants.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,7 +14,6 @@ import com.google.gson.JsonObject;
 import com.wmp.android.wetmyplants.LoginActivity;
 import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
-import com.wmp.android.wetmyplants.model.User;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
@@ -113,6 +111,13 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                     if(response.isSuccessful()) {
+                        //get token from webapi and save it to dblite
+                        response.body();
+                        String token = response.body().getAsJsonObject().toString();
+                        databaseConnector.open();
+                        databaseConnector.insertUserToken(token, email_addy);
+                        databaseConnector.close();
+
                         //Pass the emailKey to Dashboard
                         Intent key = new Intent(
                                 RegisterActivity.this, DashboardActivity.class);

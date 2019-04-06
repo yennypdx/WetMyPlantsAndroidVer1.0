@@ -1,17 +1,16 @@
 package com.wmp.android.wetmyplants.restAdapter;
 
-import android.util.Log;
-
 import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
+import com.wmp.android.wetmyplants.interfaces.GetUserInterface;
 import com.wmp.android.wetmyplants.interfaces.LoginInterface;
+import com.wmp.android.wetmyplants.interfaces.NewPasswordInterface;
 import com.wmp.android.wetmyplants.interfaces.RegisterInterface;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -53,6 +52,20 @@ public class Communicator {
         getRetrofitInstance();
         RegisterInterface service = retrofit.create(RegisterInterface.class);
         Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
+        call.enqueue(callback);
+    }
+
+    public void updatePasswordPost(String token, String newPassword, Callback<JsonObject> callback){
+        getRetrofitInstance();
+        NewPasswordInterface service = retrofit.create(NewPasswordInterface.class);
+        Call<JsonObject> call = service.post(token, newPassword);
+        call.enqueue(callback);
+    }
+
+    public void userDetailGet(String token, Callback<JsonObject> callback){
+        getRetrofitInstance();
+        GetUserInterface service = retrofit.create(GetUserInterface.class);
+        Call<JsonObject> call = service.get(token);
         call.enqueue(callback);
     }
 

@@ -11,7 +11,6 @@
     <string name="error_invalid_phone">This phone number is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
@@ -21,11 +20,9 @@
     <string name="title_activity_registration">User Registration</string>
 
     <!-- Strings related to Dashboard -->
-    <string name="action_setting">Settings"</string>
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="account_icon">My Account</string>
     <string name="plants_icon">My Plants</string>
-    <string name="add_plant_icon">Add Plant</string>
     <string name="sensor_icon">Sensors</string>
     <string name="logout_icon">Log Out</string>
     <string name="notification_icon">Notification</string>
@@ -33,8 +30,6 @@
 
     <!-- Strings related to Account -->
     <string name="title_activity_account">My Account</string>
-    <string name="edit_icon">Edit Account</string>
-    <string name="profile_pic">User Profile</string>
     <string name="update_icon">Update</string>
     <string name="first_text">First Name:</string>
     <string name="last_text">Last Name:</string>
@@ -44,8 +39,17 @@
 
     <!-- Strings related to Editaccount -->
     <string name="title_activity_edit_account">Edit User Account</string>
+    <string name="edit_acc">Edit Account</string>
+    <string name="del_acc">Delete Account</string>
 
     <!-- Strings related to New Password -->
     <string name="title_activity_newpass">Create New Password</string>
     <string name="update_password">Update Password</string>
+    <string name="newpass">New Password</string>
+    <string name="newpass_again">Confirm New Password</string>
+
+
+    <string name="add_plant">Add Plant</string>
+    <string name="sample_plant">Sample plant</string>
+    <string name="title_activity_plant">Your Plants</string>
 </resources>
