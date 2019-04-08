@@ -14,7 +14,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -33,14 +32,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.squareup.otto.Bus;
 import com.wmp.android.wetmyplants.activities.DashboardActivity;
-import com.wmp.android.wetmyplants.activities.NewpassActivity;
+import com.wmp.android.wetmyplants.activities.NewPasswordActivity;
 import com.wmp.android.wetmyplants.activities.RegisterActivity;
 import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
-import com.wmp.android.wetmyplants.restAdapter.ErrorEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mNewPasswordButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(getBaseContext(), NewpassActivity.class));
+                startActivity(new Intent(getBaseContext(), NewPasswordActivity.class));
             }
         });
 

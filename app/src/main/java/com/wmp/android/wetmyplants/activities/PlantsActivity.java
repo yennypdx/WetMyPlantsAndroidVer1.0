@@ -17,24 +17,28 @@ import java.util.ArrayList;
 
 public class PlantsActivity extends AppCompatActivity {
 
-    String[] plantModelTest = new String[]{"Succulent", "Orchid", "Cactus", "Raflesia", "Rosemary" };
     ListView listView;
-    ArrayAdapter<String> adapter;
 
-    public void onCreate(Bundle savedInstanceState){
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
 
+        String[] plantModelTest = new String[] {"Succulent", "Orchid",
+                "Cactus", "Raflesia", "Rosemary" };
+
         listView = findViewById(R.id.plantListView);
-        adapter = new ArrayAdapter<String>(PlantsActivity.this, R.layout.row_plant, plantModelTest);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(PlantsActivity.this,
+                R.layout.row_plant, R.id.plant_desc, plantModelTest);
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 TextView textOut = (TextView) view;
-                Toast.makeText(PlantsActivity.this, textOut.getText() + " " + position,
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(PlantsActivity.this,
+                        textOut.getText() + " " + position, Toast.LENGTH_LONG).show();
                 //TODO: create intent to PlantDetail activity
             }
         });

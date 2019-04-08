@@ -6,7 +6,7 @@
     android:id="@+id/accountTableLayout"
     android:stretchColumns="1,2"
     android:padding="5dp"
-    tools:context=".activities.AccountActivity">
+    tools:showIn="@layout/activity_account">
 
     <!-- tableRowAccount0 -->
     <TableRow

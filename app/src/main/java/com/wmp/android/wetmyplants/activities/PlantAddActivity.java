@@ -1,6 +1,6 @@
 package com.wmp.android.wetmyplants.activities;
 
-public class AddplantActivity {
+public class PlantAddActivity {
 
     //TODO: do this after PlantActivity is done
 }

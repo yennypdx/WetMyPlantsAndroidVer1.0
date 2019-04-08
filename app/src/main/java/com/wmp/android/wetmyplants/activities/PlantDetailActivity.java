@@ -1,4 +1,4 @@
 package com.wmp.android.wetmyplants.activities;
 
-public class PlantdetailActivity {
+public class PlantDetailActivity {
 }

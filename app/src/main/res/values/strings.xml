@@ -48,8 +48,13 @@
     <string name="newpass">New Password</string>
     <string name="newpass_again">Confirm New Password</string>
 
-
+    <!-- Strings related to Plant -->
+    <string name="title_activity_plant">Your Plants</string>
     <string name="add_plant">Add Plant</string>
     <string name="sample_plant">Sample plant</string>
-    <string name="title_activity_plant">Your Plants</string>
+
+    <!-- Strings related to Sensor -->
+    <string name="title_activity_sensor">Your Sensors</string>
+    <string name="add_sensor">Add Sensor</string>
+    <string name="sample_sensor">Sample plant</string>
 </resources>
