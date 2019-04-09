@@ -17,7 +17,6 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView emailPlaceholder;
     private ImageView mAccountButton;
     private ImageView mMyPlantsButton;
-    private ImageView mSensorsButton;
     private ImageView mNotificationButton;
     private ImageView mSettingButton;
     private ImageView mLogoutButton;
@@ -59,18 +58,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        mSensorsButton = findViewById(R.id.sensorImageView);
-        mSensorsButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                //TODO: pass the emailKey
-                Intent intentToSensors = new Intent(
-                        DashboardActivity.this, SensorsActivity.class);
-                startActivity(intentToSensors);
-            }
-        });
-
         mNotificationButton = findViewById(R.id.notificationImageView);
         mNotificationButton.setOnClickListener(new View.OnClickListener()
         {
@@ -90,7 +77,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO: pass the emailKey
                 Intent intentToSetting = new Intent(
-                        DashboardActivity.this, SettingActivity.class);
+                        DashboardActivity.this, SettingsActivity.class);
                 startActivity(intentToSetting);
             }
         });

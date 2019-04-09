@@ -6,4 +6,5 @@ public class PlantTestModel {
     public PlantTestModel(String s){ this.SpeciesId = s; }
 
     public String getSpeciesId() { return SpeciesId; }
+    public void setSpeciesId(String speciesId) { this.SpeciesId = speciesId; }
 }

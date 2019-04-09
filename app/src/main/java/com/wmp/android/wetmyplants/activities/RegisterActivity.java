@@ -140,7 +140,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT);
                     toast.show();
 
-                    //reroute User to Login page
                     //TODO: Upgrade to having this Intent to pulled the email above to Login UI
                     Intent backToLogin = new Intent(
                             RegisterActivity.this, LoginActivity.class);

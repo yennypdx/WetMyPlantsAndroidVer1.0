@@ -75,20 +75,20 @@
         android:id="@+id/tableRow3"
         android:paddingTop="40dp">
         <ImageView
-            android:id="@+id/sensorImageView"
-            android:contentDescription="@string/sensor_icon"
-            android:layout_height="60dp"
-            android:layout_width="60dp"
-            android:src="@drawable/sensor"
-            android:gravity="center"
-            android:layout_column="1"
-            android:layout_weight="1"/>
-        <ImageView
             android:id="@+id/notificationImageView"
             android:contentDescription="@string/notification_icon"
             android:layout_height="60dp"
             android:layout_width="60dp"
             android:src="@drawable/mssg"
+            android:gravity="center"
+            android:layout_column="1"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/settingImageView"
+            android:contentDescription="@string/sensor_icon"
+            android:src="@drawable/setting"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
             android:gravity="center"
             android:layout_weight="1"/>
     </TableRow>
@@ -103,7 +103,7 @@
             android:id="@+id/sensorTexView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sensor_icon"
+            android:text="@string/notification_icon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:gravity="center"
@@ -112,7 +112,7 @@
         <TextView
             android:id="@+id/notificationTexView"
             android:layout_width="wrap_content"
-            android:text="@string/notification_icon"
+            android:text="@string/setting_icon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:gravity="center"/>
@@ -126,14 +126,13 @@
         android:paddingTop="40dp">
 
         <ImageView
-            android:id="@+id/settingImageView"
+            android:id="@+id/emptyImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_column="1"
             android:gravity="center"
             android:layout_weight="1"
-            android:contentDescription="@string/sensor_icon"
-            android:src="@drawable/setting" />
+            android:contentDescription="@string/sensor_icon" />
 
         <ImageView
             android:id="@+id/logoutImageView"
@@ -155,7 +154,6 @@
             android:id="@+id/settingTexView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/setting_icon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:gravity="center"

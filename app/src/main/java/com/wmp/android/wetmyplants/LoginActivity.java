@@ -231,7 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);
                     toast.show();
-
                 }
             });
         }

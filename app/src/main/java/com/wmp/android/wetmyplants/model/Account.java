@@ -1,35 +1,22 @@
 package com.wmp.android.wetmyplants.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+public class Account {
 
-public class User {
-    @SerializedName("Id")
-    @Expose
-    private Integer Id;
-
-    @SerializedName("FirstName")
-    @Expose
     private String FirstName;
-
-    @SerializedName("LastName")
-    @Expose
     private String LastName;
-
-    @SerializedName("PhoneNumber")
-    @Expose
     private String PhoneNumber;
-
-    @SerializedName("Email")
-    @Expose
     private String Email;
-
-    @SerializedName("Password")
-    @Expose
     private String Password;
 
-    public Integer getId() { return Id; }
-    public void setId(Integer inId) { this.Id = inId;}
+    public Account(String firstname, String lastname, String phone,
+                   String email, String password)
+    {
+        this.FirstName = firstname;
+        this.LastName = lastname;
+        this.PhoneNumber = phone;
+        this.Email = email;
+        this.Password = password;
+    }
 
     public String getFirstName() { return FirstName; }
     public void setFirstName(String inFName) { this.FirstName = inFName; }
