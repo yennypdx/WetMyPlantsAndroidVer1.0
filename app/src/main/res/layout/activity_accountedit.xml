@@ -35,7 +35,9 @@
             android:text="@string/first_text"/>
         <EditText
             android:id="@+id/firstEditText"
-            android:inputType="text"
+            android:inputType="textPersonName"
+            android:hint="@string/newfname"
+            android:textColor="@android:color/holo_blue_dark"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
@@ -51,7 +53,9 @@
             style="@style/AccountTextView"/>
         <EditText
             android:id="@+id/lastEditText"
-            android:inputType="text"
+            android:inputType="textPersonName"
+            android:hint="@string/newlname"
+            android:textColor="@android:color/holo_blue_dark"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
@@ -67,7 +71,9 @@
             style="@style/AccountTextView"/>
         <EditText
             android:id="@+id/phoneEditText"
-            android:inputType="text"
+            android:inputType="phone"
+            android:hint="@string/newphone"
+            android:textColor="@android:color/holo_blue_dark"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
@@ -83,7 +89,9 @@
             style="@style/AccountTextView"/>
         <EditText
             android:id="@+id/emailEditText"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
+            android:hint="@string/newemail"
+            android:textColor="@android:color/holo_blue_dark"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
@@ -99,7 +107,9 @@
             style="@style/AccountTextView"/>
         <EditText
             android:id="@+id/passEditText"
-            android:inputType="text"
+            android:inputType="textPassword"
+            android:hint="@string/newpassword"
+            android:textColor="@android:color/holo_blue_dark"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
@@ -108,6 +118,20 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/tableRowAccount6"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/WarnLabelTextView"
+            android:textSize="14dp"
+            android:textColor="@color/deepGreen"
+            android:text="@string/warnLabel"
+            android:layout_span="3"
+            style="@style/AccountTextView"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccount7"
         android:gravity="center"
         android:layout_marginTop="30dp">
         <Button

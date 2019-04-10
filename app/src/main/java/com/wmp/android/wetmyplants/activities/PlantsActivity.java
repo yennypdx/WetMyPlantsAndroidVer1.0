@@ -38,10 +38,6 @@ public class PlantsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextView textOut = (TextView) view;
-                Toast.makeText(PlantsActivity.this,
-                        textOut.getText() + " " + position, Toast.LENGTH_LONG).show();
                 //TODO: Update this link to connect with related item
                 Intent toPlantDetail = new Intent(
                         PlantsActivity.this, PlantDetailActivity.class);

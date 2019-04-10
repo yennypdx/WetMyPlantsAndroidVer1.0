@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.wmp.android.wetmyplants.R;
 
-public class AccountEditActivity extends AppCompatActivity {
+public class PlantEditActivity extends AppCompatActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accountedit);
-
+        setContentView(R.layout.activity_plantedit);
     }
+
 }

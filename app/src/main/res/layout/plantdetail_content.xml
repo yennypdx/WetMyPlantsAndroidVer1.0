@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/accountTableLayout"
+    android:id="@+id/plantDetailTableLayout"
     android:stretchColumns="1,2,3"
     android:padding="5dp"
     tools:showIn="@layout/activity_plantdetail">
@@ -114,6 +114,7 @@
         <TextView
             android:id="@+id/battTextView"
             android:text="@string/deactive"
+            android:textSize="14sp"
             android:gravity="center"
             android:textColor="@android:color/darker_gray"
             style="@style/AccountTextViewBorder"

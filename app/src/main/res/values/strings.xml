@@ -37,6 +37,13 @@
     <string name="email_text">Email:</string>
     <string name="pass_text">Password:</string>
 
+    <string name="newfname">New first name</string>
+    <string name="newlname">New last name</string>
+    <string name="newphone">New phone number</string>
+    <string name="newemail">New email address</string>
+    <string name="newpassword">New Password</string>
+    <string name="warnLabel">Note: When left blank, data will not be updated.</string>
+
     <!-- Strings related to Editaccount -->
     <string name="title_activity_edit_account">Edit User Account</string>
     <string name="edit_acc">Edit Account</string>
@@ -70,4 +77,12 @@
     <string name="title_activity_detail_plant">Plants Detail</string>
     <string name="fabdelete">Delete</string>
     <string name="fabedit">Edit Plant</string>
+    <string name="plantdetailmenu">Menu</string>
+
+    <string name="title_activity_edit_plant">Update Plant</string>
+    <string name="update_plant_info">New Plant Information</string>
+    <string name="new_plant_name">Enter new name</string>
+    <string name="new_species">Enter new species</string>
+    <string name="update_plant_btn">Update Plant</string>
+    <string name="update_plant_icon">  Submit Update  </string>
 </resources>

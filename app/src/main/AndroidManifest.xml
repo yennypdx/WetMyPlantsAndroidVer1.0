@@ -46,6 +46,9 @@
         <activity
             android:name=".activities.PlantDetailActivity"
             android:label="@string/title_activity_detail_plant" />
+        <activity
+            android:name=".activities.PlantEditActivity"
+            android:label="@string/title_activity_edit_plant" />
 
     </application>
 

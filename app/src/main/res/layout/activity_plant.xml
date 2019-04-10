@@ -10,8 +10,8 @@
 
     <ListView
         android:id="@+id/plantListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabplant_add"
