@@ -57,8 +57,17 @@
     <string name="title_activity_sensor">Your Sensors</string>
     <string name="add_sensor">Add Sensor</string>
     <string name="sample_sensor">Sample plant</string>
-    <string name="sensorid">Sensor ID:</string>
-    <string name="paired_with">Pair plant:</string>
-    <string name="power_stat">Power status:</string>
-    <string name="sensor_profile">Sensor Profile</string>
+    <string name="curr_stat">Current Status</string>
+    <string name="plant_name">Plant name:</string>
+    <string name="plant_species">Species:</string>
+    <string name="curr_water">Humidity:</string>
+    <string name="curr_light">Light intensity:</string>
+    <string name="humidity_unit">g/m^3</string>
+    <string name="light_unit">lux</string>
+    <string name="deactive">::deactivated::</string>
+    <string name="batt_stat">Power status:</string>
+    <string name="percent">%</string>
+    <string name="title_activity_detail_plant">Plants Detail</string>
+    <string name="fabdelete">Delete</string>
+    <string name="fabedit">Edit Plant</string>
 </resources>

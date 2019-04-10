@@ -15,9 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@drawable/button_round" />
 
         <activity
             android:name=".LoginActivity"
@@ -30,22 +27,25 @@
         </activity>
         <activity
             android:name=".activities.NewPasswordActivity"
-            android:label="@string/title_activity_newpass"></activity>
+            android:label="@string/title_activity_newpass" />
         <activity
             android:name=".activities.DashboardActivity"
-            android:label="@string/title_activity_dashboard"></activity>
+            android:label="@string/title_activity_dashboard" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="@string/title_activity_registration"></activity>
+            android:label="@string/title_activity_registration" />
         <activity
             android:name=".activities.AccountActivity"
-            android:label="@string/title_activity_account"></activity>
+            android:label="@string/title_activity_account" />
         <activity
             android:name=".activities.AccountEditActivity"
-            android:label="@string/title_activity_edit_account"></activity>
+            android:label="@string/title_activity_edit_account" />
         <activity
             android:name=".activities.PlantsActivity"
-            android:label="@string/title_activity_plant"></activity>
+            android:label="@string/title_activity_plant" />
+        <activity
+            android:name=".activities.PlantDetailActivity"
+            android:label="@string/title_activity_detail_plant" />
 
     </application>
 

@@ -1,6 +1,8 @@
 package com.wmp.android.wetmyplants.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 public class PlantsActivity extends AppCompatActivity {
 
     ListView listView;
+    FloatingActionButton addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,7 +42,20 @@ public class PlantsActivity extends AppCompatActivity {
                 TextView textOut = (TextView) view;
                 Toast.makeText(PlantsActivity.this,
                         textOut.getText() + " " + position, Toast.LENGTH_LONG).show();
-                //TODO: create intent to PlantDetail activity
+                //TODO: Update this link to connect with related item
+                Intent toPlantDetail = new Intent(
+                        PlantsActivity.this, PlantDetailActivity.class);
+                startActivity(toPlantDetail);
+            }
+        });
+
+        addBtn = findViewById(R.id.fabplant_add);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toAddPlantPage = new Intent(
+                        PlantsActivity.this, PlantAddActivity.class);
+                startActivity(toAddPlantPage);
             }
         });
 

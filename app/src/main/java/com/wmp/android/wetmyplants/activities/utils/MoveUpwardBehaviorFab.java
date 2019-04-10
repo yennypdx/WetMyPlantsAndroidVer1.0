@@ -1,4 +1,4 @@
-package com.wmp.android.wetmyplants.activities.Utils;
+package com.wmp.android.wetmyplants.activities.utils;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
