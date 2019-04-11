@@ -22,8 +22,6 @@ public class AccountActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Edit Account", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Intent toEditAccount = new Intent(AccountActivity.this,
                         AccountEditActivity.class);
                 startActivity(toEditAccount);

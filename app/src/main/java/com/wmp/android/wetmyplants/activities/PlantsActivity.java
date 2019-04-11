@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.wmp.android.wetmyplants.R;
 import com.wmp.android.wetmyplants.helperClasses.CustomAdapter;
+import com.wmp.android.wetmyplants.model.Plant;
 import com.wmp.android.wetmyplants.model.PlantTestModel;
 
 import java.util.ArrayList;

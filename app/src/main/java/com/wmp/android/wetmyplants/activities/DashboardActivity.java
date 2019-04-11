@@ -63,7 +63,6 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                //TODO: pass the emailKey
                 Intent intentToNotification = new Intent(
                         DashboardActivity.this, NotificationActivity.class);
                 startActivity(intentToNotification);

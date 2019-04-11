@@ -44,26 +44,23 @@
     <string name="newpassword">New Password</string>
     <string name="warnLabel">Note: When left blank, data will not be updated.</string>
 
-    <!-- Strings related to Editaccount -->
+    <!-- Strings related to Editing Account -->
     <string name="title_activity_edit_account">Edit User Account</string>
     <string name="edit_acc">Edit Account</string>
     <string name="del_acc">Delete Account</string>
 
-    <!-- Strings related to New Password -->
+    <!-- Strings related to creating New Password -->
     <string name="title_activity_newpass">Create New Password</string>
     <string name="update_password">Update Password</string>
     <string name="newpass">New Password</string>
     <string name="newpass_again">Confirm New Password</string>
 
-    <!-- Strings related to Plant -->
+    <!-- Strings related to Plant list-->
     <string name="title_activity_plant">Your Plants</string>
     <string name="add_plant">Add Plant</string>
     <string name="sample_plant">Sample plant</string>
 
-    <!-- Strings related to Sensor -->
-    <string name="title_activity_sensor">Your Sensors</string>
-    <string name="add_sensor">Add Sensor</string>
-    <string name="sample_sensor">Sample plant</string>
+    <!-- Strings related to Plant Detail Info -->
     <string name="curr_stat">Current Status</string>
     <string name="plant_name">Plant name:</string>
     <string name="plant_species">Species:</string>
@@ -79,10 +76,23 @@
     <string name="fabedit">Edit Plant</string>
     <string name="plantdetailmenu">Menu</string>
 
+    <!-- Strings related to Editing Plant Info -->
     <string name="title_activity_edit_plant">Update Plant</string>
     <string name="update_plant_info">New Plant Information</string>
     <string name="new_plant_name">Enter new name</string>
     <string name="new_species">Enter new species</string>
     <string name="update_plant_btn">Update Plant</string>
     <string name="update_plant_icon">  Submit Update  </string>
+
+    <!-- Strings related to Notification Alert -->
+    <string name="alertVersionMssg">This feature will be available in WetMyPlant Ver2.0</string>
+    <string name="title_notif_activity">Notification Log</string>
+
+    <!-- Strings related to Adding Plant -->
+    <string name="title_add_plant">Add your plant</string>
+    <string name="bluetooth_num">Sensor unit number:</string>
+    <string name="submit_newPlant">Submit New Plant</string>
+    <string name="hint_sensor_serial">PJ876-I8UVF</string>
+
+
 </resources>

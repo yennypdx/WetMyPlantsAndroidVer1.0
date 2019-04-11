@@ -85,7 +85,7 @@
             android:layout_weight="1"/>
         <ImageView
             android:id="@+id/settingImageView"
-            android:contentDescription="@string/sensor_icon"
+            android:contentDescription="@string/setting_icon"
             android:src="@drawable/setting"
             android:layout_height="60dp"
             android:layout_width="60dp"

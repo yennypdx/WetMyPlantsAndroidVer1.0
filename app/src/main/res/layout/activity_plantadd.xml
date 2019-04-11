@@ -3,75 +3,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/plantEditTableLayout"
+    android:id="@+id/plantAddTableLayout"
     android:stretchColumns="1"
     android:padding="5dp"
-    tools:showIn="@layout/activity_plantedit">
+    tools:context=".activities.PlantAddActivity">
 
-    <!-- tableRowPlant0 -->
+    <!-- tableRowPlantAdd0 -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRowPlant0"
+        android:id="@+id/tableRowPlantAdd0"
         android:paddingTop="25dp">
         <TextView
-            android:id="@+id/plantEditTopBarLabel"
-            android:text="@string/update_plant_info"
-            android:layout_span="3"
-            android:gravity="center"
-            android:textSize="25sp"
-            style="@style/AccountTextView"/>
-    </TableRow>
-
-    <!-- tableRowPlant1 -->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantEdit1"
-        android:paddingTop="25dp">
-        <TextView
-            android:id="@+id/plantNameLabel"
+            android:id="@+id/plantAddNameLabel"
             android:text="@string/plant_name"
             style="@style/AccountTextView"/>
         <EditText
-            android:id="@+id/plantEditNameInput"
-            android:textColor="@android:color/holo_blue_dark"
-            android:hint="@string/new_plant_name"
-            style="@style/AccountTextViewBorder"/>
-    </TableRow>
-
-    <!-- tableRowPlant2-->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantEdit2"
-        android:paddingTop="10dp">
-        <TextView
-            android:id="@+id/plantEditSpeciesLabel"
-            android:text="@string/plant_species"
-            style="@style/AccountTextView"/>
-        <EditText
-            android:id="@+id/plantEditSpeciesInput"
+            android:id="@+id/plantAddNameInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/new_species"
             style="@style/AccountTextViewBorder"/>
     </TableRow>
 
-    <!-- tableRowPlant3-->
+    <!-- tableRowPlantAdd1-->
     <TableRow
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/tableRowPlantEdit3"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlantAdd1"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/plantAddSpeciesLabel"
+            android:text="@string/plant_species"
+            style="@style/AccountTextView"/>
+        <EditText
+            android:id="@+id/speciesAddInput"
+            android:textColor="@android:color/holo_blue_dark"
+            android:hint="@string/new_species"
+            style="@style/AccountTextViewBorder"/>
+    </TableRow>
+
+    <!-- tableRowPlantAdd2-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlantAdd2"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/sensorLabel"
+            android:text="@string/bluetooth_num"
+            style="@style/AccountTextView"/>
+        <EditText
+            android:id="@+id/sensorSerialInput"
+            android:textColor="@android:color/holo_blue_dark"
+            android:hint="@string/hint_sensor_serial"
+            style="@style/AccountTextViewBorder"/>
+    </TableRow>
+
+    <!-- tableRowPlantAdd3-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlantAdd3"
         android:paddingTop="40dp"
         android:paddingBottom="10dp"
         android:layout_gravity="center">
 
         <Button
-            android:id="@+id/update_plant_info_button"
+            android:id="@+id/newPlantButton"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/update_plant_icon"
+            android:text="@string/submit_newPlant"
             android:textAllCaps="false"
             android:gravity="center"
             android:layout_span="2"
@@ -80,6 +82,6 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"/>
     </TableRow>
-
 </TableLayout>
+
 
