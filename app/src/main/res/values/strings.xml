@@ -1,17 +1,98 @@
 <resources>
     <string name="app_name">WetMyPlants</string>
-    <!-- Strings related to login -->
+
+    <!-- Strings related to Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log in</string>
     <string name="action_sign_in_short">Log in</string>
     <string name="action_register">Register</string>
+    <string name="action_forgot_password">Forgot Password</string>
+    <string name="error_invalid_phone">This phone number is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="top_label">Registration Form</string>
+
+    <!-- Strings related to Register -->
+    <string name="title_activity_registration">User Registration</string>
+
+    <!-- Strings related to Dashboard -->
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="account_icon">My Account</string>
+    <string name="plants_icon">My Plants</string>
+    <string name="sensor_icon">Sensors</string>
+    <string name="logout_icon">Log Out</string>
+    <string name="notification_icon">Notification</string>
+    <string name="setting_icon">Setting</string>
+
+    <!-- Strings related to Account -->
+    <string name="title_activity_account">My Account</string>
+    <string name="update_icon">Update</string>
+    <string name="first_text">First Name:</string>
+    <string name="last_text">Last Name:</string>
+    <string name="phone_text">Phone:</string>
+    <string name="email_text">Email:</string>
+    <string name="pass_text">Password:</string>
+
+    <string name="newfname">New first name</string>
+    <string name="newlname">New last name</string>
+    <string name="newphone">New phone number</string>
+    <string name="newemail">New email address</string>
+    <string name="newpassword">New Password</string>
+    <string name="warnLabel">Note: When left blank, data will not be updated.</string>
+
+    <!-- Strings related to Editing Account -->
+    <string name="title_activity_edit_account">Edit User Account</string>
+    <string name="edit_acc">Edit Account</string>
+    <string name="del_acc">Delete Account</string>
+
+    <!-- Strings related to creating New Password -->
+    <string name="title_activity_newpass">Create New Password</string>
+    <string name="update_password">Update Password</string>
+    <string name="newpass">New Password</string>
+    <string name="newpass_again">Confirm New Password</string>
+
+    <!-- Strings related to Plant list-->
+    <string name="title_activity_plant">Your Plants</string>
+    <string name="add_plant">Add Plant</string>
+    <string name="sample_plant">Sample plant</string>
+
+    <!-- Strings related to Plant Detail Info -->
+    <string name="curr_stat">Current Status</string>
+    <string name="plant_name">Plant name:</string>
+    <string name="plant_species">Species:</string>
+    <string name="curr_water">Humidity:</string>
+    <string name="curr_light">Light intensity:</string>
+    <string name="humidity_unit">g/m^3</string>
+    <string name="light_unit">lux</string>
+    <string name="deactive">::deactivated::</string>
+    <string name="batt_stat">Power status:</string>
+    <string name="percent">%</string>
+    <string name="title_activity_detail_plant">Plants Detail</string>
+    <string name="fabdelete">Delete</string>
+    <string name="fabedit">Edit Plant</string>
+    <string name="plantdetailmenu">Menu</string>
+
+    <!-- Strings related to Editing Plant Info -->
+    <string name="title_activity_edit_plant">Update Plant</string>
+    <string name="update_plant_info">New Plant Information</string>
+    <string name="new_plant_name">Enter new name</string>
+    <string name="new_species">Enter new species</string>
+    <string name="update_plant_btn">Update Plant</string>
+    <string name="update_plant_icon">  Submit Update  </string>
+
+    <!-- Strings related to Notification Alert -->
+    <string name="alertVersionMssg">This feature will be available in WetMyPlant Ver2.0</string>
+    <string name="title_notif_activity">Notification Log</string>
+
+    <!-- Strings related to Adding Plant -->
+    <string name="title_add_plant">Add your plant</string>
+    <string name="bluetooth_num">Sensor unit number:</string>
+    <string name="submit_newPlant">Submit New Plant</string>
+    <string name="hint_sensor_serial">PJ876-I8UVF</string>
+
+
 </resources>

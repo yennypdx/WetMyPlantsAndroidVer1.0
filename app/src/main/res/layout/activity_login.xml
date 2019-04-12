@@ -70,17 +70,29 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="25dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@drawable/button_round"/>
             <Button
                 android:id="@+id/reg_user_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="45dp"
                 android:text="@string/action_register"
-                android:textStyle="bold" />
+                android:textAllCaps="false"
+                android:background="@drawable/button_round"/>
+            <Button
+                android:id="@+id/forgot_password_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/action_forgot_password"
+                android:textAllCaps="false"
+                android:background="@drawable/button_round"/>
 
         </LinearLayout>
     </ScrollView>

@@ -1,27 +1,42 @@
 package com.wmp.android.wetmyplants.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Plant {
-    @SerializedName("id")
-    @Expose
-    private int id;
 
-    @SerializedName("Nicknm")
-    @Expose
-    private String nickname;
+    private String SpeciesId;
+    private String Nickname;
+    private String SensorSerial;
+    private Double CurrentWater;
+    private Double CurrentLight;
 
-    @SerializedName("SpeciesId")
-    @Expose
-    private int speciesId;
+    public Plant(String inSpeciesId, String inName, String inSerial,
+                 Double inCurrWater, Double inCurrLight)
+    {
+        this.SpeciesId = inSpeciesId;
+        this.Nickname = inName;
+        this.SensorSerial = inSerial;
+        this.CurrentWater = inCurrWater;
+        this.CurrentLight = inCurrLight;
+    }
 
-    @SerializedName("CurrWtr")
-    @Expose
-    private double CurrentWater;
+    public Plant(String inSpeciesId, String inName, String inSerial)
+    {
+        this.SpeciesId = inSpeciesId;
+        this.Nickname = inName;
+        this.SensorSerial = inSerial;
+    }
 
-    @SerializedName("CurrLgt")
-    @Expose
-    private double CurrentLight;
+    public String getSpeciesId() { return SpeciesId; }
+    public void setSpeciesId(String inSpeciesId) { this.SpeciesId = inSpeciesId; }
 
+    public String getNickname() { return Nickname; }
+    public void setNickname(String inName) { this.Nickname = inName; }
+
+    public String getSensorSerial() { return SensorSerial; }
+    public void setSensorSerial(String inSerial) { this.SensorSerial = inSerial; }
+
+    public Double getCurrentWater() { return CurrentWater; }
+    public void setCurrentWater(Double inCurrWater) { this.CurrentWater = inCurrWater; }
+
+    public Double getCurrentLight() { return CurrentLight; }
+    public void setCurrentLight(Double inCurrLight) { this.CurrentLight = inCurrLight; }
 }
