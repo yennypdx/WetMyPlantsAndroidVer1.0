@@ -8,21 +8,11 @@
     android:padding="5dp"
     tools:context=".activities.DashboardActivity">
 
-    <!-- tableRow0 -->
+    <!-- tableRow0 | IMAGE ROW -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow0">
-        <TextView
-            android:id="@+id/emailPlaceholder"
-            style="@style/DashboardTextViewBorder"/>
-    </TableRow>
-
-    <!-- tableRow1 | IMAGE ROW -->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRow1"
+        android:id="@+id/tableRow0"
         android:paddingTop="25dp">
         <ImageView
             android:id="@+id/accountImageView"
@@ -43,11 +33,11 @@
             android:layout_weight="1"/>
     </TableRow>
 
-    <!-- tableRow2 -->
+    <!-- tableRow1 -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow2"
+        android:id="@+id/tableRow1"
         android:paddingTop="5dp">
         <TextView
             android:id="@+id/accTexView"
@@ -68,11 +58,11 @@
             android:gravity="center"/>
     </TableRow>
 
-    <!-- tableRow3 | IMAGE ROW -->
+    <!-- tableRow2 | IMAGE ROW -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow3"
+        android:id="@+id/tableRow2"
         android:paddingTop="40dp">
         <ImageView
             android:id="@+id/notificationImageView"
@@ -93,11 +83,11 @@
             android:layout_weight="1"/>
     </TableRow>
 
-    <!-- tableRow4 -->
+    <!-- tableRow3 -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow4"
+        android:id="@+id/tableRow3"
         android:paddingTop="5dp">
         <TextView
             android:id="@+id/sensorTexView"
@@ -118,11 +108,11 @@
             android:gravity="center"/>
     </TableRow>
 
-    <!-- tableRow5 | IMAGE ROW -->
+    <!-- tableRow4 | IMAGE ROW -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow5"
+        android:id="@+id/tableRow4"
         android:paddingTop="40dp">
 
         <ImageView
@@ -144,11 +134,11 @@
             android:layout_weight="1"/>
     </TableRow>
 
-    <!-- tableRow6 -->
+    <!-- tableRow5 -->
     <TableRow
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tableRow6"
+        android:id="@+id/tableRow5"
         android:paddingTop="5dp">
         <TextView
             android:id="@+id/settingTexView"

@@ -18,6 +18,12 @@
 
     <!-- Strings related to Register -->
     <string name="title_activity_registration">User Registration</string>
+    <string name="hint_firstName">First name</string>
+    <string name="hint_lastName">Last name</string>
+    <string name="hint_phone">Phone number</string>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="regBtn">Register</string>
 
     <!-- Strings related to Dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
@@ -36,6 +42,8 @@
     <string name="phone_text">Phone:</string>
     <string name="email_text">Email:</string>
     <string name="pass_text">Password:</string>
+    <string name="plant_id">Plant Id:</string>
+    <string name="plantId_hint">Sensor MAC serial number</string>
 
     <string name="newfname">New first name</string>
     <string name="newlname">New last name</string>
@@ -48,12 +56,14 @@
     <string name="title_activity_edit_account">Edit User Account</string>
     <string name="edit_acc">Edit Account</string>
     <string name="del_acc">Delete Account</string>
+    <string name="updatePassword">Update Password</string>
 
     <!-- Strings related to creating New Password -->
     <string name="title_activity_newpass">Create New Password</string>
     <string name="update_password">Update Password</string>
     <string name="newpass">New Password</string>
     <string name="newpass_again">Confirm New Password</string>
+    <string name="error_NoMatch_password">Password does not match</string>
 
     <!-- Strings related to Plant list-->
     <string name="title_activity_plant">Your Plants</string>
@@ -93,6 +103,16 @@
     <string name="bluetooth_num">Sensor unit number:</string>
     <string name="submit_newPlant">Submit New Plant</string>
     <string name="hint_sensor_serial">PJ876-I8UVF</string>
+
+    <!-- Strings related to Pin Confirmation -->
+    <string name="pin_choice">Choose how to get your confirmation pin:</string>
+    <string name="emailBtn">Email</string>
+    <string name="textBtn">Text</string>
+    <string name="my_pin_hint">987654</string>
+    <string name="enterpinhere">Enter your six digits PIN number here:</string>
+    <string name="submit_pin">Submit PIN</string>
+    <string name="title_pinconfirm">PIN Confirmation</string>
+
 
 
 </resources>

@@ -4,4 +4,6 @@
     <color name="deepGreen">#00574B</color>
     <color name="black">#000000</color>
     <color name="colorTransBg">#26000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkGrey">#424242</color>
 </resources>

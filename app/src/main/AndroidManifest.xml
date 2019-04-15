@@ -49,8 +49,11 @@
         <activity
             android:name=".activities.PlantEditActivity"
             android:label="@string/title_activity_edit_plant" />
-        <activity android:name=".activities.NotificationActivity"
+        <activity
+            android:name=".activities.NotificationActivity"
             android:label="@string/title_notif_activity"/>
+        <activity android:name=".activities.ForgotPasswordActivity"
+            android:label="@string/title_pinconfirm"/>
 
     </application>
 

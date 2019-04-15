@@ -1,6 +1,8 @@
 package com.wmp.android.wetmyplants.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -23,9 +25,14 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    /**Declaring related classes*/
+    /**Retrofit*/
     private Communicator communicator;
-    private DatabaseConnector databaseConnector;
+    /**SharedPref*/
+    public static final String appPREFERENCES = "appPref";
+    public static final String Token = "tokenKey";
+    public static final String Email = "emailKey";
+    SharedPreferences sharedpref;
+    SharedPreferences.Editor editor;
 
     /**UI references*/
     private EditText mFirstNameInput;
@@ -39,9 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         communicator = new Communicator();
-        databaseConnector = new DatabaseConnector(RegisterActivity.this);
+        sharedpref = getSharedPreferences(appPREFERENCES, Context.MODE_PRIVATE);
 
-        //set up the register form
         mFirstNameInput = findViewById(R.id.first_name_field);
         mLastNameInput = findViewById(R.id.last_name_field);
         mPhoneInput = findViewById(R.id.phone_number_field);
@@ -57,19 +63,16 @@ public class RegisterActivity extends AppCompatActivity {
                                     mEmailInput, mPasswordInput);
             }
         });
-
-        //TODO: BACK button & Route to Dashboard
-        //mDashboardView = findViewById(R.id.dashboard_form);
     }
 
     private void attemptRegister(EditText infname, EditText inlname, EditText inphone,
                                  EditText inemail, EditText inpass)
     {
-        final String first_name = infname.getText().toString();
-        final String last_name = inlname.getText().toString();
-        final String phone_number = inphone.getText().toString();
-        final String email_addy = inemail.getText().toString();
-        final String pass_word = inpass.getText().toString();
+        final String firstName = infname.getText().toString();
+        final String lastName = inlname.getText().toString();
+        final String phoneNumber = inphone.getText().toString();
+        final String emailAddress = inemail.getText().toString();
+        final String passWord = inpass.getText().toString();
 
         mPhoneInput.setError(null);
         mEmailInput.setError(null);
@@ -78,85 +81,76 @@ public class RegisterActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(phone_number) && !isPhoneValid(phone_number)) {
+        if (!TextUtils.isEmpty(phoneNumber) && !isPhoneValid(phoneNumber)) {
             mPhoneInput.setError(getString(R.string.error_invalid_phone));
             focusView = mPhoneInput;
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(pass_word) && !isPasswordValid(pass_word)) {
+        if (!TextUtils.isEmpty(passWord) && !isPasswordValid(passWord)) {
             mPasswordInput.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordInput;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(email_addy)) {
+        if (TextUtils.isEmpty(emailAddress)) {
             mEmailInput.setError(getString(R.string.error_field_required));
             focusView = mEmailInput;
             cancel = true;
         }
-        else if (!isEmailValid(email_addy)) {
+        else if (!isEmailValid(emailAddress)) {
             mEmailInput.setError(getString(R.string.error_invalid_email));
             focusView = mEmailInput;
             cancel = true;
         }
 
-        if (cancel)
-        {
+        if (cancel) {
             focusView.requestFocus();
         }
         else {
-            communicator.registerPost(first_name, last_name, phone_number, email_addy, pass_word,
+            communicator.registerPost(firstName, lastName, phoneNumber, emailAddress, passWord,
                     new Callback<JsonObject>(){
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                     if(response.isSuccessful()) {
-                        //get token from webapi and save it to dblite
-                        response.body();
                         String token = response.body().getAsJsonObject().toString();
-                        databaseConnector.open();
-                        databaseConnector.insertUserToken(token, email_addy);
-                        databaseConnector.close();
 
-                        //Pass the emailKey to Dashboard
-                        Intent key = new Intent(
-                                RegisterActivity.this, DashboardActivity.class);
-                        key.putExtra("emailKey", email_addy);
-                        startActivity(key);
+                        //storing token to shared preference
+                        editor = sharedpref.edit();
+                        editor.putString(Token, token);
+                        editor.putString(Email, emailAddress);
+                        editor.apply();
+
+                        startActivity(new Intent(
+                                RegisterActivity.this, DashboardActivity.class));
                     }
                     else
                     {
                         Log.e("Error Code", String.valueOf(response.code()));
                         Log.e("Error Body", response.errorBody().toString());
-                        Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to Server. Please try again later.",
-                                Toast.LENGTH_LONG);
-                        toast.show();
+                        Toast.makeText(getApplicationContext(),
+                                "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t){
-                    Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    //TODO: Upgrade to having this Intent to pulled the email above to Login UI
-                    Intent backToLogin = new Intent(
-                            RegisterActivity.this, LoginActivity.class);
-                    startActivity(backToLogin);
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(
+                            RegisterActivity.this, LoginActivity.class));
                 }
             });
         }
     }
 
-    private boolean isPhoneValid(String phone) { return phone.length() > 7; }
+    private boolean isPhoneValid(String phone) { return phone.length() > 10; }
 
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
 

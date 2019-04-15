@@ -17,12 +17,12 @@
         <TextView
             android:id="@+id/plantAddNameLabel"
             android:text="@string/plant_name"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <EditText
             android:id="@+id/plantAddNameInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/new_species"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowPlantAdd1-->
@@ -34,12 +34,12 @@
         <TextView
             android:id="@+id/plantAddSpeciesLabel"
             android:text="@string/plant_species"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <EditText
             android:id="@+id/speciesAddInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/new_species"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowPlantAdd2-->
@@ -51,12 +51,12 @@
         <TextView
             android:id="@+id/sensorLabel"
             android:text="@string/bluetooth_num"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <EditText
             android:id="@+id/sensorSerialInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/hint_sensor_serial"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowPlantAdd3-->
@@ -78,7 +78,7 @@
             android:gravity="center"
             android:layout_span="2"
             android:layout_weight="1"
-            android:background="@drawable/button_round"
+            android:background="@drawable/button_round_green"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"/>
     </TableRow>

@@ -3,7 +3,9 @@ package com.wmp.android.wetmyplants;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -33,9 +35,8 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.wmp.android.wetmyplants.activities.DashboardActivity;
-import com.wmp.android.wetmyplants.activities.NewPasswordActivity;
+import com.wmp.android.wetmyplants.activities.ForgotPasswordActivity;
 import com.wmp.android.wetmyplants.activities.RegisterActivity;
-import com.wmp.android.wetmyplants.helperClasses.DatabaseConnector;
 import com.wmp.android.wetmyplants.restAdapter.BusProvider;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
@@ -52,7 +53,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private static final int REQUEST_READ_CONTACTS = 0;
     private Communicator communicator;
-    private DatabaseConnector databaseConnector;
+
+    public static final String appPREFERENCES = "appPref";
+    public static final String Token = "tokenKey";
+    public static final String Email = "emailKey";
+    SharedPreferences sharedpref;
+    SharedPreferences.Editor editor;
 
     /** UI references.*/
     private AutoCompleteTextView mEmailInput;
@@ -66,9 +72,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         communicator = new Communicator();
-        databaseConnector = new DatabaseConnector(LoginActivity.this);
+        sharedpref = getSharedPreferences(appPREFERENCES, Context.MODE_PRIVATE);
 
         mEmailInput = findViewById(R.id.email);
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
         populateAutoComplete();
 
         mPasswordInput = findViewById(R.id.password);
@@ -103,12 +111,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mNewPasswordButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(getBaseContext(), NewPasswordActivity.class));
+                startActivity(new Intent(getBaseContext(), ForgotPasswordActivity.class));
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     private void populateAutoComplete()
@@ -116,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (!mayRequestContacts()) {
             return;
         }
-
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -201,27 +205,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
                 {
                     if(response.isSuccessful()) {
-                        //get token from webapi and save it to dblite
-                        response.body();
-                        String token = response.body().getAsJsonObject().toString();
-                        databaseConnector.open();
-                        databaseConnector.insertUserToken(token, email);
-                        databaseConnector.close();
+                         String token = response.body().getAsJsonObject().toString();
 
-                        //Pass the emailKey to Dashboard
-                        Intent key = new Intent(
-                                LoginActivity.this, DashboardActivity.class);
-                        key.putExtra("emailKey", email);
-                        startActivity(key);
+                        //storing token to shared preference
+                        editor = sharedpref.edit();
+                        editor.putString(Token, token);
+                        editor.putString(Email, email);
+                        editor.apply();
+
+                        startActivity(new Intent(
+                                LoginActivity.this, DashboardActivity.class));
                     }
                     else
                     {
                         Log.e("Error Code", String.valueOf(response.code()));
                         Log.e("Error Body", response.errorBody().toString());
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Unable to connect to Server. Please try again later.",
-                                Toast.LENGTH_LONG);
-                        toast.show();
+                        Toast.makeText(getApplicationContext(),
+                                "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
                     }
                 }
 

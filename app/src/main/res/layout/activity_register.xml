@@ -27,7 +27,7 @@
                 android:id="@+id/first_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
+                android:hint="@string/hint_firstName"
                 android:inputType="textPersonName"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
@@ -43,7 +43,7 @@
                 android:id="@+id/last_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
+                android:hint="@string/hint_lastName"
                 android:inputType="textPersonName"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
@@ -59,7 +59,7 @@
                 android:id="@+id/phone_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
+                android:hint="@string/hint_phone"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
                 android:imeOptions="actionUnspecified"
@@ -78,7 +78,7 @@
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
                 android:imeOptions="actionUnspecified"
-                android:hint="Email Address"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
@@ -94,7 +94,7 @@
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
                 android:imeOptions="actionUnspecified"
-                android:hint="Password"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
@@ -104,11 +104,12 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:layout_marginTop="40dp"
-            android:text="Register"
-            android:textStyle="bold"
+            android:text="@string/regBtn"
             android:textAllCaps="false"
-            android:background="@drawable/button_round"/>
+            android:background="@drawable/button_round_green"/>
 
     </LinearLayout>
 </LinearLayout>
