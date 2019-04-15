@@ -20,7 +20,7 @@
             android:layout_width="45dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/myFace" />
+            android:src="@drawable/my_face" />
     </TableRow>
 
     <!-- tableRowAccount1 -->
