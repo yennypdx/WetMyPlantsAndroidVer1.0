@@ -8,18 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wmp.android.wetmyplants.R;
-import com.wmp.android.wetmyplants.helperClasses.CustomAdapter;
-import com.wmp.android.wetmyplants.model.Account;
+import com.wmp.android.wetmyplants.helperClasses.PlantsAdapter;
 import com.wmp.android.wetmyplants.model.Plant;
-import com.wmp.android.wetmyplants.model.PlantTestModel;
 import com.wmp.android.wetmyplants.restAdapter.Communicator;
 
 import java.util.ArrayList;
@@ -32,11 +30,12 @@ import retrofit2.Response;
 public class PlantsActivity extends AppCompatActivity {
 
     private Communicator communicator;
+    private PlantsAdapter pAdapter;
     SharedPreferences sharedpref;
     String storedToken;
     Gson gson;
 
-    List<Plant> plantList;
+    ArrayList<Plant> plantList;
     ListView listView;
     FloatingActionButton addBtn;
 
@@ -46,23 +45,26 @@ public class PlantsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plant);
         communicator = new Communicator();
         gson = new Gson();
-        plantList = new ArrayList<Plant>();
+        plantList = new ArrayList<>();
 
         storedToken = sharedpref.getString("Token", "");
-        pullPlantInformation(storedToken);
-
-        String[] plantModelTest = new String[] { "Succulent" };
-
+        plantList = pullPlantInformation(storedToken);
         listView = findViewById(R.id.plantListView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(PlantsActivity.this,
-                R.layout.row_plant, R.id.plant_desc, plantModelTest);
 
-        listView.setAdapter(adapter);
+        pAdapter = new PlantsAdapter(this, plantList);
+        listView.setAdapter(pAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 //TODO: open activity with detail related to the object
+                TextView selectedItem = view.findViewById(R.id.plantIdTextView);
+                String itemId = selectedItem.getText().toString();
+
+
+                Intent viewPlantDetail = new Intent(
+                        PlantsActivity.this, PlantDetailActivity.class);
+                viewPlantDetail.putExtra("id", itemId);
+                startActivity(viewPlantDetail);
             }
         });
 
@@ -77,14 +79,20 @@ public class PlantsActivity extends AppCompatActivity {
         });
     }
 
-    public void pullPlantInformation(String inToken){
+    public ArrayList<Plant> pullPlantInformation(String inToken){
+        final ArrayList<Plant> listPlantData = new ArrayList<>();
+
         communicator.plantListGet(inToken, new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
 
-                    //display the properties to content view
-                    displayData();
+                    JsonArray jArrayPlant = response.body().getAsJsonArray();
+                    if(jArrayPlant != null){
+                        for(int i = 0; i < jArrayPlant.size(); i++){
+                            //listPlantData.add(jArrayPlant.get(i));
+                        }
+                    }
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -99,9 +107,8 @@ public class PlantsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        return listPlantData;
     }
 
-    public void displayData(){
-
-    }
 }

@@ -113,6 +113,8 @@
     <string name="submit_pin">Submit PIN</string>
     <string name="title_pinconfirm">PIN Confirmation</string>
 
+    <string name="title_update_pass">Update Password</string>
+
 
 
 </resources>

@@ -2,17 +2,17 @@ package com.wmp.android.wetmyplants.model;
 
 public class Plant {
 
-    private String SpeciesId;
     private String Nickname;
+    private String SpeciesId;
     private String SensorSerial;
     private Double CurrentWater;
     private Double CurrentLight;
 
-    public Plant(String inSpeciesId, String inName, String inSerial,
+    public Plant(String inName, String inSpeciesId, String inSerial,
                  Double inCurrWater, Double inCurrLight)
     {
-        this.SpeciesId = inSpeciesId;
         this.Nickname = inName;
+        this.SpeciesId = inSpeciesId;
         this.SensorSerial = inSerial;
         this.CurrentWater = inCurrWater;
         this.CurrentLight = inCurrLight;
@@ -20,8 +20,8 @@ public class Plant {
 
     public Plant(String inSpeciesId, String inName, String inSerial)
     {
-        this.SpeciesId = inSpeciesId;
         this.Nickname = inName;
+        this.SpeciesId = inSpeciesId;
         this.SensorSerial = inSerial;
     }
 
