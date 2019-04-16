@@ -25,6 +25,19 @@
     <string name="hint_password">Password</string>
     <string name="regBtn">Register</string>
 
+    <!-- Strings related to Settings -->
+    <string name="title_activity_settings">User Settings</string>
+    <string name="notification_prompt">How would you like to receive notifications?</string>
+    <string name="email_notifications">Email</string>
+    <string name="text_notifications">Text</string>
+    <string name="color_theme_selection">Color Theme:</string>
+    <string-array name="color_theme_options">
+        <item>Red</item>
+        <item>Black</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+
     <!-- Strings related to Dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="account_icon">My Account</string>

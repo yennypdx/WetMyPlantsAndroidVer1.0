@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    tools:context=".activities.SettingsActivity">
+
+    <LinearLayout
+        android:id="@+id/settings_notification_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/notification_text_view"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/notification_prompt"
+            style="@style/AccountTextView"/>
+
+        <CheckBox android:id="@+id/checkbox_email_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_notifications"
+            style="@style/AccountTextView"
+            android:onClick="onNotificationCheckboxClicked"/>
+
+        <CheckBox android:id="@+id/checkbox_text_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_notifications"
+            style="@style/AccountTextView"
+            android:onClick="onNotificationCheckboxClicked"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settings_color_theme_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/color_theme"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/color_theme_selection"
+            style="@style/AccountTextView"/>
+
+        <Spinner
+            android:id="@+id/color_selection_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>
