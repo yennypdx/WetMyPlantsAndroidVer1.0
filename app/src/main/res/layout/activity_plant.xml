@@ -10,8 +10,8 @@
 
     <ListView
         android:id="@+id/plantListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabplant_add"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@drawable/plussign"
         app:layout_anchor="@id/plantListView"
         app:layout_anchorGravity="bottom|right|end" />
 

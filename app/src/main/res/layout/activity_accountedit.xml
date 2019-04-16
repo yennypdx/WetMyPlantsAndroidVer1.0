@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/accountTableLayout"
+    android:stretchColumns="1"
+    android:padding="5dp"
+    tools:context=".activities.AccountEditActivity">
+
+    <!-- tableRowAccount0 -->
+    <TableRow
+        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit0"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/userImageView"
+            android:contentDescription="@string/title_activity_account"
+            android:layout_width="45dp"
+            android:layout_height="100dp"
+            android:gravity="fill"
+            android:src="@drawable/my_face"
+            style="@style/SquareFrame"/>
+    </TableRow>
+
+    <!-- tableRowAccount1 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit1"
+        android:paddingTop="25dp">
+        <TextView
+            android:id="@+id/firstLabelTextView"
+            style="@style/myStyleTextView"
+            android:text="@string/first_text"/>
+        <EditText
+            android:id="@+id/firstEditText"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/holo_blue_dark"
+            style="@style/myStyleTextViewBorder"/>
+        <ImageView
+            android:id="@+id/editFistNameBtn"
+            android:src="@drawable/black_edit_icon"
+            android:layout_gravity="center"
+            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"/>
+        </TableRow>
+
+    <!-- tableRowAccount2-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit2"
+        android:paddingTop="10dp" >
+        <TextView
+            android:id="@+id/lastLabelTextView"
+            android:text="@string/last_text"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/lastEditText"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/holo_blue_dark"
+            style="@style/myStyleTextViewBorder"/>
+        <ImageView
+            android:id="@+id/editLastNameBtn"
+            android:src="@drawable/black_edit_icon"
+            android:layout_gravity="center"
+            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"/>
+    </TableRow>
+
+    <!-- tableRowAccount3-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit3"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/phoneLabelTextView"
+            android:text="@string/phone_text"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/phoneEditText"
+            android:inputType="phone"
+            android:textColor="@android:color/holo_blue_dark"
+            style="@style/myStyleTextViewBorder"/>
+        <ImageView
+            android:id="@+id/editPhoneBtn"
+            android:src="@drawable/black_edit_icon"
+            android:layout_gravity="center"
+            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"/>
+    </TableRow>
+
+    <!-- tableRowAccount4-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit4"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/emailLabelTextView"
+            android:text="@string/email_text"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/emailEditText"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/holo_blue_dark"
+            style="@style/myStyleTextViewBorder"/>
+        <ImageView
+            android:id="@+id/editEmailBtn"
+            android:src="@drawable/black_edit_icon"
+            android:layout_gravity="center"
+            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"/>
+    </TableRow>
+
+    <!-- tableRowAccount5-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit5"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/plantIdLabelTextView"
+            android:text="@string/plant_id"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/plantIdEditText"
+            android:inputType="textPassword"
+            android:textColor="@android:color/holo_blue_dark"
+            style="@style/myStyleTextViewBorder"/>
+        <ImageView
+            android:id="@+id/editPlantIdBtn"
+            android:src="@drawable/black_edit_icon"
+            android:layout_gravity="center"
+            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"/>
+    </TableRow>
+
+    <!-- tableRowAccount6 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccountEdit6"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+        <Button
+            android:id="@+id/updateUserBtn"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/update_icon"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/button_round_green"/>
+    </TableRow>
+
+    <!-- tableRowAccount7 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowAccount7"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/updatePasswordBtn"
+            style="?android:textAppearanceSmall"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_span="2"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/updatePassword"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/button_round_grey"/>
+    </TableRow>
+
+</TableLayout>
+

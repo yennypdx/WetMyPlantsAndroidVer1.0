@@ -20,7 +20,7 @@
             android:layout_width="45dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/me_profile" />
+            android:src="@drawable/my_face" />
     </TableRow>
 
     <!-- tableRowAccount1 -->
@@ -32,10 +32,10 @@
         <TextView
             android:id="@+id/firstLabelTextView"
             android:text="@string/first_text"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/firstTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount2-->
@@ -47,10 +47,10 @@
         <TextView
             android:id="@+id/lastLabelTextView"
             android:text="@string/last_text"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/lastTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount3-->
@@ -62,10 +62,10 @@
         <TextView
             android:id="@+id/phoneLabelTextView"
             android:text="@string/phone_text"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/phoneTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount4-->
@@ -77,10 +77,10 @@
         <TextView
             android:id="@+id/emailLabelTextView"
             android:text="@string/email_text"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/emailTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowAccount5-->
@@ -90,12 +90,12 @@
         android:id="@+id/tableRowAccount5"
         android:paddingTop="10dp">
         <TextView
-            android:id="@+id/passLabelTextView"
-            android:text="@string/pass_text"
-            style="@style/AccountTextView"/>
+            android:id="@+id/plantIdLabelTextView"
+            android:text="@string/plant_id"
+            style="@style/myStyleTextView"/>
         <TextView
-            android:id="@+id/passTextView"
-            style="@style/AccountTextViewBorder"/>
+            android:id="@+id/plantIdTextView"
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
 </TableLayout>

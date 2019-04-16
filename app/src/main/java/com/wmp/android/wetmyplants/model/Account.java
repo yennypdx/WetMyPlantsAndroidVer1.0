@@ -6,16 +6,16 @@ public class Account {
     private String LastName;
     private String PhoneNumber;
     private String Email;
-    private String Password;
+    private String Id;
 
     public Account(String firstname, String lastname, String phone,
-                   String email, String password)
+                   String email, String id)
     {
         this.FirstName = firstname;
         this.LastName = lastname;
         this.PhoneNumber = phone;
         this.Email = email;
-        this.Password = password;
+        this.Id = id;
     }
 
     public String getFirstName() { return FirstName; }
@@ -30,6 +30,6 @@ public class Account {
     public String getEmail() { return Email; }
     public void setEmail(String inEmail) { this.Email = inEmail; }
 
-    public String getPassword() { return Password; }
-    public void setPassword(String inPass) { this.Password = inPass; }
+    public String getId() { return Id; }
+    public void setId(String inId) { this.Id = inId; }
 }

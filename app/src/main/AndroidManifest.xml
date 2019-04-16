@@ -27,17 +27,23 @@
             android:name=".activities.NewPasswordActivity"
             android:label="@string/title_activity_newpass" />
         <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_registration" />
+        <activity
             android:name=".activities.DashboardActivity"
             android:label="@string/title_activity_dashboard" />
         <activity
-            android:name=".activities.RegisterActivity"
-            android:label="@string/title_activity_registration" />
+            android:name=".activities.ForgotPasswordActivity"
+            android:label="@string/title_pinconfirm"/>
         <activity
             android:name=".activities.AccountActivity"
             android:label="@string/title_activity_account" />
         <activity
             android:name=".activities.AccountEditActivity"
             android:label="@string/title_activity_edit_account" />
+        <activity
+            android:name=".activities.UpdatePasswordActivity"
+            android:label="@string/title_update_pass"/>
         <activity
             android:name=".activities.PlantsActivity"
             android:label="@string/title_activity_plant" />
@@ -47,6 +53,12 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".activities.PlantEditActivity"
+            android:label="@string/title_activity_edit_plant" />
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:label="@string/title_notif_activity"/>
     </application>
 
 </manifest>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/accountTableLayout"
+    android:id="@+id/plantDetailTableLayout"
     android:stretchColumns="1,2,3"
     android:padding="5dp"
     tools:showIn="@layout/activity_plantdetail">
@@ -20,7 +20,7 @@
             android:layout_span="3"
             android:gravity="center"
             android:textSize="25sp"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
     </TableRow>
 
     <!-- tableRowPlant1 -->
@@ -32,10 +32,10 @@
         <TextView
             android:id="@+id/plantNameLabel"
             android:text="@string/plant_name"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/plantNameTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowPlant2-->
@@ -47,10 +47,10 @@
         <TextView
             android:id="@+id/plantSpeciesLabel"
             android:text="@string/plant_species"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/plantSpeciesTextView"
-            style="@style/AccountTextViewBorder"/>
+            style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
     <!-- tableRowPlant3-->
@@ -62,10 +62,10 @@
         <TextView
             android:id="@+id/humidityLabel"
             android:text="@string/curr_water"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/currWaterTextView"
-            style="@style/AccountTextViewBorder"
+            style="@style/myStyleTextViewBorder"
             android:layout_column="1"/>
         <TextView
             android:id="@+id/waterUnitLabel"
@@ -86,10 +86,10 @@
         <TextView
             android:id="@+id/lightLabel"
             android:text="@string/curr_light"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/lightTextView"
-            style="@style/AccountTextViewBorder"
+            style="@style/myStyleTextViewBorder"
             android:layout_column="1"/>
         <TextView
             android:id="@+id/lightUnitLabel"
@@ -110,13 +110,14 @@
         <TextView
             android:id="@+id/battLevelLabel"
             android:text="@string/batt_stat"
-            style="@style/AccountTextView"/>
+            style="@style/myStyleTextView"/>
         <TextView
             android:id="@+id/battTextView"
             android:text="@string/deactive"
+            android:textSize="14sp"
             android:gravity="center"
             android:textColor="@android:color/darker_gray"
-            style="@style/AccountTextViewBorder"
+            style="@style/myStyleTextViewBorder"
             android:layout_column="1"/>
         <TextView
             android:id="@+id/battUnitLabel"
