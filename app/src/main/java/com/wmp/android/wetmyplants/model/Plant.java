@@ -3,7 +3,7 @@ package com.wmp.android.wetmyplants.model;
 public class Plant {
 
     private String Nickname;
-    private String SpeciesId;
+    private String Species;
     private String SensorSerial;
     private Double CurrentWater;
     private Double CurrentLight;
@@ -12,7 +12,7 @@ public class Plant {
                  Double inCurrWater, Double inCurrLight)
     {
         this.Nickname = inName;
-        this.SpeciesId = inSpeciesId;
+        this.Species = inSpeciesId;
         this.SensorSerial = inSerial;
         this.CurrentWater = inCurrWater;
         this.CurrentLight = inCurrLight;
@@ -21,15 +21,15 @@ public class Plant {
     public Plant(String inSpeciesId, String inName, String inSerial)
     {
         this.Nickname = inName;
-        this.SpeciesId = inSpeciesId;
+        this.Species = inSpeciesId;
         this.SensorSerial = inSerial;
     }
 
-    public String getSpeciesId() { return SpeciesId; }
-    public void setSpeciesId(String inSpeciesId) { this.SpeciesId = inSpeciesId; }
-
     public String getNickname() { return Nickname; }
     public void setNickname(String inName) { this.Nickname = inName; }
+
+    public String getSpecies() { return Species; }
+    public void setSpecies(String inSpeciesId) { this.Species = inSpeciesId; }
 
     public String getSensorSerial() { return SensorSerial; }
     public void setSensorSerial(String inSerial) { this.SensorSerial = inSerial; }

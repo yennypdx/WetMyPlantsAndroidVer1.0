@@ -15,5 +15,10 @@ public interface PlantServiceInterface {
             @Query("Token") String Token
     );
 
+    @FormUrlEncoded
+    @GET("plant/id/{token}")
+    Call<JsonObject> getPlantDetail(
+            @Query("Token") String Token
+    );
 
 }
