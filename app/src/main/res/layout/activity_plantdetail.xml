@@ -22,6 +22,7 @@
         android:padding="@dimen/standard_12"
         android:clipToPadding="false"
         android:layout_marginEnd="@dimen/standard_23"
+        android:layout_marginRight="23dp"
         android:gravity="center_vertical"
         app:layout_behavior=".activities.utils.MoveUpwardBehaviorFab"
         android:layout_marginBottom="@dimen/standard_23"
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/trash"
             app:fabSize="mini"/>
     </LinearLayout>
@@ -49,6 +51,7 @@
         android:padding="@dimen/standard_12"
         android:clipToPadding="false"
         android:layout_marginEnd="@dimen/standard_23"
+        android:layout_marginRight="23dp"
         android:gravity="center_vertical"
         android:layout_marginBottom="@dimen/standard_23"
         app:layout_behavior=".activities.utils.MoveUpwardBehaviorFab"
@@ -65,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/edit"
             android:tint="@android:color/white"
             app:fabSize="mini"/>
@@ -74,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="16dp"
         android:gravity="center_vertical"
         android:clipToPadding="false"
         app:layout_behavior=".activities.utils.MoveUpwardBehaviorFab"
@@ -86,7 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/plantdetailmenu"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

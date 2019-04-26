@@ -30,12 +30,15 @@
     <string name="notification_prompt">How would you like to receive notifications?</string>
     <string name="email_notifications">Email</string>
     <string name="text_notifications">Text</string>
+    <string name="noneNotif">None</string>
     <string name="color_theme_selection">Color Theme:</string>
-    <string-array name="color_theme_options">
-        <item>Red</item>
-        <item>Black</item>
-        <item>Green</item>
-        <item>Blue</item>
+    <string-array
+        name="color_theme_options">
+        <item>Default</item>
+        <item>Brave</item>
+        <item>Mystery</item>
+        <item>Calm</item>
+        <item>Serene</item>
     </string-array>
 
     <!-- Strings related to Dashboard -->
@@ -113,7 +116,7 @@
 
     <!-- Strings related to Adding Plant -->
     <string name="title_add_plant">Add your plant</string>
-    <string name="bluetooth_num">Sensor unit number:</string>
+    <string name="bluetooth_num">Sensor MAC#:</string>
     <string name="submit_newPlant">Submit New Plant</string>
     <string name="hint_sensor_serial">PJ876-I8UVF</string>
 
@@ -127,7 +130,10 @@
     <string name="title_pinconfirm">PIN Confirmation</string>
 
     <string name="title_update_pass">Update Password</string>
-
-
+    <string name="createNewPass">Create New Password</string>
+    <string name="newPassOne">New Password</string>
+    <string name="newPassTwo">Confirm Password</string>
+    <string name="newPassOneHint">Enter new password</string>
+    <string name="newPassTwoHint">Confirm</string>
 
 </resources>

@@ -25,21 +25,19 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    /**Retrofit*/
     private Communicator communicator;
-    /**SharedPref*/
+
     public static final String appPREFERENCES = "appPref";
     public static final String Token = "tokenKey";
     public static final String Email = "emailKey";
     SharedPreferences sharedpref;
     SharedPreferences.Editor editor;
 
-    /**UI references*/
-    private EditText mFirstNameInput;
-    private EditText mLastNameInput;
-    private EditText mPhoneInput;
-    private EditText mEmailInput;
-    private EditText mPasswordInput;
+    EditText mFirstNameInput;
+    EditText mLastNameInput;
+    EditText mPhoneInput;
+    EditText mEmailInput;
+    EditText mPasswordInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

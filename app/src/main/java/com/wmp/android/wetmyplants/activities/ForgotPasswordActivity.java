@@ -28,11 +28,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     SharedPreferences sharedpref;
     SharedPreferences.Editor editor;
 
-    private EditText emailInput;
-    private EditText pinInput;
+    EditText emailInput;
+    EditText pinInput;
     Button emailOutBtn;
     Button textOutBtn;
     Button submitPinBtn;
+    String emailOut;
+    String pinOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -42,9 +44,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         sharedpref = getSharedPreferences(appPREFERENCES, Context.MODE_PRIVATE);
 
         emailInput = findViewById(R.id.email_pinconfirm);
-        final String emailOut = emailInput.getText().toString();
+        emailOut = emailInput.getText().toString();
         pinInput = findViewById(R.id.pinconfirm);
-        final String pinOut = pinInput.getText().toString();
+        pinOut = pinInput.getText().toString();
 
         emailOutBtn = findViewById(R.id.emailBtn_pin);
         emailOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +76,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private void sendPinViaEmail(String inEmail){
-        communicator.forgotPasswordSendGridPost(inEmail, new Callback<JsonObject>(){
+        communicator.forgotPasswordSendGridPost(inEmail, new Callback<okhttp3.Response>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Sending email", Toast.LENGTH_LONG).show();
                 }
@@ -89,16 +91,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<okhttp3.Response> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void sendPinViaText(String inEmail){
-        communicator.forgotPasswordRabbitmqPost(inEmail, new Callback<JsonObject>(){
+        communicator.forgotPasswordRabbitmqPost(inEmail, new Callback<okhttp3.Response>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Sending text", Toast.LENGTH_LONG).show();
                 }
@@ -111,7 +113,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<okhttp3.Response> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -122,6 +124,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
+                    String token = response.body().getAsJsonObject().toString();
+
+                    editor = sharedpref.edit();
+                    editor.putString(Token, token);
+                    editor.putString(Email, emailOut);
+                    editor.apply();
+
                     startActivity(new Intent(
                             ForgotPasswordActivity.this, NewPasswordActivity.class));
                 }

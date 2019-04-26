@@ -46,6 +46,8 @@ public class AccountEditActivity extends AppCompatActivity {
     String finalEmail;
     String finalPlantId;
 
+    Account updatedUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -116,7 +118,7 @@ public class AccountEditActivity extends AppCompatActivity {
         accountEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptEditAccount(finalFirstName, finalLastName, finalPhone, finalEmail, finalPlantId);
+                attemptEditAccount(storedToken,updatedUser);
             }
         });
 
@@ -137,9 +139,7 @@ public class AccountEditActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     String UserObject = response.body().getAsJsonObject().toString();
                     Account userAccount = gson.fromJson(UserObject, Account.class);
-
-                    //display the properties to content view
-                    textDefaultValue(userAccount);
+                    updatedUser = getDefaultValue(userAccount);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -158,7 +158,7 @@ public class AccountEditActivity extends AppCompatActivity {
         });
     }
 
-    public void textDefaultValue(Account inUserData){
+    public Account getDefaultValue(Account inUserData){
         inputFirstName.setText(inUserData.getFirstName());
         defaultFirstName = inputFirstName.getText().toString();
         finalFirstName = defaultFirstName;
@@ -178,14 +178,16 @@ public class AccountEditActivity extends AppCompatActivity {
         inputPlantId.setText(inUserData.getId());
         defaultPlantId = inputPlantId.getText().toString();
         finalPlantId = defaultPlantId;
+
+        Account outAccount = new Account(finalPlantId, finalFirstName, finalLastName,
+                finalPhone, finalEmail);
+        return outAccount;
     }
 
-    public void attemptEditAccount(String inFirstName, String inLastName, String inPhone,
-                                                            String inEmail, String inPlantId){
-        communicator.userUpdatePut(inFirstName, inLastName, inPhone, inEmail, inPlantId,
-                new Callback<JsonObject>(){
+    public void attemptEditAccount(String inToken, Account inUser){
+        communicator.userUpdatePut(inToken, inUser, new Callback<okhttp3.Response>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
                 if(response.isSuccessful()) {
                     startActivity(new Intent(AccountEditActivity.this, AccountActivity.class));
                 }
@@ -198,7 +200,7 @@ public class AccountEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<okhttp3.Response> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -36,6 +36,7 @@ public class PlantDetailActivity extends AppCompatActivity {
     TextView menuFabLabel;
     View fabBGLayout;
     boolean isFABOpen = false;
+    String storedPlantId;
     
     TextView displayPlantName;
     TextView displaySpecies;
@@ -51,6 +52,7 @@ public class PlantDetailActivity extends AppCompatActivity {
 
         storedToken = sharedpref.getString("Token", "");
         pullPlantDetailInformation(storedToken);
+
 
         fablayoutEdit = findViewById(R.id.fabLayoutEdit);
         fabedit = findViewById(R.id.fabEdit);
@@ -88,9 +90,8 @@ public class PlantDetailActivity extends AppCompatActivity {
         fabedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toPlantEdit = new Intent(
-                        PlantDetailActivity.this, PlantEditActivity.class);
-                startActivity(toPlantEdit);
+                startActivity(new Intent(
+                        PlantDetailActivity.this, PlantEditActivity.class));
             }
         });
 
@@ -102,13 +103,12 @@ public class PlantDetailActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        //TODO: proceed to delete data via Retrofit!
+                        attemptDeletePlant(storedToken, storedPlantId);
 
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-                        Intent goToPlantList = new Intent(
-                                PlantDetailActivity.this, PlantsActivity.class);
-                        startActivity(goToPlantList);
+                        startActivity(new Intent(
+                                PlantDetailActivity.this, PlantsActivity.class));
                         break;
                 }
                 }
@@ -188,13 +188,12 @@ public class PlantDetailActivity extends AppCompatActivity {
     }
 
     private void pullPlantDetailInformation(String inToken){
-        communicator.userDetailGet(inToken, new Callback<JsonObject>(){
+        communicator.plantDetailGet(inToken, new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
                     String PlantObject = response.body().getAsJsonObject().toString();
                     Plant plantData = gson.fromJson(PlantObject, Plant.class);
-
                     //display the properties to content view
                     displayData(plantData);
                 }
@@ -202,7 +201,8 @@ public class PlantDetailActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server. Please try again later.",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -214,10 +214,39 @@ public class PlantDetailActivity extends AppCompatActivity {
     }
 
     public void displayData(Plant inPlantData){
-        displayPlantName.setText(inPlantData.getNickname());
-        displaySpecies.setText(inPlantData.getSpecies());
-        displayHumidity.setText(inPlantData.getCurrentWater().toString());
-        displayLight.setText(inPlantData.getCurrentLight().toString());
+        String id = inPlantData.getSensorSerial();
+        storedPlantId = id;
+        String name = inPlantData.getNickname();
+        displayPlantName.setText(name);
+        String species = inPlantData.getSpecies();
+        displaySpecies.setText(species);
+        String water = Double.toString(inPlantData.getCurrentWater());
+        displayHumidity.setText(water);
+        String light = Double.toString(inPlantData.getCurrentLight());
+        displayLight.setText(light);
+    }
+
+    public void attemptDeletePlant(String inToken, String plantId){
+        communicator.plantDelete(inToken, plantId, new Callback<okhttp3.Response>(){
+            @Override
+            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+                if(response.isSuccessful()) {
+                        //do nothing here
+                }
+                else{
+                    Log.e("Error Code", String.valueOf(response.code()));
+                    Log.e("Error Body", response.errorBody().toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Unable to connect to Server. Please try again later.",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

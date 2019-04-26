@@ -6,19 +6,54 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.wmp.android.wetmyplants.R;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    CheckBox emailCb;
+    CheckBox textCb;
+    CheckBox nonCb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // Notification opt
+        emailCb = findViewById(R.id.checkbox_email_notifications);
+        emailCb.setChecked(false);
+        emailCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                emailCb.setChecked(true);
+            }
+        });
+
+        textCb = findViewById(R.id.checkbox_text_notifications);
+        textCb.setChecked(false);
+        textCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                textCb.setChecked(true);
+            }
+        });
+
+        nonCb = findViewById(R.id.no_notifications);
+        nonCb.setChecked(false);
+        nonCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                nonCb.setChecked(true);
+            }
+        });
+
+        attemptNotifySystem();
+
         // Populate the dropdown menu for selecting a color theme
-        Spinner spinner = (Spinner) findViewById(R.id.color_selection_spinner);
+        Spinner spinner = findViewById(R.id.color_selection_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.color_theme_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -26,26 +61,18 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         spinner.setOnItemSelectedListener(this);
     }
 
-    public void onNotificationCheckboxClicked(View view)
-    {
-        boolean checked = ((CheckBox) view).isChecked();
+    public void attemptNotifySystem(){
+        if(emailCb.isChecked()){
 
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_email_notifications:
-                if (checked) {
-                    // Send email notifications
-                }
-                else {
-                    // DO NOT send email notifications
-                }
-            case R.id.checkbox_text_notifications:
-                if (checked) {
-                    // Send text notifications
-                }
-                else {
-                    // DO NOT send text notifications
-                }
+        }
+        else if(textCb.isChecked()){
+
+        }
+        else if(emailCb.isChecked() && textCb.isChecked()){
+
+        }
+        else if(nonCb.isChecked()){
+
         }
     }
 

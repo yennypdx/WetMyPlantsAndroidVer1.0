@@ -37,6 +37,9 @@
             android:id="@+id/plantEditNameInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/new_plant_name"
+            android:inputType="text"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
@@ -54,6 +57,9 @@
             android:id="@+id/plantEditSpeciesInput"
             android:textColor="@android:color/holo_blue_dark"
             android:hint="@string/new_species"
+            android:inputType="text"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             style="@style/myStyleTextViewBorder"/>
     </TableRow>
 
@@ -76,6 +82,8 @@
             android:gravity="center"
             android:layout_span="2"
             android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:background="@drawable/button_round_green"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"/>

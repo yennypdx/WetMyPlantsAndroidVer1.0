@@ -82,9 +82,9 @@ public class PlantsActivity extends AppCompatActivity {
     public ArrayList<Plant> pullPlantInformation(String inToken){
         final ArrayList<Plant> listPlantData = new ArrayList<>();
 
-        communicator.plantListGet(inToken, new Callback<JsonObject>(){
+        communicator.plantListGet(inToken, new Callback<JsonArray>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response){
                 if(response.isSuccessful()) {
 
                     JsonArray jArrayPlant = response.body().getAsJsonArray();
@@ -103,7 +103,7 @@ public class PlantsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<JsonArray> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,13 +1,17 @@
 package com.wmp.android.wetmyplants.restAdapter;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
 import com.wmp.android.wetmyplants.interfaces.PlantServiceInterface;
 import com.wmp.android.wetmyplants.interfaces.UserServiceInterface;
 import com.wmp.android.wetmyplants.interfaces.LoginInterface;
 import com.wmp.android.wetmyplants.interfaces.PasswordServiceInterface;
+import com.wmp.android.wetmyplants.model.Account;
+import com.wmp.android.wetmyplants.model.Plant;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,17 +54,17 @@ public class Communicator {
     }
 
     /**using PasswordServiceInterface*/
-    public void forgotPasswordSendGridPost(String inEmail, Callback<JsonObject> callback){
+    public void forgotPasswordSendGridPost(String inEmail, Callback<Response> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<JsonObject> call = service.postSg(inEmail);
+        Call<Response> call = service.postSg(inEmail);
         call.enqueue(callback);
     }
 
-    public void forgotPasswordRabbitmqPost(String inEmail, Callback<JsonObject> callback){
+    public void forgotPasswordRabbitmqPost(String inEmail, Callback<Response> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<JsonObject> call = service.postRmq(inEmail);
+        Call<Response> call = service.postRmq(inEmail);
         call.enqueue(callback);
     }
 
@@ -79,8 +83,8 @@ public class Communicator {
     }
 
     /**using UserServiceInterface*/
-    public void registerPost(String inFname, String inLname, String inPhone,String inEmail, String inPass,
-                             Callback<JsonObject> callback){
+    public void registerPost(String inFname, String inLname, String inPhone,String inEmail,
+                             String inPass, Callback<JsonObject> callback){
         getRetrofitInstance();
         UserServiceInterface service = retrofit.create(UserServiceInterface.class);
         Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
@@ -94,19 +98,46 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void userUpdatePut(String inFname, String inLname, String inPhone,String inEmail, String inPass,
-                               Callback<JsonObject> callback){
+    public void userUpdatePut(String token, Account user, Callback<Response> callback){
         getRetrofitInstance();
         UserServiceInterface service = retrofit.create(UserServiceInterface.class);
-        Call<JsonObject> call = service.postUpdateUser(inFname, inLname, inPhone, inEmail, inPass);
+        Call<Response> call = service.postUpdateUser(token, user);
         call.enqueue(callback);
     }
 
     /**using PlantServiceInterface*/
-    public void plantListGet(String token, Callback<JsonObject> callback){
+    public void plantListGet(String token, Callback<JsonArray> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<JsonObject> call = service.getPlantList(token);
+        Call<JsonArray> call = service.getPlantList(token);
+        call.enqueue(callback);
+    }
+
+    public void plantAddPost(String token, Plant newPlant, Callback<Response> callback){
+        getRetrofitInstance();
+        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
+        Call<Response> call = service.postAddPlant(token, newPlant);
+        call.enqueue(callback);
+    }
+
+    public void plantDetailGet(String token, Callback<JsonObject> callback){
+        getRetrofitInstance();
+        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
+        Call<JsonObject> call = service.getPlantDetail(token);
+        call.enqueue(callback);
+    }
+
+    public void plantUpdatePut(String token, Plant plant, Callback<Response> callback){
+        getRetrofitInstance();
+        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
+        Call<okhttp3.Response> call = service.putNewPlantData(token, plant);
+        call.enqueue(callback);
+    }
+
+    public void plantDelete(String token, String plantId, Callback<okhttp3.Response> callback){
+        getRetrofitInstance();
+        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
+        Call<okhttp3.Response> call = service.deletePlant(token, plantId);
         call.enqueue(callback);
     }
 

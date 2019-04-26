@@ -30,8 +30,10 @@ public class NewPasswordActivity extends AppCompatActivity {
     SharedPreferences sharedpref;
     SharedPreferences.Editor editor;
 
-    private EditText newPassword1;
-    private EditText newPassword2;
+    EditText inputPassword1;
+    EditText inputPassword2;
+    private String outPass1;
+    private String outPass2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,44 +42,44 @@ public class NewPasswordActivity extends AppCompatActivity {
         communicator = new Communicator();
         sharedpref = getSharedPreferences(appPREFERENCES, Context.MODE_PRIVATE);
 
-        newPassword1 = findViewById(R.id.newpass_input_one);
-        newPassword2 = findViewById(R.id.newpass_input_two);
+        inputPassword1 = findViewById(R.id.newpass_input_one);
+        inputPassword2 = findViewById(R.id.newpass_input_two);
 
         Button updatePasswordButton = findViewById(R.id.new_password_button);
         updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               attemptUpdatePassword(newPassword1, newPassword2);
+               attemptUpdatePassword(inputPassword1, inputPassword2);
             }
         });
     }
 
     private void attemptUpdatePassword(EditText inPass1, EditText inPass2){
 
-        final String passWord1 = inPass1.getText().toString();
-        final String passWord2 = inPass2.getText().toString();
+        inPass1.setError(null);
+        inPass2.setError(null);
 
-        newPassword1.setError(null);
-        newPassword2.setError(null);
+        outPass1 = inPass1.getText().toString();
+        outPass2 = inPass2.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(passWord1) && !isPasswordValid(passWord1)) {
-            newPassword1.setError(getString(R.string.error_invalid_password));
-            focusView = newPassword1;
+        if (!TextUtils.isEmpty(outPass1) && !isPasswordValid(outPass1)) {
+            inPass1.setError(getString(R.string.error_invalid_password));
+            focusView = inPass1;
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(passWord2) && !isPasswordValid(passWord2)) {
-            newPassword2.setError(getString(R.string.error_invalid_password));
-            focusView = newPassword2;
+        if (!TextUtils.isEmpty(outPass2) && !isPasswordValid(outPass2)) {
+            inPass2.setError(getString(R.string.error_invalid_password));
+            focusView = inPass2;
             cancel = true;
         }
 
-        if(!attemptConfirmIsMatch(passWord1, passWord2)){
-            newPassword2.setError(getString(R.string.error_NoMatch_password));
-            focusView = newPassword2;
+        if(!attemptConfirmIsMatch(outPass1, outPass2)){
+            inPass2.setError(getString(R.string.error_NoMatch_password));
+            focusView = inPass2;
             cancel = true;
         }
 
@@ -85,7 +87,7 @@ public class NewPasswordActivity extends AppCompatActivity {
             focusView.requestFocus();
         }
         else{
-            communicator.updatePasswordPost(passWord2, new Callback<JsonObject>(){
+            communicator.updatePasswordPost(outPass2, new Callback<JsonObject>(){
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                     if(response.isSuccessful()) {
@@ -123,8 +125,8 @@ public class NewPasswordActivity extends AppCompatActivity {
         }
     }
 
-    private boolean attemptConfirmIsMatch(String inPass1, String inPass2){
-        if(inPass1 == inPass2) { return true; }
+    private boolean attemptConfirmIsMatch(String inPasswd1, String inPasswd2){
+        if(inPasswd2.equals(inPasswd1)) { return true; }
         return false;
     }
 

@@ -8,20 +8,20 @@ public class Plant {
     private Double CurrentWater;
     private Double CurrentLight;
 
-    public Plant(String inName, String inSpeciesId, String inSerial,
+    public Plant(String inName, String inSpecies, String inSerial,
                  Double inCurrWater, Double inCurrLight)
     {
         this.Nickname = inName;
-        this.Species = inSpeciesId;
+        this.Species = inSpecies;
         this.SensorSerial = inSerial;
         this.CurrentWater = inCurrWater;
         this.CurrentLight = inCurrLight;
     }
 
-    public Plant(String inSpeciesId, String inName, String inSerial)
+    public Plant(String inName, String inSpecies, String inSerial)
     {
         this.Nickname = inName;
-        this.Species = inSpeciesId;
+        this.Species = inSpecies;
         this.SensorSerial = inSerial;
     }
 
@@ -29,7 +29,7 @@ public class Plant {
     public void setNickname(String inName) { this.Nickname = inName; }
 
     public String getSpecies() { return Species; }
-    public void setSpecies(String inSpeciesId) { this.Species = inSpeciesId; }
+    public void setSpecies(String inSpecies) { this.Species = inSpecies; }
 
     public String getSensorSerial() { return SensorSerial; }
     public void setSensorSerial(String inSerial) { this.SensorSerial = inSerial; }
