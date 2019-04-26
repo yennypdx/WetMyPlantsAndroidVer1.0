@@ -41,14 +41,14 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
-        nonCb = findViewById(R.id.no_notifications);
-        nonCb.setChecked(false);
-        nonCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                nonCb.setChecked(true);
-            }
-        });
+        //nonCb = findViewById(R.id.no_notifications);
+        //nonCb.setChecked(false);
+        //nonCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //    @Override
+        //    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //        nonCb.setChecked(true);
+        //    }
+        //});
 
         attemptNotifySystem();
 
