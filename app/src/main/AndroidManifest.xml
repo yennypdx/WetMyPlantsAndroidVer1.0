@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,9 +52,9 @@
         <activity
             android:name=".activities.PlantDetailActivity"
             android:label="@string/title_activity_detail_plant" />
-        <!-- <activity
+        <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings" /> -->
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".activities.PlantEditActivity"
             android:label="@string/title_activity_edit_plant" />

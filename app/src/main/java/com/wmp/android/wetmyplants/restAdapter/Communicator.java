@@ -39,7 +39,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(TEST_SERVER_URL)
+                    .baseUrl(TEAM_SERVER_URL)
                     .build();
         }
         return retrofit;

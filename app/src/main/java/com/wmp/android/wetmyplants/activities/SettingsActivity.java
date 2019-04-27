@@ -62,18 +62,20 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void attemptNotifySystem(){
+        int notifStatus;
         if(emailCb.isChecked()){
-
+            notifStatus = 0;
         }
         else if(textCb.isChecked()){
-
+            notifStatus = 1;
         }
         else if(emailCb.isChecked() && textCb.isChecked()){
-
+            notifStatus = 2;
         }
         else if(nonCb.isChecked()){
-
+            notifStatus = 3;
         }
+        //TODO: hook-up communicator here
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
