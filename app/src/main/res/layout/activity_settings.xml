@@ -23,20 +23,17 @@
             android:id="@+id/notification_text_view"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/notification_prompt"
-            style="@style/AccountTextView"/>
+            android:text="@string/notification_prompt" />
 
         <CheckBox android:id="@+id/checkbox_email_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email_notifications"
-            style="@style/AccountTextView"/>
+            android:text="@string/email_notifications" />
 
         <CheckBox android:id="@+id/checkbox_text_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_notifications"
-            style="@style/AccountTextView"/>
+            android:text="@string/text_notifications" />
 
     </LinearLayout>
 
@@ -51,8 +48,7 @@
             android:id="@+id/color_theme"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/color_theme_selection"
-            style="@style/AccountTextView"/>
+            android:text="@string/color_theme_selection" />
 
         <Spinner
             android:id="@+id/color_selection_spinner"

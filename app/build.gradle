@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.wmp.android.wetmyplants"
+        applicationId "com.android.wetmyplants"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
