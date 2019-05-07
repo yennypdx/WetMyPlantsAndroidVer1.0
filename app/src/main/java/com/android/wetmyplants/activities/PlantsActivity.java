@@ -12,12 +12,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.helperClasses.PlantsAdapter;
 import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.restAdapter.Communicator;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -29,11 +33,12 @@ public class PlantsActivity extends AppCompatActivity {
 
     private Communicator communicator;
     private PlantsAdapter pAdapter;
-    SharedPreferences sharedpref;
+    private DbHelper database;
     String storedToken;
     Gson gson;
 
     ArrayList<Plant> plantList;
+    Plant plant;
     ListView listView;
     FloatingActionButton addBtn;
 
@@ -42,27 +47,36 @@ public class PlantsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
         communicator = new Communicator();
-        gson = new Gson();
-        plantList = new ArrayList<>();
-
-        storedToken = sharedpref.getString("UserCredentials", "");
-        plantList = pullPlantInformation(storedToken);
+        database = new DbHelper(getApplicationContext());
         listView = findViewById(R.id.plantListView);
+        gson = new Gson();
 
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getStringExtra("userEmail");
+        UserCredentials user = database.getUserCredential(userEmail);
+        storedToken = user.getToken();
+
+        plantList = new ArrayList<>();
+        plant = new Plant();
         pAdapter = new PlantsAdapter(this, plantList);
+
         listView.setAdapter(pAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: open activity with detail related to the object
-                TextView selectedItem = view.findViewById(R.id.plantIdTextView);
-                String itemId = selectedItem.getText().toString();
 
+                TextView idText = findViewById(R.id.plantIdTextView);
+                final String plantId = idText.getText().toString();
 
-                Intent viewPlantDetail = new Intent(
-                        PlantsActivity.this, PlantDetailActivity.class);
-                viewPlantDetail.putExtra("id", itemId);
-                startActivity(viewPlantDetail);
+                plantList = pullPlantDataFromServer(storedToken);
+                // push to temp db
+                for(Plant p : plantList){
+                    database.insertPlant(p, userEmail);
+                }
+
+                Intent intent = new Intent(PlantsActivity.this, PlantDetailActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 
@@ -70,25 +84,24 @@ public class PlantsActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toAddPlantPage = new Intent(
-                        PlantsActivity.this, PlantAddActivity.class);
-                startActivity(toAddPlantPage);
+                startActivity(new Intent(PlantsActivity.this, PlantAddActivity.class));
             }
         });
     }
 
-    public ArrayList<Plant> pullPlantInformation(String inToken){
-        final ArrayList<Plant> listPlantData = new ArrayList<>();
+    public ArrayList<Plant> pullPlantDataFromServer(String inToken){
+        final ArrayList<Plant> plantDataList = new ArrayList<>();
 
-        communicator.plantListGet(inToken, new Callback<JsonArray>(){
+        communicator.plantListGet(inToken, new Callback<ArrayList<Plant>>(){
             @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response){
+            public void onResponse(Call<ArrayList<Plant>> call, Response<ArrayList<Plant>> response){
                 if(response.isSuccessful()) {
 
-                    JsonArray jArrayPlant = response.body().getAsJsonArray();
-                    if(jArrayPlant != null){
-                        for(int i = 0; i < jArrayPlant.size(); i++){
-                            //listPlantData.add(jArrayPlant.get(i));
+                    ArrayList<Plant> arrayFromServer = response.body();
+                    if(arrayFromServer != null){
+                        int size = arrayFromServer.size();
+                        for(int i = 0; i < size; i++){
+                            plantDataList.add(arrayFromServer.get(i));
                         }
                     }
                 }
@@ -101,12 +114,11 @@ public class PlantsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonArray> call, Throwable t){
+            public void onFailure(Call<ArrayList<Plant>> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        return listPlantData;
+        return plantDataList;
     }
-
 }

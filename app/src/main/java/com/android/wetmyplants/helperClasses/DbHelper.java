@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.model.UserCredentials;
+
+import java.util.ArrayList;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -23,11 +26,31 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String STORAGE_COLUMN_EMAIL = "email";
     public static final String STORAGE_COLUMN_TOKEN = "token";
 
+    public static final String PLANT_TABLE = "plant";
+    public static final String PLANT_ID = "id";
+    public static final String PLANT_COLUMN_SENSOR_ID = "sensor_id";
+    public static final String PLANT_COLUMN_NICKNAME = "nickname";
+    public static final String PLANT_COLUMN_SPECIES_ID = "species_id";
+    public static final String PLANT_COLUMN_CURR_WTR = "curr_water";
+    public static final String PLANT_COLUMN_CURR_LIGHT = "curr_light";
+    public static final String STORAGE_REF_COLUMN = "sto_email";
+
     private static final String CREATE_STORAGE_TABLE =
             "CREATE TABLE " + STORAGE_TABLE + "("
                     + STORAGE_ID + " INTEGER PRIMARY KEY, "
                     + STORAGE_COLUMN_EMAIL + " TEXT, "
                     + STORAGE_COLUMN_TOKEN + " TEXT " +")";
+
+    private static final String CREATE_PLANT_TABLE =
+            "CREATE TABLE " + PLANT_TABLE + "("
+                    + PLANT_ID + " INTEGER PRIMARY KEY, "
+                    + PLANT_COLUMN_SENSOR_ID + " TEXT, "
+                    + PLANT_COLUMN_NICKNAME + " TEXT, "
+                    + PLANT_COLUMN_SPECIES_ID + " INTEGER, "
+                    + PLANT_COLUMN_CURR_WTR + " REAL, "
+                    + PLANT_COLUMN_CURR_LIGHT + " REAL, "
+                    + STORAGE_REF_COLUMN + " TEXT, FOREIGN KEY (" + STORAGE_COLUMN_EMAIL + ") REFERENCES "
+                    + STORAGE_TABLE + "( " + STORAGE_COLUMN_EMAIL + ")" + ")";
 
     public DbHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
@@ -36,11 +59,13 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_STORAGE_TABLE);
+        db.execSQL(CREATE_PLANT_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + STORAGE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PLANT_TABLE);
         onCreate(db);
     }
 
@@ -56,6 +81,22 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void insertPlant(Plant inPlant, String inEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(PLANT_COLUMN_SENSOR_ID, inPlant.getId());
+        values.put(PLANT_COLUMN_NICKNAME, inPlant.getNickname());
+        values.put(PLANT_COLUMN_SPECIES_ID, inPlant.getSpeciesId());
+        values.put(PLANT_COLUMN_CURR_WTR, inPlant.getCurrentWater());
+        values.put(PLANT_COLUMN_CURR_LIGHT, inPlant.getCurrentLight());
+        values.put(STORAGE_REF_COLUMN, inEmail);
+
+        db.insert(PLANT_TABLE, null, values);
+        db.close();
+    }
+
     public int updateCredential(UserCredentials userCredentials){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -68,6 +109,22 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.update(STORAGE_TABLE, values, STORAGE_COLUMN_EMAIL + " = ?",
                 new String[] {String.valueOf(userCredentials.getEmail())});
 
+    }
+
+    public int updatePlantData(Plant inPlant, String inEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(PLANT_COLUMN_SENSOR_ID, inPlant.getId());
+        values.put(PLANT_COLUMN_NICKNAME, inPlant.getNickname());
+        values.put(PLANT_COLUMN_SPECIES_ID, inPlant.getSpeciesId());
+        values.put(PLANT_COLUMN_CURR_WTR, inPlant.getCurrentWater());
+        values.put(PLANT_COLUMN_CURR_LIGHT, inPlant.getCurrentLight());
+
+        // updating row
+        return db.update(PLANT_TABLE, values, STORAGE_REF_COLUMN + " = ?",
+                new String[] {String.valueOf(inEmail)});
     }
 
     public UserCredentials getUserCredential(String inEmail){
@@ -87,6 +144,34 @@ public class DbHelper extends SQLiteOpenHelper {
         user.setToken(cursor.getString(cursor.getColumnIndex(STORAGE_COLUMN_TOKEN)));
 
         return user;
+    }
+
+    public ArrayList<Plant> getAllPlants(String inEmail)
+    {
+        ArrayList<Plant> plants = new ArrayList<Plant>();
+        String selectQuery =
+                "SELECT * FROM " + PLANT_TABLE + " WHERE " + STORAGE_COLUMN_EMAIL + " = \'"
+                        + inEmail + "\'";
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //looping through all rows and adding to list
+        if(cursor.moveToFirst()){
+            do{
+                Plant plant = new Plant();
+                plant.setId(cursor.getString(cursor.getColumnIndex(PLANT_COLUMN_SENSOR_ID)));
+                plant.setNickname(cursor.getString(cursor.getColumnIndex(PLANT_COLUMN_NICKNAME)));
+                plant.setSpeciesId(cursor.getInt(cursor.getColumnIndex(PLANT_COLUMN_SPECIES_ID)));
+                plant.setCurrentWater(cursor.getDouble(cursor.getColumnIndex(PLANT_COLUMN_CURR_WTR)));
+                plant.setCurrentLight(cursor.getDouble(cursor.getColumnIndex(PLANT_COLUMN_CURR_LIGHT)));
+
+                plants.add(plant);
+            } while (cursor.moveToNext());
+        }
+        return plants;
     }
 
 }

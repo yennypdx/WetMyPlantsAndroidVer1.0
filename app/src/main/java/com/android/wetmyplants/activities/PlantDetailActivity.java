@@ -214,7 +214,7 @@ public class PlantDetailActivity extends AppCompatActivity {
     }
 
     public void displayData(Plant inPlantData){
-        String id = inPlantData.getSensorSerial();
+        /*String id = inPlantData.getSensorSerial();
         storedPlantId = id;
         String name = inPlantData.getNickname();
         displayPlantName.setText(name);
@@ -223,7 +223,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         String water = Double.toString(inPlantData.getCurrentWater());
         displayHumidity.setText(water);
         String light = Double.toString(inPlantData.getCurrentLight());
-        displayLight.setText(light);
+        displayLight.setText(light);*/
     }
 
     public void attemptDeletePlant(String inToken, String plantId){

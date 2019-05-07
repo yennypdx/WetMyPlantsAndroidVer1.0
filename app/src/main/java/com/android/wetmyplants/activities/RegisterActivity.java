@@ -109,8 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
                         UserCredentials user = new UserCredentials(emailAddress, token);
                         database.insertCredential(user);
 
-                        startActivity(new Intent(
-                                RegisterActivity.this, DashboardActivity.class));
+                        Intent intent = new Intent(RegisterActivity.this, DashboardActivity.class);
+                        intent.putExtra("userEmail", emailAddress);
+                        startActivity(intent);
                     }
                     else
                     {

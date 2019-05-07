@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.Communicator;
@@ -22,36 +24,37 @@ import retrofit2.Response;
 public class UpdatePasswordActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    public static final String appPREFERENCES = "appPref";
-    SharedPreferences sharedpref;
+    private DbHelper database;
 
-    EditText inputPass1;
-    EditText inputPass2;
-    Button updatePwdBtn;
-    String outPass1;
-    String outPass2;
-
+    EditText inputPass1, inputPass2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updatepassword);
+        communicator = new Communicator();
+        database = new DbHelper(getApplicationContext());
+
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getExtras().toString();
+        UserCredentials user = database.getUserCredential(userEmail);
+        final String userToken = user.getToken();
 
         inputPass1 = findViewById(R.id.passOne);
-        outPass1 = inputPass1.getText().toString();
+        final String outPass1 = inputPass1.getText().toString();
         inputPass2 = findViewById(R.id.passTwo);
-        outPass2 = inputPass2.getText().toString();
+        final String outPass2 = inputPass2.getText().toString();
 
-        updatePwdBtn = findViewById(R.id.updatePasswordBtn);
+        Button updatePwdBtn = findViewById(R.id.updatePasswordBtn);
         updatePwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptUpdatePassword(outPass1, outPass2);
+                attemptUpdatePassword(userToken, outPass1, outPass2);
             }
         });
     }
 
-    public void attemptUpdatePassword(String inPass1, String inPass2){
+    public void attemptUpdatePassword(String userToken, String inPass1, String inPass2){
         inputPass1.setError(null);
         inputPass2.setError(null);
 
@@ -76,15 +79,13 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
         }
         else {
-            communicator.updatePasswordPost(outPass2, new Callback<JsonObject>(){
+            communicator.updatePasswordInternalPost(userToken, inPass2, new Callback<JsonObject>(){
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     if(response.isSuccessful()) {
-                        startActivity(new Intent(
-                                UpdatePasswordActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(UpdatePasswordActivity.this, AccountActivity.class));
                     }
-                    else
-                    {
+                    else {
                         Log.e("Error Code", String.valueOf(response.code()));
                         Log.e("Error Body", response.errorBody().toString());
                         Toast.makeText(getApplicationContext(),

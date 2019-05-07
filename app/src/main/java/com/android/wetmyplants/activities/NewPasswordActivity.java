@@ -37,7 +37,7 @@ public class NewPasswordActivity extends AppCompatActivity {
         database = new DbHelper(getApplicationContext());
 
         Intent getEmail = getIntent();
-        final String userEmail = getEmail.getExtras().toString();
+        final String userEmail = getEmail.getStringExtra("userEmail");
 
         final EditText inputPassword1 = findViewById(R.id.newpass_input_one);
         final EditText inputPassword2 = findViewById(R.id.newpass_input_two);
@@ -83,7 +83,7 @@ public class NewPasswordActivity extends AppCompatActivity {
             focusView.requestFocus();
         }
         else{
-            communicator.updatePasswordPost(outPass2, new Callback<JsonObject>(){
+            communicator.updatePasswordExternalPost(inEmail, outPass2, new Callback<JsonObject>(){
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                     if(response.isSuccessful()) {
@@ -92,8 +92,9 @@ public class NewPasswordActivity extends AppCompatActivity {
                         UserCredentials user = new UserCredentials(inEmail, token);
                         database.updateCredential(user);
 
-                        startActivity(new Intent(
-                                NewPasswordActivity.this, DashboardActivity.class));
+                        Intent intent = new Intent(NewPasswordActivity.this, DashboardActivity.class);
+                        intent.putExtra("userEmail", inEmail);
+                        startActivity(intent);
                     }
                     else
                     {

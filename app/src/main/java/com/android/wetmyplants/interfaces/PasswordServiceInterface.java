@@ -31,10 +31,16 @@ public interface PasswordServiceInterface {
 
     @FormUrlEncoded
     @POST("newpass")
-    Call<JsonObject> postNewPass(
+    Call<JsonObject> postNewPassExternal(
+            @Field("Email") String Email,
             @Field("Password") String Password
     );
 
-
+    @FormUrlEncoded
+    @POST("newpass/{token}")
+    Call<JsonObject> postNewPassInternal(
+            @Path("Token") String Token,
+            @Field("Password") String Password
+    );
 
 }

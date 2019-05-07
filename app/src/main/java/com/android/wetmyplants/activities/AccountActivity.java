@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
@@ -23,21 +25,18 @@ import retrofit2.Response;
 public class AccountActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    SharedPreferences sharedpref;
-    String storedToken;
-    Gson gson;
+    private DbHelper database;
+    private Gson gson;
 
-    TextView displayFirstName;
-    TextView displayLastName;
-    TextView displayPhone;
-    TextView displayEmail;
-    TextView displayPlantId;
+    TextView displayFirstName, displayLastName, displayPhone;
+    TextView displayEmail, displayPlantId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         communicator = new Communicator();
+        database = new DbHelper(getApplicationContext());
         gson = new Gson();
 
         displayFirstName = findViewById(R.id.firstTextView);
@@ -46,20 +45,23 @@ public class AccountActivity extends AppCompatActivity {
         displayEmail = findViewById(R.id.emailTextView);
         displayPlantId = findViewById(R.id.plantIdTextView);
 
-        storedToken = sharedpref.getString("UserCredentials", "");
-        pullUserInformation(storedToken);
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getStringExtra("userEmail");
+        UserCredentials user = database.getUserCredential(userEmail);
+        pullUserDataFromServer(user.getToken());
 
         FloatingActionButton editAccFab = findViewById(R.id.edit_fab);
         editAccFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        AccountActivity.this, AccountEditActivity.class));
+                Intent intent = new Intent(AccountActivity.this, AccountEditActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
     }
 
-    public void pullUserInformation(String inToken){
+    public void pullUserDataFromServer(String inToken){
         communicator.userDetailGet(inToken, new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
@@ -67,7 +69,6 @@ public class AccountActivity extends AppCompatActivity {
                     String UserObject = response.body().getAsJsonObject().toString();
                     Account userAccount = gson.fromJson(UserObject, Account.class);
 
-                    //display the properties to content view
                     displayData(userAccount);
                 }
                 else{

@@ -52,7 +52,7 @@ public class PlantAddActivity extends AppCompatActivity {
         inputSensorNumber = findViewById(R.id.sensorSerialInput);
         outSensorNumber = inputSensorNumber.getText().toString();
 
-        newPlant = new Plant(outPlantName, outSpeciesName, outSensorNumber, initWater, initLight);
+        //newPlant = new Plant(outPlantName, outSpeciesName, outSensorNumber, initWater, initLight);
 
         Button submitNewPlantBtn = findViewById(R.id.newPlantButton);
         submitNewPlantBtn.setOnClickListener(new View.OnClickListener() {

@@ -2,37 +2,38 @@ package com.android.wetmyplants.model;
 
 public class Plant {
 
+    private String Id;
     private String Nickname;
-    private String Species;
-    private String SensorSerial;
+    private int SpeciesId;
     private Double CurrentWater;
     private Double CurrentLight;
 
-    public Plant(String inName, String inSpecies, String inSerial,
+    public Plant() {}
+
+    public Plant(String inId, String inNickname, int inSpeciesId,
                  Double inCurrWater, Double inCurrLight)
     {
-        this.Nickname = inName;
-        this.Species = inSpecies;
-        this.SensorSerial = inSerial;
+        this.Id = inId;
+        this.Nickname = inNickname;
+        this.SpeciesId = inSpeciesId;
         this.CurrentWater = inCurrWater;
         this.CurrentLight = inCurrLight;
     }
 
-    public Plant(String inName, String inSpecies, String inSerial)
+    public Plant(String inId, String inName)
     {
+        this.Id = inId;
         this.Nickname = inName;
-        this.Species = inSpecies;
-        this.SensorSerial = inSerial;
     }
+
+    public String getId() { return Id; }
+    public void setId(String id) {Id = id; }
 
     public String getNickname() { return Nickname; }
     public void setNickname(String inName) { this.Nickname = inName; }
 
-    public String getSpecies() { return Species; }
-    public void setSpecies(String inSpecies) { this.Species = inSpecies; }
-
-    public String getSensorSerial() { return SensorSerial; }
-    public void setSensorSerial(String inSerial) { this.SensorSerial = inSerial; }
+    public int getSpeciesId() { return SpeciesId; }
+    public void setSpeciesId(int speciesId) { SpeciesId = speciesId; }
 
     public Double getCurrentWater() { return CurrentWater; }
     public void setCurrentWater(Double inCurrWater) { this.CurrentWater = inCurrWater; }

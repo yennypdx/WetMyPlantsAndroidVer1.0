@@ -199,8 +199,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         UserCredentials user = new UserCredentials(email, token);
                         database.updateCredential(user);
 
-                        startActivity(new Intent(
-                                LoginActivity.this, DashboardActivity.class));
+                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                        intent.putExtra("userEmail", email);
+                        startActivity(intent);
                     }
                     else {
                         Log.e("Error Code", String.valueOf(response.code()));

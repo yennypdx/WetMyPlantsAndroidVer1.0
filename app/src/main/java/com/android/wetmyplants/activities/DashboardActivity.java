@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.android.wetmyplants.LoginActivity;
 import com.android.wetmyplants.R;
+import com.android.wetmyplants.model.Notification;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -16,13 +17,17 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getStringExtra("userEmail");
+
         ImageView mAccountButton = findViewById(R.id.accountImageView);
         mAccountButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        DashboardActivity.this, AccountActivity.class));
+                Intent intent = new Intent(DashboardActivity.this, AccountActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 
@@ -31,8 +36,9 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        DashboardActivity.this, PlantsActivity.class));
+                Intent intent = new Intent(DashboardActivity.this, PlantsActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 
@@ -41,8 +47,9 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        DashboardActivity.this, NotificationActivity.class));
+                Intent intent = new Intent(DashboardActivity.this, Notification.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 
@@ -51,8 +58,9 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        DashboardActivity.this, SettingsActivity.class));
+                Intent intent = new Intent(DashboardActivity.this, SettingsActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 

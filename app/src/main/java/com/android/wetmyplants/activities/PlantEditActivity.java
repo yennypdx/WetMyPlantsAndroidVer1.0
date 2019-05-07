@@ -71,12 +71,12 @@ public class PlantEditActivity extends AppCompatActivity {
                     String plantObject = response.body().getAsJsonObject().toString();
                     Plant userPlant = gson.fromJson(plantObject, Plant.class);
 
-                    storedPlantId = userPlant.getSensorSerial();
+                    //storedPlantId = userPlant.getSensorSerial();
                     storedCurrWater = userPlant.getCurrentWater();
                     storedCurrLight = userPlant.getCurrentLight();
 
-                    updatedPlant = new Plant(storedPlantId, outNewPlantName, outNewPlantSpecies,
-                            storedCurrWater, storedCurrLight);
+                    //updatedPlant = new Plant(storedPlantId, outNewPlantName, outNewPlantSpecies,
+                            //storedCurrWater, storedCurrLight);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));

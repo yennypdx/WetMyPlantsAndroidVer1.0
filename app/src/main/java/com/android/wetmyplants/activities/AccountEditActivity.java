@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
@@ -24,27 +26,16 @@ import retrofit2.Response;
 public class AccountEditActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    SharedPreferences sharedpref;
+    private DbHelper database;
     String storedToken;
     Gson gson;
 
-    EditText inputFirstName;
-    EditText inputLastName;
-    EditText inputPhone;
-    EditText inputEmail;
-    EditText inputPlantId;
-
-    String defaultFirstName;
-    String defaultLastName;
-    String defaultPhone;
-    String defaultEmail;
-    String defaultPlantId;
-
-    String finalFirstName;
-    String finalLastName;
-    String finalPhone;
-    String finalEmail;
-    String finalPlantId;
+    EditText inputFirstName, inputLastName, inputPhone;
+    EditText inputEmail, inputPlantId;
+    String defaultFirstName, defaultLastName, defaultPhone;
+    String defaultEmail, defaultPlantId;
+    String finalFirstName, finalLastName, finalPhone;
+    String finalEmail, finalPlantId;
 
     Account updatedUser;
 
@@ -52,11 +43,15 @@ public class AccountEditActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountedit);
-        gson = new Gson();
         communicator = new Communicator();
+        database = new DbHelper(getApplicationContext());
+        gson = new Gson();
 
-        storedToken = sharedpref.getString("UserCredentials", "");
-        pullUserInformation(storedToken);
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getStringExtra("userEmail");
+        UserCredentials user = database.getUserCredential(userEmail);
+        final String storedToken = user.getToken();
+        pullUserDataFromServer(storedToken);
 
         inputFirstName = findViewById(R.id.firstEditText);
         inputFirstName.setEnabled(false);
@@ -132,7 +127,7 @@ public class AccountEditActivity extends AppCompatActivity {
         });
     }
 
-    public void pullUserInformation(String inToken){
+    public void pullUserDataFromServer(String inToken){
         communicator.userDetailGet(inToken, new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
@@ -179,8 +174,8 @@ public class AccountEditActivity extends AppCompatActivity {
         defaultPlantId = inputPlantId.getText().toString();
         finalPlantId = defaultPlantId;
 
-        Account outAccount = new Account(finalPlantId, finalFirstName, finalLastName,
-                finalPhone, finalEmail);
+        Account outAccount = new Account(finalPlantId, finalFirstName,
+                finalLastName, finalPhone, finalEmail);
         return outAccount;
     }
 
