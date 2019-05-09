@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DashboardActivity.this, Notification.class);
+                Intent intent = new Intent(DashboardActivity.this, NotificationActivity.class);
                 intent.putExtra("userEmail", userEmail);
                 startActivity(intent);
             }

@@ -33,7 +33,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String PLANT_COLUMN_SPECIES_ID = "species_id";
     public static final String PLANT_COLUMN_CURR_WTR = "curr_water";
     public static final String PLANT_COLUMN_CURR_LIGHT = "curr_light";
-    public static final String STORAGE_REF_COLUMN = "sto_email";
+    public static final String STORAGE_REF_COLUMN = "sto_id";
 
     private static final String CREATE_STORAGE_TABLE =
             "CREATE TABLE " + STORAGE_TABLE + "("
@@ -49,8 +49,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     + PLANT_COLUMN_SPECIES_ID + " INTEGER, "
                     + PLANT_COLUMN_CURR_WTR + " REAL, "
                     + PLANT_COLUMN_CURR_LIGHT + " REAL, "
-                    + STORAGE_REF_COLUMN + " TEXT, FOREIGN KEY (" + STORAGE_COLUMN_EMAIL + ") REFERENCES "
-                    + STORAGE_TABLE + "( " + STORAGE_COLUMN_EMAIL + ")" + ")";
+                    + STORAGE_REF_COLUMN + " INTEGER, FOREIGN KEY (" + STORAGE_ID + ") REFERENCES "
+                    + STORAGE_TABLE + "( " + STORAGE_ID + ")" + ")";
 
     public DbHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
@@ -144,6 +144,28 @@ public class DbHelper extends SQLiteOpenHelper {
         user.setToken(cursor.getString(cursor.getColumnIndex(STORAGE_COLUMN_TOKEN)));
 
         return user;
+    }
+
+    public Plant getPlant(String inEmail)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =
+                "SELECT * FROM " + PLANT_TABLE + " WHERE "
+                        + STORAGE_REF_COLUMN + " = \'" + inEmail + "\'";
+        Log.e(LOG, selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor != null){ cursor.moveToFirst(); }
+
+        Plant plant = new Plant();
+        plant.setId(cursor.getString(cursor.getColumnIndex(PLANT_COLUMN_SENSOR_ID)));
+        plant.setNickname(cursor.getString(cursor.getColumnIndex(PLANT_COLUMN_NICKNAME)));
+        plant.setSpeciesId(cursor.getInt(cursor.getColumnIndex(PLANT_COLUMN_SPECIES_ID)));
+        plant.setCurrentWater(cursor.getDouble(cursor.getColumnIndex(PLANT_COLUMN_CURR_WTR)));
+        plant.setCurrentLight(cursor.getDouble(cursor.getColumnIndex(PLANT_COLUMN_CURR_LIGHT)));
+
+        return plant;
     }
 
     public ArrayList<Plant> getAllPlants(String inEmail)

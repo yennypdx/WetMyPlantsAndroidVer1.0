@@ -3,7 +3,6 @@ package com.android.wetmyplants.activities;
 import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -14,11 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.restAdapter.Communicator;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,19 +30,17 @@ import retrofit2.Response;
 public class PlantDetailActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    SharedPreferences sharedpref;
+    private DbHelper database;
     String storedToken;
-    Gson gson;
 
     FloatingActionButton fab, fabedit, fabdel;
     LinearLayout fablayoutEdit, fablayoutDel;
     TextView menuFabLabel;
     View fabBGLayout;
     boolean isFABOpen = false;
+
     String storedPlantId;
-    
     TextView displayPlantName;
-    TextView displaySpecies;
     TextView displayHumidity;
     TextView displayLight;
 
@@ -48,11 +49,15 @@ public class PlantDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plantdetail);
         communicator = new Communicator();
-        gson = new Gson();
+        database = new DbHelper(getApplicationContext());
 
-        storedToken = sharedpref.getString("UserCredentials", "");
-        pullPlantDetailInformation(storedToken);
+        displayPlantName = findViewById(R.id.plantNameTextView);
+        displayHumidity = findViewById(R.id.currWaterTextView);
+        displayLight = findViewById(R.id.lightTextView);
 
+        Intent getEmail = getIntent();
+        final String userEmail = getEmail.getStringExtra("userEmail");
+        pullPlantDetailInformation(userEmail);
 
         fablayoutEdit = findViewById(R.id.fabLayoutEdit);
         fabedit = findViewById(R.id.fabEdit);
@@ -187,43 +192,15 @@ public class PlantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void pullPlantDetailInformation(String inToken){
-        communicator.plantDetailGet(inToken, new Callback<JsonObject>(){
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
-                if(response.isSuccessful()) {
-                    String PlantObject = response.body().getAsJsonObject().toString();
-                    Plant plantData = gson.fromJson(PlantObject, Plant.class);
-                    //display the properties to content view
-                    displayData(plantData);
-                }
-                else{
-                    Log.e("Error Code", String.valueOf(response.code()));
-                    Log.e("Error Body", response.errorBody().toString());
-                    Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
+    private void pullPlantDetailInformation(String inEmail){
+        Plant plant = database.getPlant(inEmail);
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void displayData(Plant inPlantData){
-        /*String id = inPlantData.getSensorSerial();
-        storedPlantId = id;
-        String name = inPlantData.getNickname();
+        String name = plant.getNickname();
         displayPlantName.setText(name);
-        String species = inPlantData.getSpecies();
-        displaySpecies.setText(species);
-        String water = Double.toString(inPlantData.getCurrentWater());
+        String water = Double.toString(plant.getCurrentWater());
         displayHumidity.setText(water);
-        String light = Double.toString(inPlantData.getCurrentLight());
-        displayLight.setText(light);*/
+        String light = Double.toString(plant.getCurrentLight());
+        displayLight.setText(light);
     }
 
     public void attemptDeletePlant(String inToken, String plantId){
@@ -248,5 +225,4 @@ public class PlantDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -28,13 +28,13 @@ public interface UserServiceInterface {
     @FormUrlEncoded
     @GET("user/{token}")
     Call<JsonObject> getUser(
-            @Query("UserCredentials") String Token
+            @Path("token") String Token
     );
 
     @FormUrlEncoded
-    @POST("user/update")
+    @POST("user/update/{Token}")
     Call<Response> postUpdateUser(
-            @Path("UserCredentials") String Token,
+            @Path("Token") String Token,
             @Body Account account
     );
 

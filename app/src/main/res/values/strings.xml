@@ -106,9 +106,10 @@
     <string name="title_activity_edit_plant">Update Plant</string>
     <string name="update_plant_info">New Plant Information</string>
     <string name="new_plant_name">Enter new name</string>
-    <string name="new_species">Enter new species</string>
+    <string name="new_plant_id">Enter new sensor id</string>
     <string name="update_plant_btn">Update Plant</string>
     <string name="update_plant_icon">  Submit Update  </string>
+    <string name="update_id_plant_label">Plant ID :</string>
 
     <!-- Strings related to Notification Alert -->
     <string name="alertVersionMssg">This feature will be available in WetMyPlant Ver2.0</string>
@@ -119,6 +120,7 @@
     <string name="bluetooth_num">Sensor MAC#:</string>
     <string name="submit_newPlant">Submit New Plant</string>
     <string name="hint_sensor_serial">PJ876-I8UVF</string>
+    <string name="add_species_label">Default</string>
 
     <!-- Strings related to Pin Confirmation -->
     <string name="pin_choice">Choose how to get your confirmation pin:</string>

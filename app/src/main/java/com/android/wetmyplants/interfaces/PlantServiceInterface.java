@@ -23,35 +23,35 @@ public interface PlantServiceInterface {
     @FormUrlEncoded
     @GET("plant/{token}")
     Call<ArrayList<Plant>> getPlantList(
-            @Path ("Token") String Token
+            @Path("Token") String Token
     );
 
     @FormUrlEncoded
     @GET("plant/id/{token}")
     Call<JsonObject> getPlantDetail(
-            @Path ("Token") String Token
+            @Path("Token") String Token
     );
 
     @FormUrlEncoded
     @POST("plant/add/{token}")
     Call<Response> postAddPlant(
-            @Path ("Token") String Token,
+            @Path("Token") String Token,
             @Body Plant plant
     );
 
     @FormUrlEncoded
     @PUT("plant/edit/{token}")
     Call<Response> putNewPlantData(
-            @Path ("Token") String Token,
-            @Body Plant plant
-
+            @Path("Token") String Token,
+            @Field("Nickname") String Nickname,
+            @Field("Id") String Id
     );
 
     @FormUrlEncoded
-    @DELETE("plant/del/{token}")
+    @DELETE("plant/del/{token}/{plantid}/")
     Call<Response> deletePlant(
-            @Path ("Token") String Token,
-            @Field ("PlantId") String PlantId
+            @Path("Token") String Token,
+            @Path("PlantId") String PlantId
     );
 
 }

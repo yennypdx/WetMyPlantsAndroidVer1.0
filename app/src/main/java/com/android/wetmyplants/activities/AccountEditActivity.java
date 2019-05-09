@@ -132,9 +132,9 @@ public class AccountEditActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
-                    String UserObject = response.body().getAsJsonObject().toString();
-                    Account userAccount = gson.fromJson(UserObject, Account.class);
-                    updatedUser = getDefaultValue(userAccount);
+                    //String UserObject = response.body();
+                   // Account userAccount = gson.fromJson(UserObject, Account.class);
+                    //updatedUser = getDefaultValue(userAccount);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));

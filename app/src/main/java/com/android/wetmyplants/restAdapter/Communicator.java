@@ -2,6 +2,7 @@ package com.android.wetmyplants.restAdapter;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.squareup.otto.Produce;
 
 import com.android.wetmyplants.interfaces.PlantServiceInterface;
@@ -25,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Communicator {
 
     private static final String TAG = "Communicator";
-    private static final String TEAM_SERVER_URL = "https://wetmyplants.azurewebsites.net/api";
+    private static final String LOCAL_SERVER_URL = "http://192.168.1.6:5000/api/";
+    private static final String TEAM_SERVER_URL = "https://wetmyplants.azurewebsites.net/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitInstance(){
@@ -42,17 +44,17 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(TEAM_SERVER_URL)
+                    .baseUrl(LOCAL_SERVER_URL)
                     .build();
         }
         return retrofit;
     }
 
     /**using LoginInterface*/
-    public void loginPost(String inEmail, String inPass, Callback<JsonObject> callback){
+    public void loginPost(String inEmail, String inPass, Callback<String> callback){
         getRetrofitInstance();
         LoginInterface service = retrofit.create(LoginInterface.class);
-        Call<JsonObject> call = service.post(inEmail, inPass);
+        Call<String> call = service.post(inEmail, inPass);
         call.enqueue(callback);
     }
 
@@ -130,17 +132,17 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void plantDetailGet(String token, Callback<JsonObject> callback){
+    /*public void plantDetailGet(String token, Callback<JsonObject> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
         Call<JsonObject> call = service.getPlantDetail(token);
         call.enqueue(callback);
-    }
+    }*/
 
-    public void plantUpdatePut(String token, Plant plant, Callback<Response> callback){
+    public void plantUpdatePut(String token, String name, String id, Callback<Response> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<okhttp3.Response> call = service.putNewPlantData(token, plant);
+        Call<okhttp3.Response> call = service.putNewPlantData(token, name, id);
         call.enqueue(callback);
     }
 

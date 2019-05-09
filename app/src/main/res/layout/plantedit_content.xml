@@ -50,13 +50,13 @@
         android:id="@+id/tableRowPlantEdit2"
         android:paddingTop="10dp">
         <TextView
-            android:id="@+id/plantEditSpeciesLabel"
-            android:text="@string/plant_species"
+            android:id="@+id/plantEditIdLabel"
+            android:text="@string/update_id_plant_label"
             style="@style/myStyleTextView"/>
         <EditText
-            android:id="@+id/plantEditSpeciesInput"
+            android:id="@+id/plantEditIdInput"
             android:textColor="@android:color/holo_blue_dark"
-            android:hint="@string/new_species"
+            android:hint="@string/new_plant_id"
             android:inputType="text"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
