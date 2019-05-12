@@ -16,33 +16,30 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface PlantServiceInterface {
 
-    @FormUrlEncoded
-    @GET("plant/{token}")
+    @GET("plant/{token}/")
     Call<ArrayList<Plant>> getPlantList(
-            @Path("Token") String Token
+            @Path("token") String token
     );
 
-    @FormUrlEncoded
-    @GET("plant/id/{token}")
+    @GET("plant/id/{token}/")
     Call<JsonObject> getPlantDetail(
-            @Path("Token") String Token
+            @Path("token") String token
     );
 
     @FormUrlEncoded
-    @POST("plant/add/{token}")
+    @POST("plant/add/{token}/")
     Call<Response> postAddPlant(
-            @Path("Token") String Token,
+            @Path("token") String token,
             @Body Plant plant
     );
 
     @FormUrlEncoded
-    @PUT("plant/edit/{token}")
+    @PUT("plant/edit/{token}/")
     Call<Response> putNewPlantData(
-            @Path("Token") String Token,
+            @Path("token") String token,
             @Field("Nickname") String Nickname,
             @Field("Id") String Id
     );
@@ -50,8 +47,8 @@ public interface PlantServiceInterface {
     @FormUrlEncoded
     @DELETE("plant/del/{token}/{plantid}/")
     Call<Response> deletePlant(
-            @Path("Token") String Token,
-            @Path("PlantId") String PlantId
+            @Path("token") String token,
+            @Path("plantid") String plantid
     );
 
 }

@@ -12,7 +12,7 @@ public interface UtilityInterface {
     @FormUrlEncoded
     @POST("notif/{token}")
     Call<Response> postNotifStatus(
-            @Path("UserCredentials") String Token,
-            @Field("NotifId") int NotifId
+            @Path("token") String token,
+            @Field("Status") int Status
     );
 }

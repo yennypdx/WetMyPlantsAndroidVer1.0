@@ -1,5 +1,6 @@
 package com.android.wetmyplants.restAdapter;
 
+import com.android.wetmyplants.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -10,13 +11,16 @@ import com.android.wetmyplants.interfaces.UserServiceInterface;
 import com.android.wetmyplants.interfaces.LoginInterface;
 import com.android.wetmyplants.interfaces.PasswordServiceInterface;
 
-import com.android.wetmyplants.model.Account;
 import com.android.wetmyplants.model.Plant;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,10 +84,10 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void updatePasswordExternalPost(String email, String newPassword, Callback<JsonObject> callback){
+    public void updatePasswordExternalPost(String email, String newPassword, Callback<String> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<JsonObject> call = service.postNewPassExternal(email, newPassword);
+        Call<String> call = service.postNewPassExternal(email, newPassword);
         call.enqueue(callback);
     }
 
@@ -96,10 +100,10 @@ public class Communicator {
 
     /**using UserServiceInterface*/
     public void registerPost(String inFname, String inLname, String inPhone,String inEmail,
-                             String inPass, Callback<JsonObject> callback){
+                             String inPass, Callback<String> callback){
         getRetrofitInstance();
         UserServiceInterface service = retrofit.create(UserServiceInterface.class);
-        Call<JsonObject> call = service.post(inFname, inLname, inPhone, inEmail, inPass);
+        Call<String> call = service.postRegister(inFname, inLname, inPhone, inEmail, inPass);
         call.enqueue(callback);
     }
 
@@ -110,10 +114,10 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void userUpdatePut(String token, Account user, Callback<Response> callback){
+    public void userUpdatePut(String token, User user, Callback<ResponseBody> callback){
         getRetrofitInstance();
         UserServiceInterface service = retrofit.create(UserServiceInterface.class);
-        Call<Response> call = service.postUpdateUser(token, user);
+        Call<ResponseBody> call = service.patchUpdateUser(token, user);
         call.enqueue(callback);
     }
 

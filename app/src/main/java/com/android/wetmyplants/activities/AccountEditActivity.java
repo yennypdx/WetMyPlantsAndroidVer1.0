@@ -12,32 +12,30 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.User;
 import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
-import com.android.wetmyplants.model.Account;
+import com.android.wetmyplants.model.User;
 import com.android.wetmyplants.restAdapter.Communicator;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AccountEditActivity extends AppCompatActivity {
-
     private Communicator communicator;
     private DbHelper database;
-    String storedToken;
-    Gson gson;
+    private Gson gson;
 
     EditText inputFirstName, inputLastName, inputPhone;
-    EditText inputEmail, inputPlantId;
-    String defaultFirstName, defaultLastName, defaultPhone;
-    String defaultEmail, defaultPlantId;
-    String finalFirstName, finalLastName, finalPhone;
-    String finalEmail, finalPlantId;
-
-    Account updatedUser;
+    EditText inputEmail, inputPass;
+    String defaultFirstName, defaultLastName, defaultPhone, defaultEmail;
+    String finalFirstName, finalLastName, finalPhone, finalEmail;
+    User updatedUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -47,8 +45,10 @@ public class AccountEditActivity extends AppCompatActivity {
         database = new DbHelper(getApplicationContext());
         gson = new Gson();
 
-        Intent getEmail = getIntent();
-        final String userEmail = getEmail.getStringExtra("userEmail");
+        Intent getExtras = getIntent();
+        final String userEmail = getExtras.getStringExtra("userEmail");
+        final int finalUserId = getExtras.getIntExtra("userId", 0);
+
         UserCredentials user = database.getUserCredential(userEmail);
         final String storedToken = user.getToken();
         pullUserDataFromServer(storedToken);
@@ -61,15 +61,13 @@ public class AccountEditActivity extends AppCompatActivity {
         inputPhone.setEnabled(false);
         inputEmail = findViewById(R.id.emailEditText);
         inputEmail.setEnabled(false);
-        inputPlantId = findViewById(R.id.plantIdEditText);
-        inputPlantId.setEnabled(false);
 
         ImageView editFistNameBtn = findViewById(R.id.editFistNameBtn);
         editFistNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputFirstName.setText(null);
                 inputFirstName.setEnabled(true);
-                finalFirstName = inputFirstName.getText().toString();
             }
         });
 
@@ -77,8 +75,8 @@ public class AccountEditActivity extends AppCompatActivity {
         editLastNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputLastName.setText(null);
                 inputLastName.setEnabled(true);
-                finalLastName = inputLastName.getText().toString();
             }
         });
 
@@ -86,8 +84,8 @@ public class AccountEditActivity extends AppCompatActivity {
         editPhoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputPhone.setText(null);
                 inputPhone.setEnabled(true);
-                finalPhone = inputPhone.getText().toString();
             }
         });
 
@@ -95,17 +93,8 @@ public class AccountEditActivity extends AppCompatActivity {
         editEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputEmail.setText(null);
                 inputEmail.setEnabled(true);
-                finalEmail = inputEmail.getText().toString();
-            }
-        });
-
-        ImageView editPlantIdBtn = findViewById(R.id.editPlantIdBtn);
-        editPlantIdBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputPlantId.setEnabled(true);
-                finalPlantId = inputPlantId.getText().toString();
             }
         });
 
@@ -113,6 +102,12 @@ public class AccountEditActivity extends AppCompatActivity {
         accountEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finalFirstName = inputFirstName.getText().toString();
+                finalLastName = inputLastName.getText().toString();
+                finalPhone = inputPhone.getText().toString();
+                finalEmail = inputEmail.getText().toString();
+                updatedUser = new User(finalUserId, finalFirstName, finalLastName, finalPhone, finalEmail);
+
                 attemptEditAccount(storedToken,updatedUser);
             }
         });
@@ -132,9 +127,9 @@ public class AccountEditActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
-                    //String UserObject = response.body();
-                   // Account userAccount = gson.fromJson(UserObject, Account.class);
-                    //updatedUser = getDefaultValue(userAccount);
+                    gson = new GsonBuilder().create();
+                    User newUser = gson.fromJson(response.body(), User.class);
+                    getDefaultValue(newUser);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -153,7 +148,7 @@ public class AccountEditActivity extends AppCompatActivity {
         });
     }
 
-    public Account getDefaultValue(Account inUserData){
+    public User getDefaultValue(User inUserData){
         inputFirstName.setText(inUserData.getFirstName());
         defaultFirstName = inputFirstName.getText().toString();
         finalFirstName = defaultFirstName;
@@ -162,7 +157,7 @@ public class AccountEditActivity extends AppCompatActivity {
         defaultLastName = inputLastName.getText().toString();
         finalLastName = defaultLastName;
 
-        inputPhone.setText(inUserData.getPhoneNumber());
+        inputPhone.setText(inUserData.getPhone());
         defaultPhone = inputPhone.getText().toString();
         finalPhone = defaultPhone;
 
@@ -170,20 +165,17 @@ public class AccountEditActivity extends AppCompatActivity {
         defaultEmail = inputEmail.getText().toString();
         finalEmail = defaultEmail;
 
-        inputPlantId.setText(inUserData.getId());
-        defaultPlantId = inputPlantId.getText().toString();
-        finalPlantId = defaultPlantId;
-
-        Account outAccount = new Account(finalPlantId, finalFirstName,
-                finalLastName, finalPhone, finalEmail);
+        User outAccount = new User(finalFirstName, finalLastName, finalPhone, finalEmail);
         return outAccount;
     }
 
-    public void attemptEditAccount(String inToken, Account inUser){
-        communicator.userUpdatePut(inToken, inUser, new Callback<okhttp3.Response>(){
+    public void attemptEditAccount(String inToken, User inUser){
+        communicator.userUpdatePut(inToken, inUser, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Account updated", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(AccountEditActivity.this, AccountActivity.class));
                 }
                 else{
@@ -195,7 +187,7 @@ public class AccountEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

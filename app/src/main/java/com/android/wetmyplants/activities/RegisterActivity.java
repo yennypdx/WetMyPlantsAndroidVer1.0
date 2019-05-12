@@ -17,6 +17,7 @@ import com.android.wetmyplants.LoginActivity;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.BusProvider;
 import com.android.wetmyplants.restAdapter.Communicator;
+import com.google.gson.JsonParser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,11 +101,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             communicator.registerPost(firstName, lastName, phoneNumber, emailAddress, passWord,
-                    new Callback<JsonObject>(){
+                    new Callback<String>(){
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                public void onResponse(Call<String> call, Response<String> response){
                     if(response.isSuccessful()) {
-                        String token = response.body().getAsJsonObject().toString();
+                        String myToken = response.body();
+                        JsonObject jsonObj = new JsonParser().parse(myToken).getAsJsonObject();
+                        String token = jsonObj.get("content").toString();
+                        token = token.substring(1, token.length()-1);
 
                         UserCredentials user = new UserCredentials(emailAddress, token);
                         database.insertCredential(user);
@@ -123,7 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t){
+                public void onFailure(Call<String> call, Throwable t){
                     Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(
                             RegisterActivity.this, LoginActivity.class));

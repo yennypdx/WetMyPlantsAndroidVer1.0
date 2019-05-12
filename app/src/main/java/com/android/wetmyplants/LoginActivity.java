@@ -41,6 +41,7 @@ import com.android.wetmyplants.activities.ForgotPasswordActivity;
 import com.android.wetmyplants.activities.RegisterActivity;
 import com.android.wetmyplants.restAdapter.BusProvider;
 import com.android.wetmyplants.restAdapter.Communicator;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
@@ -148,7 +149,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     if(response.isSuccessful()) {
-                         String token = response.body();
+                         String myToken = response.body();
+                         JsonObject jsonObj = new JsonParser().parse(myToken).getAsJsonObject();
+                         String token = jsonObj.get("content").toString();
+                         token = token.substring(1, token.length()-1);
 
                         //storing token to db
                         UserCredentials user = new UserCredentials(email, token);

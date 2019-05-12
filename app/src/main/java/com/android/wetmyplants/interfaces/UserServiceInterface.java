@@ -1,14 +1,15 @@
 package com.android.wetmyplants.interfaces;
 
+import com.android.wetmyplants.model.User;
 import com.google.gson.JsonObject;
-import com.android.wetmyplants.model.Account;
 
-import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -17,7 +18,7 @@ public interface UserServiceInterface {
 
     @FormUrlEncoded
     @POST("user/register")
-    Call<JsonObject> post(
+    Call<String> postRegister(
             @Field("FirstName") String FirstName,
             @Field("LastName") String LastName,
             @Field("Phone") String Phone,
@@ -25,17 +26,15 @@ public interface UserServiceInterface {
             @Field("Password") String Password
     );
 
-    @FormUrlEncoded
-    @GET("user/{token}")
+    @GET("user/{token}/")
     Call<JsonObject> getUser(
-            @Path("token") String Token
+            @Path("token") String token
     );
 
-    @FormUrlEncoded
-    @POST("user/update/{Token}")
-    Call<Response> postUpdateUser(
-            @Path("Token") String Token,
-            @Body Account account
+    @PATCH("user/update/{token}/")
+    Call<ResponseBody> patchUpdateUser(
+            @Path("token") String token,
+            @Body User user
     );
 
 }

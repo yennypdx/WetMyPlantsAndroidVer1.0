@@ -1,9 +1,11 @@
 package com.android.wetmyplants.activities;
 
+import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.User;
 import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
-import com.android.wetmyplants.model.Account;
+import com.android.wetmyplants.model.User;
 import com.android.wetmyplants.restAdapter.Communicator;
 
 import retrofit2.Call;
@@ -28,8 +32,11 @@ public class AccountActivity extends AppCompatActivity {
     private DbHelper database;
     private Gson gson;
 
-    TextView displayFirstName, displayLastName, displayPhone;
-    TextView displayEmail, displayPlantId;
+    TextView FirstNameBox;
+    TextView LastNameBox;
+    TextView PhoneBox;
+    TextView EmailBox;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +44,24 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
         communicator = new Communicator();
         database = new DbHelper(getApplicationContext());
-        gson = new Gson();
-
-        displayFirstName = findViewById(R.id.firstTextView);
-        displayLastName = findViewById(R.id.lastTextView);
-        displayPhone = findViewById(R.id.phoneTextView);
-        displayEmail = findViewById(R.id.emailTextView);
-        displayPlantId = findViewById(R.id.plantIdTextView);
+        FirstNameBox = findViewById(R.id.firstTextView);
+        LastNameBox = findViewById(R.id.lastTextView);
+        PhoneBox = findViewById(R.id.phoneTextView);
+        EmailBox = findViewById(R.id.emailTextView);
 
         Intent getEmail = getIntent();
         final String userEmail = getEmail.getStringExtra("userEmail");
         UserCredentials user = database.getUserCredential(userEmail);
-        pullUserDataFromServer(user.getToken());
+        String storedToken = user.getToken();
+
+        pullUserDataFromServer(storedToken);
 
         FloatingActionButton editAccFab = findViewById(R.id.edit_fab);
         editAccFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AccountActivity.this, AccountEditActivity.class);
+                intent.putExtra("userId", userId);
                 intent.putExtra("userEmail", userEmail);
                 startActivity(intent);
             }
@@ -66,10 +73,9 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
                 if(response.isSuccessful()) {
-                    String UserObject = response.body().getAsJsonObject().toString();
-                    Account userAccount = gson.fromJson(UserObject, Account.class);
-
-                    displayData(userAccount);
+                    gson = new GsonBuilder().create();
+                    User newUser = gson.fromJson(response.body(), User.class);
+                    displayData(newUser);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -88,11 +94,15 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
-    public void displayData(Account inUserData){
-        displayFirstName.setText(inUserData.getFirstName());
-        displayLastName.setText(inUserData.getLastName());
-        displayPhone.setText(inUserData.getPhoneNumber());
-        displayEmail.setText(inUserData.getEmail());
-        displayPlantId.setText(inUserData.getId());
+    public void displayData(User inUser){
+        userId = inUser.getId();
+        String firstName = inUser.getFirstName();
+        FirstNameBox.setText(firstName);
+        String lastName = inUser.getLastName();
+        LastNameBox.setText(lastName);
+        String phone = inUser.getPhone();
+        PhoneBox.setText(phone);
+        String email = inUser.getEmail();
+        EmailBox.setText(email);
     }
 }

@@ -12,26 +12,26 @@ import retrofit2.http.Path;
 public interface PasswordServiceInterface {
 
     @FormUrlEncoded
-    @POST("forgotpass/sg/{email}")
+    @POST("forgotpass/sg/{email}/")
     Call<Response> postSg(
             @Path("Email") String Email
     );
 
     @FormUrlEncoded
-    @POST("forgotpass/rmq/{email}")
+    @POST("forgotpass/rmq/{email}/")
     Call<Response> postRmq(
             @Path("Email") String Email
     );
 
     @FormUrlEncoded
-    @POST("submit/{pin}")
+    @POST("submit/{pin}/")
     Call<JsonObject> postPin(
             @Path("Pin") String Pin
     );
 
     @FormUrlEncoded
     @POST("newpass")
-    Call<JsonObject> postNewPassExternal(
+    Call<String> postNewPassExternal(
             @Field("Email") String Email,
             @Field("Password") String Password
     );

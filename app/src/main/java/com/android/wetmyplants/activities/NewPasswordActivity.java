@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import com.android.wetmyplants.LoginActivity;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.Communicator;
+import com.google.gson.JsonParser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,11 +84,14 @@ public class NewPasswordActivity extends AppCompatActivity {
             focusView.requestFocus();
         }
         else{
-            communicator.updatePasswordExternalPost(inEmail, outPass2, new Callback<JsonObject>(){
+            communicator.updatePasswordExternalPost(inEmail, outPass2, new Callback<String>(){
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                public void onResponse(Call<String> call, Response<String> response){
                     if(response.isSuccessful()) {
-                        String token = response.body().getAsJsonObject().toString();
+                        String myToken = response.body();
+                        JsonObject jsonObj = new JsonParser().parse(myToken).getAsJsonObject();
+                        String token = jsonObj.get("content").toString();
+                        token = token.substring(1, token.length()-1);
 
                         UserCredentials user = new UserCredentials(inEmail, token);
                         database.updateCredential(user);
@@ -108,7 +112,7 @@ public class NewPasswordActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t){
+                public void onFailure(Call<String> call, Throwable t){
                     Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);
                     toast.show();
