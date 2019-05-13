@@ -37,7 +37,7 @@ public interface PasswordServiceInterface {
     );
 
     @FormUrlEncoded
-    @POST("newpass/{token}")
+    @POST("newpass/{token}/")
     Call<JsonObject> postNewPassInternal(
             @Path("Token") String Token,
             @Field("Password") String Password

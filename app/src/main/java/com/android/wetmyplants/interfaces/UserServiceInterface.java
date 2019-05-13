@@ -23,7 +23,8 @@ public interface UserServiceInterface {
             @Field("LastName") String LastName,
             @Field("Phone") String Phone,
             @Field("Email") String Email,
-            @Field("Password") String Password
+            @Field("Password") String Password,
+            @Field("ConfirmPassword") String ConfirmPassword
     );
 
     @GET("user/{token}/")

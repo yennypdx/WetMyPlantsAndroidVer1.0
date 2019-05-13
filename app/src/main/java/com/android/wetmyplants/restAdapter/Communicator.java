@@ -100,10 +100,10 @@ public class Communicator {
 
     /**using UserServiceInterface*/
     public void registerPost(String inFname, String inLname, String inPhone,String inEmail,
-                             String inPass, Callback<String> callback){
+                             String inPass1, String inPass2, Callback<String> callback){
         getRetrofitInstance();
         UserServiceInterface service = retrofit.create(UserServiceInterface.class);
-        Call<String> call = service.postRegister(inFname, inLname, inPhone, inEmail, inPass);
+        Call<String> call = service.postRegister(inFname, inLname, inPhone, inEmail, inPass1, inPass2);
         call.enqueue(callback);
     }
 

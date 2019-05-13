@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             communicator.registerPost(firstName, lastName, phoneNumber, emailAddress, passWord,
-                    new Callback<String>(){
+                    passWord, new Callback<String>(){
                 @Override
                 public void onResponse(Call<String> call, Response<String> response){
                     if(response.isSuccessful()) {
@@ -136,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isPhoneValid(String phone) { return phone.length() > 10; }
+    private boolean isPhoneValid(String phone) { return phone.length() >= 9; }
 
     private boolean isEmailValid(String email) {
         return email.contains("@");
