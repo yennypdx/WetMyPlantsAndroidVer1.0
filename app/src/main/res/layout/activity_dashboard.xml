@@ -6,6 +6,7 @@
     android:id="@+id/dashboardTableLayout"
     android:stretchColumns="1,2"
     android:padding="5dp"
+    android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.DashboardActivity">
 
     <!-- tableRow0 | IMAGE ROW -->

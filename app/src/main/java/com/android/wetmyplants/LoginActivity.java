@@ -167,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("Error Body", response.errorBody().toString());
                         Toast.makeText(getApplicationContext(),
                                 "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
                     }
                 }
 
@@ -176,6 +177,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);
                     toast.show();
+                    startActivity(new Intent(LoginActivity.this, LoginActivity.class));
                 }
             });
         }

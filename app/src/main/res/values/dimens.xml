@@ -11,4 +11,5 @@
     <dimen name="standard_23">23dp</dimen>
     <dimen name="standard_100">100dp</dimen>
     <dimen name="standard_145">145dp</dimen>
+    <dimen name="std_16">16dp</dimen>
 </resources>

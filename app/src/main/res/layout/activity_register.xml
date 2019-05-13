@@ -7,9 +7,10 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
+    android:paddingTop="@dimen/std_16"
+    android:paddingRight="@dimen/std_16"
+    android:paddingBottom="@dimen/std_16"
+    android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.RegisterActivity">
 
     <LinearLayout

@@ -1,12 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/plantEditLinearLayout"
+    android:id="@+id/plantEditTableLayout"
+    android:stretchColumns="1"
+    android:padding="5dp"
+    android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.PlantEditActivity">
 
-    <include layout="@layout/plantedit_content" />
+    <!-- tableRowPlant0 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlant0"
+        android:paddingTop="25dp">
+        <TextView
+            android:id="@+id/plantEditTopBarLabel"
+            android:text="@string/update_plant_info"
+            android:layout_span="3"
+            android:gravity="center"
+            android:textSize="25sp"
+            style="@style/myStyleTextView"/>
+    </TableRow>
 
-</LinearLayout>
+    <!-- tableRowPlant1 -->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlantEdit1"
+        android:paddingTop="25dp">
+        <TextView
+            android:id="@+id/plantNameLabel"
+            android:text="@string/plant_name"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/plantEditNameInput"
+            android:textColor="@android:color/holo_blue_dark"
+            android:hint="@string/new_plant_name"
+            android:inputType="text"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            style="@style/myStyleTextViewBorder"/>
+    </TableRow>
+
+    <!-- tableRowPlant2-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRowPlantEdit2"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/plantEditIdLabel"
+            android:text="@string/update_id_plant_label"
+            style="@style/myStyleTextView"/>
+        <EditText
+            android:id="@+id/plantEditIdInput"
+            android:textColor="@android:color/holo_blue_dark"
+            android:hint="@string/new_plant_id"
+            android:inputType="text"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            style="@style/myStyleTextViewBorder"/>
+    </TableRow>
+
+    <!-- tableRowPlant3-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/tableRowPlantEdit3"
+        android:paddingTop="40dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/update_plant_info_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_plant_icon"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:layout_span="2"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/button_round_green"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"/>
+    </TableRow>
+
+</TableLayout>
+
+

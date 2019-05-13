@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.Communicator;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,25 +37,23 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         database = new DbHelper(getApplicationContext());
 
         Intent getEmail = getIntent();
-        final String userEmail = getEmail.getExtras().toString();
-        UserCredentials user = database.getUserCredential(userEmail);
-        final String userToken = user.getToken();
+        final String userEmail = getEmail.getStringExtra("userEmail");
 
         inputPass1 = findViewById(R.id.passOne);
-        final String outPass1 = inputPass1.getText().toString();
         inputPass2 = findViewById(R.id.passTwo);
-        final String outPass2 = inputPass2.getText().toString();
 
         Button updatePwdBtn = findViewById(R.id.updatePasswordBtn);
         updatePwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptUpdatePassword(userToken, outPass1, outPass2);
+                final String outPass1 = inputPass1.getText().toString();
+                final String outPass2 = inputPass2.getText().toString();
+                attemptUpdatePassword(userEmail, outPass1, outPass2);
             }
         });
     }
 
-    public void attemptUpdatePassword(String userToken, String inPass1, String inPass2){
+    public void attemptUpdatePassword(String userEmail, String inPass1, String inPass2){
         inputPass1.setError(null);
         inputPass2.setError(null);
 
@@ -67,8 +66,8 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             focusView = inputPass1;
             cancel = true;
 
-            if(!TextUtils.isEmpty(inPass2) && !isPasswordValid(inPass2)){
-                inputPass2.setError(getString(R.string.error_invalid_password));
+            if(!TextUtils.isEmpty(inPass2) && !isPasswordValid(inPass2) && !inPass2.equals(inPass1)){
+                inputPass2.setError(getString(R.string.error_invalid_password2));
                 focusView = inputPass2;
                 cancel = true;
             }
@@ -79,11 +78,12 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
         }
         else {
-            communicator.updatePasswordInternalPost(userToken, inPass2, new Callback<JsonObject>(){
+            communicator.updatePasswordInternalPost(userEmail, inPass1, inPass2, new Callback<ResponseBody>(){
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
-                        startActivity(new Intent(UpdatePasswordActivity.this, AccountActivity.class));
+                        Intent intent = new Intent(UpdatePasswordActivity.this, AccountActivity.class);
+                        startActivity(intent);
                     }
                     else {
                         Log.e("Error Code", String.valueOf(response.code()));
@@ -94,7 +94,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t){
+                public void onFailure(Call<ResponseBody> call, Throwable t){
                     Log.w("Error", t.getMessage());
                     Toast toast = Toast.makeText(getApplicationContext(), t.getMessage(),
                             Toast.LENGTH_SHORT);

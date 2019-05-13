@@ -116,8 +116,10 @@ public class AccountEditActivity extends AppCompatActivity {
         updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(
-                        AccountEditActivity.this, UpdatePasswordActivity.class));
+                Intent intent = new Intent(
+                        AccountEditActivity.this, UpdatePasswordActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
     }

@@ -91,10 +91,10 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void updatePasswordInternalPost(String token, String newPassword, Callback<JsonObject> callback){
+    public void updatePasswordInternalPost(String email, String newPass1, String newPass2, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<JsonObject> call = service.postNewPassInternal(token, newPassword);
+        Call<ResponseBody> call = service.postNewPassInternal(email, newPass1, newPass2);
         call.enqueue(callback);
     }
 

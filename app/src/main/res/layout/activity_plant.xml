@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/plant_activity_layout"
+    android:background="@drawable/wmp_xxdpi"
     tool:context=".activities.PlantsActivity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

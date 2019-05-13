@@ -6,6 +6,7 @@
     android:id="@+id/plantAddTableLayout"
     android:stretchColumns="1"
     android:padding="5dp"
+    android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.PlantAddActivity">
 
     <!-- tableRowPlantAdd0 -->
