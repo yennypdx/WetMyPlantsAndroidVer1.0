@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.android.wetmyplants.model.Plant;
+import com.android.wetmyplants.model.PlantRow;
 import com.android.wetmyplants.model.UserCredentials;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -35,6 +37,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String PLANT_COLUMN_CURR_LIGHT = "curr_light";
     public static final String STORAGE_REF_COLUMN = "sto_id";
 
+    public static final String PLANTROW_TABLE = "plant_row";
+    public static final String PLANTROW_ID = "id";
+    public static final String PLANTROW_COLUMN_PLANT_ID = "plant_id";
+    public static final String PLANTROW_COLUMN_NICKNAME = "nickname";
+    public static final String STORAGE_REF_COLUMN_PROW = "sto_prow_id";
+
     private static final String CREATE_STORAGE_TABLE =
             "CREATE TABLE " + STORAGE_TABLE + "("
                     + STORAGE_ID + " INTEGER PRIMARY KEY, "
@@ -52,6 +60,14 @@ public class DbHelper extends SQLiteOpenHelper {
                     + STORAGE_REF_COLUMN + " INTEGER, FOREIGN KEY (" + STORAGE_ID + ") REFERENCES "
                     + STORAGE_TABLE + "( " + STORAGE_ID + ")" + ")";
 
+    private static final String CREATE_PLANTROW_TABLE =
+            "CREATE TABLE " + PLANTROW_TABLE + "("
+                    + PLANTROW_ID + " INTEGER PRIMARY KEY, "
+                    + PLANTROW_COLUMN_PLANT_ID + " TEXT, "
+                    + PLANTROW_COLUMN_NICKNAME + " TEXT, "
+                    + STORAGE_REF_COLUMN_PROW + " INTEGER, FOREIGN KEY (" + STORAGE_ID + ") REFERENCES "
+                    + STORAGE_TABLE + "( " + STORAGE_ID + ")" + ")";
+
     public DbHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
     }
@@ -60,12 +76,14 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_STORAGE_TABLE);
         db.execSQL(CREATE_PLANT_TABLE);
+        db.execSQL(CREATE_PLANTROW_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + STORAGE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + PLANT_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PLANTROW_TABLE);
         onCreate(db);
     }
 
@@ -94,6 +112,19 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(STORAGE_REF_COLUMN, inEmail);
 
         db.insert(PLANT_TABLE, null, values);
+        db.close();
+    }
+
+    public void insertPlantRow(PlantRow inPlantRow, String inEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(PLANTROW_COLUMN_PLANT_ID, inPlantRow.getId());
+        values.put(PLANTROW_COLUMN_NICKNAME, inPlantRow.getNickname());
+        values.put(STORAGE_REF_COLUMN_PROW, inEmail);
+
+        db.insert(PLANTROW_TABLE, null, values);
         db.close();
     }
 
@@ -146,13 +177,13 @@ public class DbHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public Plant getPlant(String inEmail)
+    public Plant getPlant(String inId)
     {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery =
                 "SELECT * FROM " + PLANT_TABLE + " WHERE "
-                        + STORAGE_REF_COLUMN + " = \'" + inEmail + "\'";
+                        + PLANT_COLUMN_SENSOR_ID + " = \'" + inId + "\'";
         Log.e(LOG, selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -168,11 +199,30 @@ public class DbHelper extends SQLiteOpenHelper {
         return plant;
     }
 
-    public ArrayList<Plant> getAllPlants(String inEmail)
+    public PlantRow getPlantRow(String inEmail)
     {
-        ArrayList<Plant> plants = new ArrayList<Plant>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
         String selectQuery =
-                "SELECT * FROM " + PLANT_TABLE + " WHERE " + STORAGE_COLUMN_EMAIL + " = \'"
+                "SELECT * FROM " + PLANTROW_TABLE + " WHERE "
+                        + STORAGE_REF_COLUMN_PROW + " = \'" + inEmail + "\'";
+        Log.e(LOG, selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor != null){ cursor.moveToFirst(); }
+
+        PlantRow plant = new PlantRow();
+        plant.setId(cursor.getString(cursor.getColumnIndex(PLANTROW_COLUMN_PLANT_ID)));
+        plant.setNickname(cursor.getString(cursor.getColumnIndex(PLANTROW_COLUMN_NICKNAME)));
+
+        return plant;
+    }
+
+    public List<Plant> getAllPlants(String inEmail)
+    {
+        List<Plant> plants = new ArrayList<Plant>();
+        String selectQuery =
+                "SELECT * FROM " + PLANT_TABLE + " WHERE " + STORAGE_REF_COLUMN + " = \'"
                         + inEmail + "\'";
 
         Log.e(LOG, selectQuery);
@@ -194,6 +244,25 @@ public class DbHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return plants;
+    }
+
+    public boolean isEmailExist(String inEmail)
+    {
+        boolean found = false;
+        Plant plant = new Plant();
+        String selectQuery =
+                "SELECT * FROM " + PLANT_TABLE + " WHERE " + STORAGE_REF_COLUMN + " = \'"
+                        + inEmail + "\'";
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.getCount() > 0){
+            found = true;
+        }
+        cursor.close();
+        return found;
     }
 
 }

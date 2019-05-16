@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:backgroundTint="@color/colorSecondary">
 
     <ImageView
         android:id="@+id/plant_icon"
         android:contentDescription="@string/plants_icon"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
@@ -35,7 +36,8 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:gravity="center_vertical"
-            android:textSize="22sp"/>
+            android:textSize="18sp"
+            android:textColor="@color/darkGrey"/>
         <TextView
             android:id="@+id/plantIdTextView"
             android:layout_width="match_parent"
@@ -45,7 +47,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:textSize="16sp"/>
+            android:textSize="14sp"
+            android:textColor="@color/darkGrey"/>
     </LinearLayout>
 
 </LinearLayout>

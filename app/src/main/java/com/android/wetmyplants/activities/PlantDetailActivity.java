@@ -55,9 +55,9 @@ public class PlantDetailActivity extends AppCompatActivity {
         displayHumidity = findViewById(R.id.currWaterTextView);
         displayLight = findViewById(R.id.lightTextView);
 
-        Intent getEmail = getIntent();
-        final String userEmail = getEmail.getStringExtra("userEmail");
-        pullPlantDetailInformation(userEmail);
+        Intent getPlantId = getIntent();
+        final String plantId = getPlantId.getStringExtra("plantId");
+        pullPlantDetailInformation(plantId);
 
         fablayoutEdit = findViewById(R.id.fabLayoutEdit);
         fabedit = findViewById(R.id.fabEdit);
@@ -192,8 +192,8 @@ public class PlantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void pullPlantDetailInformation(String inEmail){
-        Plant plant = database.getPlant(inEmail);
+    private void pullPlantDetailInformation(String inId){
+        Plant plant = database.getPlant(inId);
 
         String name = plant.getNickname();
         displayPlantName.setText(name);
@@ -208,7 +208,9 @@ public class PlantDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
                 if(response.isSuccessful()) {
-                        //do nothing here
+                    Toast.makeText(getApplicationContext(),
+                            "Plant deleted",
+                            Toast.LENGTH_LONG).show();
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));

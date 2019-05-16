@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/dash_icon"
-        android:icon="@drawable/home_icon"
+        android:icon="@drawable/homie"
         android:title="@string/title_activity_dashboard"
         app:showAsAction="always" />
 

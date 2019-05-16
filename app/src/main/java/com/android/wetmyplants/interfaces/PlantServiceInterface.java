@@ -1,10 +1,9 @@
 package com.android.wetmyplants.interfaces;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.android.wetmyplants.model.Plant;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Response;
 import retrofit2.Call;
@@ -20,13 +19,13 @@ import retrofit2.http.Path;
 public interface PlantServiceInterface {
 
     @GET("plant/{token}/")
-    Call<ArrayList<Plant>> getPlantList(
+    Call<List<Plant>> getPlantList(
             @Path("token") String token
     );
 
-    @GET("plant/id/{token}/")
+    @GET("plant/id/{id}/")
     Call<JsonObject> getPlantDetail(
-            @Path("token") String token
+            @Path("id") String id
     );
 
     @FormUrlEncoded

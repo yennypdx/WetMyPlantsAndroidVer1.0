@@ -11,16 +11,17 @@ import android.widget.TextView;
 
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.model.Plant;
+import com.android.wetmyplants.model.PlantRow;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlantsAdapter extends ArrayAdapter<Plant> {
+public class PlantRowAdapter extends ArrayAdapter<Plant> {
 
-    private ArrayList<Plant> plantList;
+    private List<Plant> plantList;
     private Context mContext;
 
-
-    public PlantsAdapter(@NonNull Context context, ArrayList<Plant> array) {
+    public PlantRowAdapter(@NonNull Context context, List<Plant> array) {
         super(context, 0, array);
         this.mContext = context;
         this.plantList = array;
@@ -35,13 +36,15 @@ public class PlantsAdapter extends ArrayAdapter<Plant> {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.row_plant, parent, false);
         }
 
-        Plant currentPlant = plantList.get(position);
+        Plant plant = plantList.get(position);
 
         //TODO: upgrade changing the plant images in Ver2.0
-        TextView plantName = listItem.findViewById(R.id.plantIdTextView);
-        plantName.setText(currentPlant.getNickname());
+        TextView plantName = listItem.findViewById(R.id.plantNameTextView);
+        String name = plant.getNickname();
+        plantName.setText(name);
         TextView plantId = listItem.findViewById(R.id.plantIdTextView);
-        plantId.setText(currentPlant.getId());
+        String pid = plant.getId();
+        plantId.setText(pid);
 
         return listItem;
     }

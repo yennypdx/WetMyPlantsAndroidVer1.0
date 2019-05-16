@@ -3,6 +3,7 @@ package com.android.wetmyplants.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,8 +27,8 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
     private Communicator communicator;
     private DbHelper database;
-
     EditText inputPass1, inputPass2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -51,9 +52,19 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 attemptUpdatePassword(userEmail, outPass1, outPass2);
             }
         });
+
+        FloatingActionButton homeAccFab = findViewById(R.id.newPass_homeFab);
+        homeAccFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpdatePasswordActivity.this, DashboardActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
+            }
+        });
     }
 
-    public void attemptUpdatePassword(String userEmail, String inPass1, String inPass2){
+    public void attemptUpdatePassword(final String userEmail, String inPass1, String inPass2){
         inputPass1.setError(null);
         inputPass2.setError(null);
 
@@ -75,15 +86,18 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
         if (cancel) {
             focusView.requestFocus();
-
         }
         else {
             communicator.updatePasswordInternalPost(userEmail, inPass1, inPass2, new Callback<ResponseBody>(){
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(),
+                                "Password updated", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(UpdatePasswordActivity.this, AccountActivity.class);
+                        intent.putExtra("userEmail", userEmail);
                         startActivity(intent);
+                        finish();
                     }
                     else {
                         Log.e("Error Code", String.valueOf(response.code()));
@@ -107,4 +121,5 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         return password.length() > 6;
     }
+
 }

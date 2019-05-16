@@ -66,6 +66,17 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        FloatingActionButton homeAccFab = findViewById(R.id.account_homeFab);
+        homeAccFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this, DashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
+            }
+        });
     }
 
     public void pullUserDataFromServer(String inToken){

@@ -33,8 +33,7 @@
     <string name="text_notifications">Text</string>
     <string name="noneNotif">None</string>
     <string name="color_theme_selection">Color Theme:</string>
-    <string-array
-        name="color_theme_options">
+    <string-array name="color_theme_options">
         <item>Default</item>
         <item>Brave</item>
         <item>Mystery</item>
@@ -46,10 +45,11 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="account_icon">My Account</string>
     <string name="plants_icon">My Plants</string>
-    <string name="sensor_icon">Sensors</string>
+    <string name="hub_icon">Hubs</string>
     <string name="logout_icon">Log Out</string>
     <string name="notification_icon">Notification</string>
     <string name="setting_icon">Setting</string>
+    <string name="title_activity_hub">My Hubs</string>
 
     <!-- Strings related to Account -->
     <string name="title_activity_account">My Account</string>

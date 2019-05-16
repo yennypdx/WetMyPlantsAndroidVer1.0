@@ -1,29 +1,33 @@
 package com.android.wetmyplants.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.wetmyplants.helperClasses.DbHelper;
+import com.android.wetmyplants.model.PlantRow;
 import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.android.wetmyplants.R;
-import com.android.wetmyplants.helperClasses.PlantsAdapter;
+import com.android.wetmyplants.helperClasses.PlantRowAdapter;
 import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.restAdapter.Communicator;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,14 +36,13 @@ import retrofit2.Response;
 public class PlantsActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    private PlantsAdapter pAdapter;
+    private PlantRowAdapter plantRowAdapter;
     private DbHelper database;
     String storedToken;
-    Gson gson;
 
-    ArrayList<Plant> plantList;
+    List<Plant> plantList;
     Plant plant;
-    ListView listView;
+    ListView plantListView;
     FloatingActionButton addBtn;
 
     @Override
@@ -48,34 +51,28 @@ public class PlantsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plant);
         communicator = new Communicator();
         database = new DbHelper(getApplicationContext());
-        listView = findViewById(R.id.plantListView);
-        gson = new Gson();
+        plantListView = findViewById(R.id.plantListView);
+        plantList = new ArrayList<>();
 
         Intent getEmail = getIntent();
         final String userEmail = getEmail.getStringExtra("userEmail");
         UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
 
-        plantList = new ArrayList<>();
-        plant = new Plant();
-        pAdapter = new PlantsAdapter(this, plantList);
+        pullPlantDataFromServer(storedToken, userEmail);
+        plantList = database.getAllPlants(userEmail);
 
-        listView.setAdapter(pAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
+
+        plantListView.setAdapter(plantRowAdapter);
+        plantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 TextView idText = findViewById(R.id.plantIdTextView);
                 final String plantId = idText.getText().toString();
 
-                plantList = pullPlantDataFromServer(storedToken);
-                // push to temp db
-                for(Plant p : plantList){
-                    database.insertPlant(p, userEmail);
-                }
-
                 Intent intent = new Intent(PlantsActivity.this, PlantDetailActivity.class);
-                intent.putExtra("userEmail", userEmail);
+                intent.putExtra("plantId", plantId);
                 startActivity(intent);
             }
         });
@@ -89,19 +86,17 @@ public class PlantsActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<Plant> pullPlantDataFromServer(String inToken){
-        final ArrayList<Plant> plantDataList = new ArrayList<>();
+    public void pullPlantDataFromServer(String inToken, final String userEmail){
+        final List<Plant> plantListOut = new ArrayList<>();
 
-        communicator.plantListGet(inToken, new Callback<ArrayList<Plant>>(){
+        communicator.plantListGet(inToken, new Callback<List<Plant>>(){
             @Override
-            public void onResponse(Call<ArrayList<Plant>> call, Response<ArrayList<Plant>> response){
+            public void onResponse(Call<List<Plant>> call, Response<List<Plant>> response){
                 if(response.isSuccessful()) {
-
-                    ArrayList<Plant> arrayFromServer = response.body();
-                    if(arrayFromServer != null){
-                        int size = arrayFromServer.size();
-                        for(int i = 0; i < size; i++){
-                            plantDataList.add(arrayFromServer.get(i));
+                    if(!database.isEmailExist(userEmail)) {
+                        List<Plant> plantsNew = response.body();
+                        for (Plant p : plantsNew) {
+                            database.insertPlant(p, userEmail);
                         }
                     }
                 }
@@ -114,11 +109,10 @@ public class PlantsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Plant>> call, Throwable t){
+            public void onFailure(Call<List<Plant>> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        return plantDataList;
     }
+
 }

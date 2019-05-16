@@ -3,6 +3,7 @@ package com.android.wetmyplants.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -66,8 +67,10 @@ public class AccountEditActivity extends AppCompatActivity {
         editFistNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputFirstName.setText(null);
                 inputFirstName.setEnabled(true);
+                inputLastName.setEnabled(false);
+                inputPhone.setEnabled(false);
+                inputEmail.setEnabled(false);
             }
         });
 
@@ -75,8 +78,10 @@ public class AccountEditActivity extends AppCompatActivity {
         editLastNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputLastName.setText(null);
                 inputLastName.setEnabled(true);
+                inputFirstName.setEnabled(false);
+                inputPhone.setEnabled(false);
+                inputEmail.setEnabled(false);
             }
         });
 
@@ -84,8 +89,10 @@ public class AccountEditActivity extends AppCompatActivity {
         editPhoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputPhone.setText(null);
                 inputPhone.setEnabled(true);
+                inputFirstName.setEnabled(false);
+                inputLastName.setEnabled(false);
+                inputEmail.setEnabled(false);
             }
         });
 
@@ -93,8 +100,10 @@ public class AccountEditActivity extends AppCompatActivity {
         editEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputEmail.setText(null);
                 inputEmail.setEnabled(true);
+                inputFirstName.setEnabled(false);
+                inputLastName.setEnabled(false);
+                inputPhone.setEnabled(false);
             }
         });
 
@@ -108,7 +117,7 @@ public class AccountEditActivity extends AppCompatActivity {
                 finalEmail = inputEmail.getText().toString();
                 updatedUser = new User(finalUserId, finalFirstName, finalLastName, finalPhone, finalEmail);
 
-                attemptEditAccount(storedToken,updatedUser);
+                attemptEditAccount(storedToken, userEmail, updatedUser);
             }
         });
 
@@ -118,6 +127,16 @@ public class AccountEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(
                         AccountEditActivity.this, UpdatePasswordActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton homeAccFab = findViewById(R.id.editAccount_homeFab);
+        homeAccFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountEditActivity.this, DashboardActivity.class);
                 intent.putExtra("userEmail", userEmail);
                 startActivity(intent);
             }
@@ -171,14 +190,19 @@ public class AccountEditActivity extends AppCompatActivity {
         return outAccount;
     }
 
-    public void attemptEditAccount(String inToken, User inUser){
+    public void attemptEditAccount(String inToken, String inEmail, User inUser){
+        final String attemptEmail = inEmail;
         communicator.userUpdatePut(inToken, inUser, new Callback<ResponseBody>(){
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),
+                    Toast.makeText(AccountEditActivity.this,
                             "Account updated", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AccountEditActivity.this, AccountActivity.class));
+
+                    Intent intent = new Intent(AccountEditActivity.this, AccountActivity.class);
+                    intent.putExtra("userEmail", attemptEmail);
+                    startActivity(intent);
+                    finish();
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
