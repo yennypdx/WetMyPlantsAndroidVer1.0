@@ -91,11 +91,11 @@
     <string name="curr_stat">Current Status</string>
     <string name="plant_name">Plant name:</string>
     <string name="plant_species">Species:</string>
-    <string name="curr_water">Humidity:</string>
+    <string name="curr_water">Water Level:</string>
     <string name="curr_light">Light intensity:</string>
     <string name="humidity_unit">g/m^3</string>
     <string name="light_unit">lux</string>
-    <string name="deactive">::deactivated::</string>
+    <string name="deactive">::temp. deactivated::</string>
     <string name="batt_stat">Power status:</string>
     <string name="percent">%</string>
     <string name="title_activity_detail_plant">Plants Detail</string>

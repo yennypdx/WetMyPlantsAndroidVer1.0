@@ -51,9 +51,9 @@ public class PlantDetailActivity extends AppCompatActivity {
         communicator = new Communicator();
         database = new DbHelper(getApplicationContext());
 
-        displayPlantName = findViewById(R.id.plantNameTextView);
-        displayHumidity = findViewById(R.id.currWaterTextView);
-        displayLight = findViewById(R.id.lightTextView);
+        displayPlantName = findViewById(R.id.plantDetail_nameTextOut);
+        displayHumidity = findViewById(R.id.plantDetail_waterTextOut);
+        displayLight = findViewById(R.id.plantDetail_lightTextOut);
 
         Intent getPlantId = getIntent();
         final String plantId = getPlantId.getStringExtra("plantId");
@@ -126,6 +126,44 @@ public class PlantDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void pullPlantDetailInformation(String inId){
+        Plant plant = database.getPlant(inId);
+
+        String name = plant.getNickname();
+        displayPlantName.setText(name);
+        String water = Double.toString(plant.getCurrentWater());
+        displayHumidity.setText(water);
+        String light = Double.toString(plant.getCurrentLight());
+        displayLight.setText(light);
+
+        database.close();
+    }
+
+    public void attemptDeletePlant(String inToken, String plantId){
+        communicator.plantDelete(inToken, plantId, new Callback<okhttp3.Response>(){
+            @Override
+            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+                if(response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Plant deleted",
+                            Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Log.e("Error Code", String.valueOf(response.code()));
+                    Log.e("Error Body", response.errorBody().toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Unable to connect to Server. Please try again later.",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void showFabMenu(){
         isFABOpen = true;
         fablayoutEdit.setVisibility(View.VISIBLE);
@@ -190,41 +228,5 @@ public class PlantDetailActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    private void pullPlantDetailInformation(String inId){
-        Plant plant = database.getPlant(inId);
-
-        String name = plant.getNickname();
-        displayPlantName.setText(name);
-        String water = Double.toString(plant.getCurrentWater());
-        displayHumidity.setText(water);
-        String light = Double.toString(plant.getCurrentLight());
-        displayLight.setText(light);
-    }
-
-    public void attemptDeletePlant(String inToken, String plantId){
-        communicator.plantDelete(inToken, plantId, new Callback<okhttp3.Response>(){
-            @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
-                if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),
-                            "Plant deleted",
-                            Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Log.e("Error Code", String.valueOf(response.code()));
-                    Log.e("Error Body", response.errorBody().toString());
-                    Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

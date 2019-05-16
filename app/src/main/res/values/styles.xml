@@ -5,10 +5,11 @@
         <item name="colorPrimary">#069adc</item>
         <item name="colorPrimaryDark">#FFFFFF</item>
         <item name="colorAccent">#5FB404</item>
+
     </style>
 
     <!-- declare the theme name that's actually applied in the manifest file -->
-    <style name="AppTheme" parent="BaseAppTheme" />
+    <style name="AppTheme" parent="BaseAppTheme"/>
 
     <!-- shape for the label -->
     <style name="myStyleTextView">

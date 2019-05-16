@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:backgroundTint="@color/colorSecondary">
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/plant_icon"
         android:contentDescription="@string/plants_icon"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginEnd="3dp"
@@ -22,7 +22,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
