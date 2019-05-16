@@ -64,7 +64,14 @@
                 android:text="@string/plant_species"
                 android:layout_marginBottom="40dp"
                 style="@style/myStyleTextView"/>
-            <Spinner></Spinner>
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/species_spinner"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:entries="@array/species_options"
+                android:layout_gravity="start"
+                style="@android:style/Widget.Holo.Light.Spinner"/>
         </TableRow>
 
         <!-- tableRowPlantAdd3-->

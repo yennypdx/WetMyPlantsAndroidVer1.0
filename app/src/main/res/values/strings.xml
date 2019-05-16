@@ -122,6 +122,13 @@
     <string name="submit_newPlant">Submit New Plant</string>
     <string name="hint_sensor_serial">A8:99:B2:05</string>
     <string name="add_species_label">Default</string>
+    <string-array name="species_options">
+        <item>Click here</item>
+        <item>Species Type One</item>
+        <item>Species Type Two</item>
+        <item>Species Type Three</item>
+        <item>Species Type Four</item>
+    </string-array>
 
     <!-- Strings related to Pin Confirmation -->
     <string name="pin_choice">Choose how to get your confirmation pin:</string>

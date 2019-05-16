@@ -50,6 +50,7 @@ public class PlantAddActivity extends AppCompatActivity {
         UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
 
+
         inputPlantName = findViewById(R.id.plantAddNameInput);
         outPlantName = inputPlantName.getText().toString();
         //inputSpeciesName = findViewById(R.id.speciesAddInput);
