@@ -81,7 +81,19 @@ public class PlantsActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PlantsActivity.this, PlantAddActivity.class));
+                Intent intent = new Intent(PlantsActivity.this, PlantAddActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton homeAccFab = findViewById(R.id.plant_homeFab);
+        homeAccFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PlantsActivity.this, DashboardActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
     }
@@ -93,10 +105,16 @@ public class PlantsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Plant>> call, Response<List<Plant>> response){
                 if(response.isSuccessful()) {
+                    List<Plant> plantsNew = response.body();
+                    // email NOT found in db insert all detail
                     if(!database.isEmailExist(userEmail)) {
-                        List<Plant> plantsNew = response.body();
                         for (Plant p : plantsNew) {
                             database.insertPlant(p, userEmail);
+                        }
+                    }
+                    else{ //email found in db only update water and light
+                        for (Plant p : plantsNew) {
+                            database.updatePartsOfPlantData(p, userEmail);
                         }
                     }
                 }

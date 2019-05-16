@@ -1,96 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/plantAddTableLayout"
-    android:stretchColumns="1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp"
     android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.PlantAddActivity">
 
-    <!-- tableRowPlantAdd0 -->
-    <TableRow
-        android:layout_height="wrap_content"
+    <TableLayout
         android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantAdd0"
-        android:paddingTop="25dp">
-        <TextView
-            android:id="@+id/plantAddNameLabel"
-            android:text="@string/plant_name"
-            style="@style/myStyleTextView"/>
-        <EditText
-            android:id="@+id/plantAddNameInput"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:hint="@string/new_plant_name"
-            style="@style/myStyleTextViewBorder"/>
-    </TableRow>
-
-    <!-- tableRowPlantAdd1-->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantAdd1"
-        android:paddingTop="10dp">
-        <TextView
-            android:id="@+id/plantAddSpeciesLabel"
-            android:text="@string/plant_species"
-            style="@style/myStyleTextView"/>
-        <EditText
-            android:id="@+id/speciesAddInput"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:hint="@string/add_species_label"
-            style="@style/myStyleTextViewBorder"/>
-    </TableRow>
-
-    <!-- tableRowPlantAdd2-->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantAdd2"
-        android:paddingTop="10dp">
-        <TextView
-            android:id="@+id/sensorLabel"
-            android:text="@string/bluetooth_num"
-            style="@style/myStyleTextView"/>
-        <EditText
-            android:id="@+id/sensorSerialInput"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:hint="@string/hint_sensor_serial"
-            style="@style/myStyleTextViewBorder"/>
-    </TableRow>
-
-    <!-- tableRowPlantAdd3-->
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRowPlantAdd3"
-        android:paddingTop="40dp"
-        android:paddingBottom="10dp"
-        android:layout_gravity="center">
-
-        <Button
-            android:id="@+id/newPlantButton"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/plantAddTableLayout"
+        android:stretchColumns="1">
+        <!-- tableRowPlantAdd0 -->
+        <TableRow
             android:layout_height="wrap_content"
-            android:text="@string/submit_newPlant"
-            android:textAllCaps="false"
-            android:gravity="center"
-            android:layout_span="2"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:background="@drawable/button_round_green"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"/>
-    </TableRow>
-</TableLayout>
+            android:layout_width="match_parent"
+            android:id="@+id/tableRowPlantAdd0"
+            android:paddingTop="25dp">
+            <TextView
+                android:id="@+id/plantAddNameLabel"
+                android:text="@string/plant_name"
+                style="@style/myStyleTextView"/>
+            <EditText
+                android:id="@+id/plantAddNameInput"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:hint="@string/new_plant_name"
+                style="@style/myStyleTextViewBorder"/>
+        </TableRow>
+
+        <!-- tableRowPlantAdd1-->
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tableRowPlantAdd1"
+            android:paddingTop="10dp">
+            <TextView
+                android:id="@+id/sensorLabel"
+                android:text="@string/bluetooth_num"
+                style="@style/myStyleTextView"/>
+            <EditText
+                android:id="@+id/sensorSerialInput"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:hint="@string/hint_sensor_serial"
+                style="@style/myStyleTextViewBorder"/>
+        </TableRow>
+
+        <!-- tableRowPlantAdd2-->
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tableRowPlantAdd2"
+            android:paddingTop="10dp">
+            <TextView
+                android:id="@+id/plantAddSpeciesLabel"
+                android:text="@string/plant_species"
+                android:layout_marginBottom="40dp"
+                style="@style/myStyleTextView"/>
+            <Spinner></Spinner>
+        </TableRow>
+
+        <!-- tableRowPlantAdd3-->
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tableRowPlantAdd3"
+            android:paddingTop="40dp"
+            android:paddingBottom="10dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/newPlantButton"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/submit_newPlant"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_span="2"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/button_round_green"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/plantAdd_homeFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        app:fabSize="auto"
+        android:layout_margin="16dp"
+        android:src="@drawable/homie"/>
+
+</android.support.design.widget.CoordinatorLayout>
 
 

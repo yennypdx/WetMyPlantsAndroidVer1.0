@@ -97,13 +97,13 @@
     </TableLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/account_homeFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        app:fabSize="auto"
-        android:layout_margin="16dp"
-        android:src="@drawable/homie"/>
+    android:id="@+id/account_homeFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|start"
+    app:fabSize="auto"
+    android:layout_margin="16dp"
+    android:src="@drawable/homie"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/edit_fab"

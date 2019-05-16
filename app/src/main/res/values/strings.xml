@@ -120,7 +120,7 @@
     <string name="title_add_plant">Add your plant</string>
     <string name="bluetooth_num">Sensor MAC#:</string>
     <string name="submit_newPlant">Submit New Plant</string>
-    <string name="hint_sensor_serial">PJ876-I8UVF</string>
+    <string name="hint_sensor_serial">A8:99:B2:05</string>
     <string name="add_species_label">Default</string>
 
     <!-- Strings related to Pin Confirmation -->

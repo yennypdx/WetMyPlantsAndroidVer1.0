@@ -11,7 +11,7 @@
     <!-- declare the theme name that's actually applied in the manifest file -->
     <style name="AppTheme" parent="BaseAppTheme"/>
 
-    <!-- shape for the label -->
+    <!-- spinner_background for the label -->
     <style name="myStyleTextView">
         <item  name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -22,7 +22,7 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
-    <!-- shape for the label border -->
+    <!-- spinner_background for the label border -->
     <style name="myStyleTextViewBorder">
         <item  name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -34,7 +34,7 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
-    <!-- shape for the label border GREY-->
+    <!-- spinner_background for the label border GREY-->
     <style name="myStyleTextViewBorderGrey">
         <item  name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -44,7 +44,7 @@
         <item name="android:background">@drawable/rectangle_border</item>
     </style>
 
-    <!-- shape for the account dashboard key border -->
+    <!-- spinner_background for the account dashboard key border -->
     <style name="DashboardTextViewBorder">
         <item  name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

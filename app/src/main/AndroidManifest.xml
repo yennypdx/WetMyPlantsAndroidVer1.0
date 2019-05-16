@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.wetmyplants">
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/shape" />
         <!-- LAUNCHER Activity -->
         <activity
             android:name=".LoginActivity"
@@ -65,8 +67,7 @@
             android:label="@string/title_notif_activity" />
         <activity
             android:name=".activities.HubActivity"
-            android:label="@string/title_activity_hub"></activity>
-
+            android:label="@string/title_activity_hub" />
     </application>
 
 </manifest>

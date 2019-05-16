@@ -158,6 +158,19 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[] {String.valueOf(inEmail)});
     }
 
+    public int updatePartsOfPlantData(Plant inPlant, String inEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(PLANT_COLUMN_CURR_WTR, inPlant.getCurrentWater());
+        values.put(PLANT_COLUMN_CURR_LIGHT, inPlant.getCurrentLight());
+
+        // updating row
+        return db.update(PLANT_TABLE, values, STORAGE_REF_COLUMN + " = ?",
+                new String[] {String.valueOf(inEmail)});
+    }
+
     public UserCredentials getUserCredential(String inEmail){
         SQLiteDatabase db = this.getReadableDatabase();
 
