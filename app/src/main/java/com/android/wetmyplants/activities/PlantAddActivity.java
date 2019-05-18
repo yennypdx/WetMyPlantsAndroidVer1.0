@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.wetmyplants.helperClasses.DbHelper;
@@ -17,6 +18,9 @@ import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.model.UserCredentials;
 import com.android.wetmyplants.restAdapter.Communicator;
 
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,16 +31,13 @@ public class PlantAddActivity extends AppCompatActivity {
     private DbHelper database;
     String storedToken;
 
-    EditText inputPlantName;
-    EditText inputSpeciesName;
-    EditText inputSensorNumber;
-
+    EditText inputPlantName, inputSensorNumber;
+    String outPlantName, outSensorNumber;
+    Spinner inputPlantSpecies;
     Plant newPlant;
-    String outPlantName;
     int outSpeciesId;
-    String outSensorNumber;
-    double initWater = 0.0;
-    double initLight = 0.0;
+    double initWater = 0.00;
+    double initLight = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -50,27 +51,41 @@ public class PlantAddActivity extends AppCompatActivity {
         UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
 
-
         inputPlantName = findViewById(R.id.plantAddNameInput);
-        outPlantName = inputPlantName.getText().toString();
-        //inputSpeciesName = findViewById(R.id.speciesAddInput);
-        String id = inputSpeciesName.getText().toString();
-        outSpeciesId = Integer.parseInt(id);
         inputSensorNumber = findViewById(R.id.sensorSerialInput);
-        outSensorNumber = inputSensorNumber.getText().toString();
-
-        newPlant = new Plant(outSensorNumber, outPlantName, outSpeciesId, initWater, initLight);
+        inputPlantSpecies = findViewById(R.id.species_spinner);
 
         Button submitNewPlantBtn = findViewById(R.id.newPlantButton);
         submitNewPlantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                outPlantName = inputPlantName.getText().toString();
+                outSensorNumber = inputSensorNumber.getText().toString();
+                String speciesTempVal = inputPlantSpecies.getSelectedItem().toString();
+                switch (speciesTempVal){
+                    case "Click here":
+                        outSpeciesId = 701;
+                        break;
+                    case "Species Type One":
+                        outSpeciesId = 701;
+                        break;
+                    case "Species Type Two":
+                        outSpeciesId = 702;
+                        break;
+                    case "Species Type Three":
+                        outSpeciesId = 703;
+                        break;
+                    default:
+                        outSpeciesId = 701;
+                        break;
+                }
 
-                attemptAddingPlant(storedToken, newPlant);
-                Snackbar.make(v, "New plant added", Snackbar.LENGTH_LONG).
-                        setAction("Action", null).show();
+                newPlant = new Plant(outSensorNumber, outPlantName, outSpeciesId, initWater, initLight);
+                attemptAddingPlant(storedToken, userEmail, newPlant);
 
-                startActivity(new Intent(PlantAddActivity.this, PlantsActivity.class));
+                Intent intent = new Intent(PlantAddActivity.this, PlantsActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 
@@ -85,12 +100,12 @@ public class PlantAddActivity extends AppCompatActivity {
         });
     }
 
-    public void attemptAddingPlant(String inToken, Plant inPlant){
-        communicator.plantAddPost(inToken, inPlant, new Callback<okhttp3.Response>(){
+    public void attemptAddingPlant(String inToken, final String userEmail, Plant inPlant){
+        communicator.plantAddPost(inToken, inPlant, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),"Plant added", Toast.LENGTH_LONG).show();
+                    //do nothing
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -101,7 +116,7 @@ public class PlantAddActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

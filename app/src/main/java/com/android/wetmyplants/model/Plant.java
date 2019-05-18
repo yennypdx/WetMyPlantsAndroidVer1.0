@@ -59,6 +59,15 @@ public class Plant {
         this.CurrentWater = inCurrWater;
         this.CurrentLight = inCurrLight;
     }
+
+    public Plant(String inId, String inNickname, Double inCurrWater, Double inCurrLight)
+    {
+        this.Id = inId;
+        this.Nickname = inNickname;
+        this.CurrentWater = inCurrWater;
+        this.CurrentLight = inCurrLight;
+    }
+
     public Plant(String inId, String inNickname, int inSpeciesId,
                  Double inCurrWater, Double inCurrLight, String inEmail)
     {

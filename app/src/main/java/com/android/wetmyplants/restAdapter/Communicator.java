@@ -43,7 +43,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(HOME_SERVER_URL)
+                    .baseUrl(SCHOOL_SERVER_URL)
                     .build();
         }
         return retrofit;
@@ -124,31 +124,24 @@ public class Communicator {
         call.enqueue(callback);
     }
 
-    public void plantAddPost(String token, Plant inPlant, Callback<Response> callback){
+    public void plantAddPost(String token, Plant inPlant, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<Response> call = service.postAddPlant(token, inPlant);
+        Call<ResponseBody> call = service.postAddPlant(token, inPlant);
         call.enqueue(callback);
     }
 
-    /*public void plantDetailGet(String id, Callback<JsonObject> callback){
+    public void plantUpdatePut(String token, Plant inPlant, String id, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<JsonObject> call = service.getPlantDetail(id);
-        call.enqueue(callback);
-    }*/
-
-    public void plantUpdatePut(String token, String name, String id, Callback<Response> callback){
-        getRetrofitInstance();
-        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<okhttp3.Response> call = service.putNewPlantData(token, name, id);
+        Call<ResponseBody> call = service.putNewPlantData(token, inPlant);
         call.enqueue(callback);
     }
 
-    public void plantDelete(String token, String plantId, Callback<okhttp3.Response> callback){
+    public void plantDelete(String token, String plantId, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
-        Call<okhttp3.Response> call = service.deletePlant(token, plantId);
+        Call<ResponseBody> call = service.deletePlant(token, plantId);
         call.enqueue(callback);
     }
 

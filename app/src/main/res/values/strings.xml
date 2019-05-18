@@ -102,6 +102,7 @@
     <string name="fabdelete">Delete</string>
     <string name="fabedit">Edit Plant</string>
     <string name="plantdetailmenu">Menu</string>
+    <string name="sensor_id">Sensor MAC#:</string>
 
     <!-- Strings related to Editing Plant Info -->
     <string name="title_activity_edit_plant">Update Plant</string>
@@ -120,14 +121,13 @@
     <string name="title_add_plant">Add your plant</string>
     <string name="bluetooth_num">Sensor MAC#:</string>
     <string name="submit_newPlant">Submit New Plant</string>
-    <string name="hint_sensor_serial">A8:99:B2:05</string>
+    <string name="hint_sensor_serial">A8:99:B2:05:C9:5T</string>
     <string name="add_species_label">Default</string>
     <string-array name="species_options">
         <item>Click here</item>
         <item>Species Type One</item>
         <item>Species Type Two</item>
         <item>Species Type Three</item>
-        <item>Species Type Four</item>
     </string-array>
 
     <!-- Strings related to Pin Confirmation -->
@@ -145,5 +145,7 @@
     <string name="newPassTwo">Confirm Password</string>
     <string name="newPassOneHint">Enter new password</string>
     <string name="newPassTwoHint">Confirm</string>
+
+    <string name="title_add_plant_activity">Add New Plant</string>
 
 </resources>

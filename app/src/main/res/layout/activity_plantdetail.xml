@@ -84,7 +84,6 @@
         android:clipToPadding="false"
         app:layout_behavior=".activities.MoveUpwardBehaviorFab"
         android:padding="@dimen/standard_12"
-        android:layout_marginBottom="@dimen/fab_margin"
         android:layout_gravity="bottom|end">
 
         <TextView

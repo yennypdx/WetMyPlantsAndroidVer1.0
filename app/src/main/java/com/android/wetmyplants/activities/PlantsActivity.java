@@ -36,14 +36,11 @@ import retrofit2.Response;
 public class PlantsActivity extends AppCompatActivity {
 
     private Communicator communicator;
-    private PlantRowAdapter plantRowAdapter;
     private DbHelper database;
     String storedToken;
 
     List<Plant> plantList;
-    Plant plant;
     ListView plantListView;
-    FloatingActionButton addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,60 +59,55 @@ public class PlantsActivity extends AppCompatActivity {
         pullPlantDataFromServer(storedToken, userEmail);
         plantList = database.getAllPlants(userEmail);
 
-        plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
-
+        PlantRowAdapter plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
         plantListView.setAdapter(plantRowAdapter);
+
         plantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView idText = findViewById(R.id.plantIdTextView);
-                final String plantId = idText.getText().toString();
+
+                TextView temp = view.findViewById(R.id.plantNameTextView);
+                final String plantName = temp.getText().toString();
 
                 Intent intent = new Intent(PlantsActivity.this, PlantDetailActivity.class);
-                intent.putExtra("plantId", plantId);
+                intent.putExtra("userEmail", userEmail);
+                intent.putExtra("plantName", plantName);
                 startActivity(intent);
             }
         });
 
-        addBtn = findViewById(R.id.fabplant_add);
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addPlantBtn = findViewById(R.id.fabplant_add);
+        addPlantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlantsActivity.this, PlantAddActivity.class);
-                intent.putExtra("userEmail", userEmail);
-                startActivity(intent);
+                Intent intent1 = new Intent(PlantsActivity.this, PlantAddActivity.class);
+                intent1.putExtra("userEmail", userEmail);
+                startActivity(intent1);
             }
         });
 
-        FloatingActionButton homeAccFab = findViewById(R.id.plant_homeFab);
-        homeAccFab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton homePlantFab = findViewById(R.id.plant_homeFab);
+        homePlantFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PlantsActivity.this, DashboardActivity.class);
-                intent.putExtra("userEmail", userEmail);
-                startActivity(intent);
+                Intent intent2 = new Intent(PlantsActivity.this, DashboardActivity.class);
+                intent2.putExtra("userEmail", userEmail);
+                startActivity(intent2);
             }
         });
     }
 
     public void pullPlantDataFromServer(String inToken, final String userEmail){
-        final List<Plant> plantListOut = new ArrayList<>();
-
         communicator.plantListGet(inToken, new Callback<List<Plant>>(){
             @Override
             public void onResponse(Call<List<Plant>> call, Response<List<Plant>> response){
                 if(response.isSuccessful()) {
                     List<Plant> plantsNew = response.body();
-                    // email NOT found in db insert all detail
-                    if(!database.isEmailExist(userEmail)) {
-                        for (Plant p : plantsNew) {
-                            database.insertPlant(p, userEmail);
-                        }
-                    }
-                    else{ //email found in db only update water and light
-                        for (Plant p : plantsNew) {
-                            database.updatePartsOfPlantData(p, userEmail);
-                        }
+                    int listLength = plantsNew.size();
+
+                    database.deletePlants(userEmail);
+                    for(int p = 0; p < listLength; p++){
+                        database.insertPlant(plantsNew.get(p), userEmail);
                     }
                 }
                 else{

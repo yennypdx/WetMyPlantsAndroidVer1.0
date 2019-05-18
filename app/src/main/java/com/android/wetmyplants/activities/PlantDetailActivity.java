@@ -23,6 +23,7 @@ import com.android.wetmyplants.restAdapter.Communicator;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,8 +40,10 @@ public class PlantDetailActivity extends AppCompatActivity {
     View fabBGLayout;
     boolean isFABOpen = false;
 
+    String sensorId;
     String storedPlantId;
     TextView displayPlantName;
+    TextView displaySensorId;
     TextView displayHumidity;
     TextView displayLight;
 
@@ -52,12 +55,15 @@ public class PlantDetailActivity extends AppCompatActivity {
         database = new DbHelper(getApplicationContext());
 
         displayPlantName = findViewById(R.id.plantDetail_nameTextOut);
+        displaySensorId = findViewById(R.id.plantDetail_plantIdTextOut);
         displayHumidity = findViewById(R.id.plantDetail_waterTextOut);
         displayLight = findViewById(R.id.plantDetail_lightTextOut);
 
-        Intent getPlantId = getIntent();
-        final String plantId = getPlantId.getStringExtra("plantId");
-        pullPlantDetailInformation(plantId);
+        Intent getExtras = getIntent();
+        final String userEmail = getExtras.getStringExtra("userEmail");
+        final String plantName = getExtras.getStringExtra("plantName");
+
+        pullPlantDetailInformation(plantName);
 
         fablayoutEdit = findViewById(R.id.fabLayoutEdit);
         fabedit = findViewById(R.id.fabEdit);
@@ -95,8 +101,12 @@ public class PlantDetailActivity extends AppCompatActivity {
         fabedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(
-                        PlantDetailActivity.this, PlantEditActivity.class));
+                Intent intent = new Intent(
+                        PlantDetailActivity.this, PlantEditActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                intent.putExtra("plantName", plantName);
+                intent.putExtra("sensorId", sensorId);
+                startActivity(intent);
             }
         });
 
@@ -124,25 +134,40 @@ public class PlantDetailActivity extends AppCompatActivity {
                     .setNegativeButton("No", dialogClickListener).show();
             }
         });
+
+        FloatingActionButton homePlantEditFab = findViewById(R.id.plantDetail_homeFab);
+        homePlantEditFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(PlantDetailActivity.this, DashboardActivity.class);
+                intent2.putExtra("userEmail", userEmail);
+                startActivity(intent2);
+            }
+        });
     }
 
-    private void pullPlantDetailInformation(String inId){
-        Plant plant = database.getPlant(inId);
+    private void pullPlantDetailInformation(String inName){
+        Plant plant = database.getPlant(inName);
 
-        String name = plant.getNickname();
-        displayPlantName.setText(name);
-        String water = Double.toString(plant.getCurrentWater());
+        displayPlantName.setText(inName);
+        String id = plant.getId();
+        sensorId = id;
+        displaySensorId.setText(id);
+        Double tempWater = plant.getCurrentWater();
+        String.format("%1$.2f", tempWater);
+        String water = Double.toString(tempWater);
         displayHumidity.setText(water);
-        String light = Double.toString(plant.getCurrentLight());
+        Double tempLight = plant.getCurrentLight();
+        String light = Double.toString(tempLight);
         displayLight.setText(light);
 
         database.close();
     }
 
     public void attemptDeletePlant(String inToken, String plantId){
-        communicator.plantDelete(inToken, plantId, new Callback<okhttp3.Response>(){
+        communicator.plantDelete(inToken, plantId, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),
                             "Plant deleted",
@@ -158,7 +183,7 @@ public class PlantDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

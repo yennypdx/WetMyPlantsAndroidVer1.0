@@ -65,6 +65,9 @@
         <activity
             android:name=".activities.HubActivity"
             android:label="@string/title_activity_hub" />
+        <activity
+            android:name=".activities.PlantAddActivity"
+            android:label="@string/title_add_plant_activity" />
     </application>
 
 </manifest>
