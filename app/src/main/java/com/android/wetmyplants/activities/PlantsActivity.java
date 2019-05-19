@@ -3,6 +3,7 @@ package com.android.wetmyplants.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,8 +38,9 @@ public class PlantsActivity extends AppCompatActivity {
 
     private Communicator communicator;
     private DbHelper database;
-    String storedToken;
 
+    SwipeRefreshLayout pullToRefresh;
+    String storedToken;
     List<Plant> plantList;
     ListView plantListView;
 
@@ -50,18 +52,18 @@ public class PlantsActivity extends AppCompatActivity {
         database = new DbHelper(getApplicationContext());
         plantListView = findViewById(R.id.plantListView);
         plantList = new ArrayList<>();
+        pullToRefresh = findViewById(R.id.pullToRefresh);
 
         Intent getEmail = getIntent();
         final String userEmail = getEmail.getStringExtra("userEmail");
-        UserCredentials user = database.getUserCredential(userEmail);
+        final UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
 
         pullPlantDataFromServer(storedToken, userEmail);
         plantList = database.getAllPlants(userEmail);
 
-        PlantRowAdapter plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
+        final PlantRowAdapter plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
         plantListView.setAdapter(plantRowAdapter);
-
         plantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -73,6 +75,15 @@ public class PlantsActivity extends AppCompatActivity {
                 intent.putExtra("userEmail", userEmail);
                 intent.putExtra("plantName", plantName);
                 startActivity(intent);
+            }
+        });
+
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                plantList = pullPlantDataFromServer(storedToken, userEmail);
+                plantRowAdapter.notifyDataSetChanged();
+                pullToRefresh.setRefreshing(false);
             }
         });
 
@@ -97,7 +108,8 @@ public class PlantsActivity extends AppCompatActivity {
         });
     }
 
-    public void pullPlantDataFromServer(String inToken, final String userEmail){
+    public List<Plant> pullPlantDataFromServer(String inToken, final String userEmail){
+        final List<Plant> outPlantList = new ArrayList<>();
         communicator.plantListGet(inToken, new Callback<List<Plant>>(){
             @Override
             public void onResponse(Call<List<Plant>> call, Response<List<Plant>> response){
@@ -123,6 +135,6 @@ public class PlantsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        return outPlantList;
     }
-
 }

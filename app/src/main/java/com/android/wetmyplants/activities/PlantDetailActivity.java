@@ -41,7 +41,6 @@ public class PlantDetailActivity extends AppCompatActivity {
     boolean isFABOpen = false;
 
     String sensorId;
-    String storedPlantId;
     TextView displayPlantName;
     TextView displaySensorId;
     TextView displayHumidity;
@@ -62,6 +61,8 @@ public class PlantDetailActivity extends AppCompatActivity {
         Intent getExtras = getIntent();
         final String userEmail = getExtras.getStringExtra("userEmail");
         final String plantName = getExtras.getStringExtra("plantName");
+        final UserCredentials user  = database.getUserCredential(userEmail);
+        storedToken = user.getToken();
 
         pullPlantDetailInformation(plantName);
 
@@ -113,25 +114,25 @@ public class PlantDetailActivity extends AppCompatActivity {
         fabdel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                switch(which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        attemptDeletePlant(storedToken, storedPlantId);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch(which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                attemptDeletePlant(storedToken, sensorId);
+                                closeFabMenu();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                startActivity(new Intent(
+                                        PlantDetailActivity.this, PlantsActivity.class));
+                                break;
+                        }
+                    }
+                };
 
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        startActivity(new Intent(
-                                PlantDetailActivity.this, PlantsActivity.class));
-                        break;
-                }
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(PlantDetailActivity.this);
-            builder.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(PlantDetailActivity.this);
+                builder.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         });
 
@@ -154,11 +155,10 @@ public class PlantDetailActivity extends AppCompatActivity {
         sensorId = id;
         displaySensorId.setText(id);
         Double tempWater = plant.getCurrentWater();
-        String.format("%1$.2f", tempWater);
-        String water = Double.toString(tempWater);
+        String water = String.format("%1$.2f", tempWater);
         displayHumidity.setText(water);
         Double tempLight = plant.getCurrentLight();
-        String light = Double.toString(tempLight);
+        String light =  String.format("%1$.2f", tempLight);
         displayLight.setText(light);
 
         database.close();
@@ -169,8 +169,7 @@ public class PlantDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),
-                            "Plant deleted",
+                    Toast.makeText(getApplicationContext(),"Plant deleted",
                             Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -189,7 +188,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void showFabMenu(){
+    protected void showFabMenu(){
         isFABOpen = true;
         fablayoutEdit.setVisibility(View.VISIBLE);
         fablayoutDel.setVisibility(View.VISIBLE);
@@ -217,7 +216,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         fablayoutDel.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
     }
 
-    private void closeFabMenu(){
+    protected void closeFabMenu(){
         isFABOpen = false;
         fabBGLayout.setVisibility(View.GONE);
         fab.animate().rotationBy(-180);

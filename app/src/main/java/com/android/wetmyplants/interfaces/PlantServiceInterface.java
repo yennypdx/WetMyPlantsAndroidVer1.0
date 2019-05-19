@@ -17,6 +17,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface PlantServiceInterface {
 
@@ -42,11 +43,10 @@ public interface PlantServiceInterface {
             @Body Plant plant
     );
 
-    @FormUrlEncoded
-    @DELETE("plant/del/{token}/{plantid}/")
+    @DELETE("plant/del/{token}/")
     Call<ResponseBody> deletePlant(
             @Path("token") String token,
-            @Path("plantid") String plantid
+            @Query("plantid") String plantid
     );
 
 }

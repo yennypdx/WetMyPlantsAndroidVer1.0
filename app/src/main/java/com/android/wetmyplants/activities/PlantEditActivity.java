@@ -16,6 +16,7 @@ import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.model.UserCredentials;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.Communicator;
+import com.google.gson.Gson;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,6 +47,7 @@ public class PlantEditActivity extends AppCompatActivity {
         final String sensorId = getExtras.getStringExtra("sensorId");
         UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
+
         Plant thePlant = database.getPlant(plantName);
         outCurrWater = thePlant.getCurrentWater();
         outCurrLight = thePlant.getCurrentLight();

@@ -43,7 +43,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(SCHOOL_SERVER_URL)
+                    .baseUrl(HOME_SERVER_URL)
                     .build();
         }
         return retrofit;
@@ -121,6 +121,13 @@ public class Communicator {
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
         Call<List<Plant>> call = service.getPlantList(token);
+        call.enqueue(callback);
+    }
+
+    public void plantDetailGet(String plantId, Callback<JsonObject> callback){
+        getRetrofitInstance();
+        PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
+        Call<JsonObject> call = service.getPlantDetail(plantId);
         call.enqueue(callback);
     }
 

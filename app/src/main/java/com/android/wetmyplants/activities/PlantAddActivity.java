@@ -82,10 +82,6 @@ public class PlantAddActivity extends AppCompatActivity {
 
                 newPlant = new Plant(outSensorNumber, outPlantName, outSpeciesId, initWater, initLight);
                 attemptAddingPlant(storedToken, userEmail, newPlant);
-
-                Intent intent = new Intent(PlantAddActivity.this, PlantsActivity.class);
-                intent.putExtra("userEmail", userEmail);
-                startActivity(intent);
             }
         });
 
@@ -105,7 +101,12 @@ public class PlantAddActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    //do nothing
+                    Toast.makeText(getApplicationContext(),
+                            "New plant added", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(PlantAddActivity.this, PlantsActivity.class);
+                    intent.putExtra("userEmail", userEmail);
+                    startActivity(intent);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
