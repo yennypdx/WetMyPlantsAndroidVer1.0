@@ -68,8 +68,9 @@ public class DashboardActivity extends AppCompatActivity {
         mHubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: confirm what data needed to pull data from the server for the Hubs
-                startActivity(new Intent(DashboardActivity.this, HubActivity.class));
+                Intent intent = new Intent(DashboardActivity.this, HubActivity.class);
+                intent.putExtra("userEmail", userEmail);
+                startActivity(intent);
             }
         });
 

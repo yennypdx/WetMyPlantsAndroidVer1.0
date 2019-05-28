@@ -156,7 +156,7 @@ public class AccountEditActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -208,7 +208,7 @@ public class AccountEditActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
                 }
             }
 

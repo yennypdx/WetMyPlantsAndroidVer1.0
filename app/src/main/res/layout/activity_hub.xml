@@ -8,14 +8,14 @@
     android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.HubActivity">
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/hubListView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-    </ListView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/plant_homeFab"
+        android:id="@+id/hub_homeFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"

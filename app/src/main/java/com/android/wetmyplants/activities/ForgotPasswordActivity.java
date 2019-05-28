@@ -38,7 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         emailOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //attempt sending request for recovery text with PIN via SendGrid
+                //SendGrid
                 requestPinViaEmail(emailOut);
             }
         });
@@ -47,7 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         textOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //attempt sending request for recovery text with PIN via SendGrid
+                //Twilio
                 requestPinViaText(emailOut);
             }
         });
@@ -72,7 +72,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -94,7 +94,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -118,7 +118,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Log.e("Error Code", String.valueOf(response.code()));
                     Log.e("Error Body", response.errorBody().toString());
                     Toast.makeText(getApplicationContext(),
-                            "Unable to connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
                 }
             }
 

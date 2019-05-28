@@ -26,7 +26,6 @@ public class NewPasswordActivity extends AppCompatActivity {
 
     private Communicator communicator;
     private DbHelper database;
-
     private String outPass1;
     private String outPass2;
 
@@ -105,8 +104,7 @@ public class NewPasswordActivity extends AppCompatActivity {
                         Log.e("Error Code", String.valueOf(response.code()));
                         Log.e("Error Body", response.errorBody().toString());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Unable to connect to Server. Please try again later.",
-                                Toast.LENGTH_LONG);
+                                "Unable to connect to Server", Toast.LENGTH_LONG);
                         toast.show();
                     }
                 }

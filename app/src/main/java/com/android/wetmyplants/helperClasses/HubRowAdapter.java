@@ -13,12 +13,12 @@ import com.android.wetmyplants.R;
 import com.android.wetmyplants.model.Hub;
 
 import java.util.List;
-
-public class HubRowAdapter extends ArrayAdapter<Hub> {
-    private List<Hub> hubList;
+// temporary changed from List<Hub> to List<String> for testing purposes
+public class HubRowAdapter extends ArrayAdapter<String> {
+    private List<String> hubList;
     private Context mContext;
 
-    public HubRowAdapter(@NonNull Context context, List<Hub> array){
+    public HubRowAdapter(@NonNull Context context, List<String> array){
         super(context, 0, array);
         this.mContext = context;
         this.hubList = array;
@@ -33,11 +33,13 @@ public class HubRowAdapter extends ArrayAdapter<Hub> {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.row_hub, parent, false);
         }
 
-        Hub hub = hubList.get(position);
+        //Hub hub = hubList.get(position);
+        String hub = hubList.get(position);
 
-        TextView hubId = listItem.findViewById(R.id.HubIdTextView);
-        String name = hub.getId();
-        hubId.setText(name);
+        TextView hubName = listItem.findViewById(R.id.HubIdTextView);
+        //String name = hub.getId();
+        //hubName.setText(name);
+        hubName.setText(hub);
 
         return listItem;
     }

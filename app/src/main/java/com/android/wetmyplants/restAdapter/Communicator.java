@@ -1,5 +1,6 @@
 package com.android.wetmyplants.restAdapter;
 
+import com.android.wetmyplants.interfaces.UtilityServiceInterface;
 import com.android.wetmyplants.model.User;
 import com.google.gson.JsonObject;
 import com.squareup.otto.Produce;
@@ -43,7 +44,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(SCHOOL_SERVER_URL)
+                    .baseUrl(HOME_SERVER_URL)
                     .build();
         }
         return retrofit;
@@ -149,6 +150,14 @@ public class Communicator {
         getRetrofitInstance();
         PlantServiceInterface service = retrofit.create(PlantServiceInterface.class);
         Call<ResponseBody> call = service.deletePlant(token, plantId);
+        call.enqueue(callback);
+    }
+
+    /**using UtilityServiceInterface*/
+    public void notificationPreferencePost(String token, int status, Callback<ResponseBody> callback){
+        getRetrofitInstance();
+        UtilityServiceInterface service = retrofit.create(UtilityServiceInterface.class);
+        Call<ResponseBody> call = service.postNotifStatus(token, status);
         call.enqueue(callback);
     }
 
