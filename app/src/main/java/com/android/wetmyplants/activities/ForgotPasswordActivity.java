@@ -31,7 +31,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         EditText emailInput = findViewById(R.id.email_pinconfirm);
         final String emailOut = emailInput.getText().toString();
         EditText pinInput = findViewById(R.id.pinconfirm);
-        final String pinOut = pinInput.getText().toString();
+        String tempPin = pinInput.getText().toString();
+        final int pinOut = Integer.parseInt(tempPin);
 
         Button emailOutBtn = findViewById(R.id.emailBtn_pin);
         emailOutBtn.setOnClickListener(new View.OnClickListener() {
