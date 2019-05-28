@@ -43,7 +43,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(HOME_SERVER_URL)
+                    .baseUrl(SCHOOL_SERVER_URL)
                     .build();
         }
         return retrofit;
@@ -58,24 +58,24 @@ public class Communicator {
     }
 
     /**using PasswordServiceInterface*/
-    public void forgotPasswordSendGridPost(String inEmail, Callback<Response> callback){
+    public void forgotPasswordSendGridPost(String inEmail, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<Response> call = service.postSg(inEmail);
+        Call<ResponseBody> call = service.postSg(inEmail);
         call.enqueue(callback);
     }
 
-    public void forgotPasswordRabbitmqPost(String inEmail, Callback<Response> callback){
+    public void forgotPasswordRabbitmqPost(String inEmail, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<Response> call = service.postRmq(inEmail);
+        Call<ResponseBody> call = service.postRmq(inEmail);
         call.enqueue(callback);
     }
 
-    public void submitPinPost(String inPin, Callback<JsonObject> callback){
+    public void submitPinPost(int inPin, String inEmail, Callback<ResponseBody> callback){
         getRetrofitInstance();
         PasswordServiceInterface service = retrofit.create(PasswordServiceInterface.class);
-        Call<JsonObject> call = service.postPin(inPin);
+        Call<ResponseBody> call = service.postPin(inPin, inEmail);
         call.enqueue(callback);
     }
 

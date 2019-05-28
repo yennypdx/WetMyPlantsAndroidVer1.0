@@ -51,9 +51,7 @@
                 android:layout_height="25dp"
                 android:layout_width="25dp"
                 android:layout_marginStart="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </TableRow>
 
         <!-- tableRowAccount2-->
@@ -78,9 +76,7 @@
                 android:layout_height="25dp"
                 android:layout_width="25dp"
                 android:layout_marginStart="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </TableRow>
 
         <!-- tableRowAccount3-->
@@ -105,9 +101,7 @@
                 android:layout_height="25dp"
                 android:layout_width="25dp"
                 android:layout_marginStart="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </TableRow>
 
         <!-- tableRowAccount4-->
@@ -132,9 +126,7 @@
                 android:layout_height="25dp"
                 android:layout_width="25dp"
                 android:layout_marginStart="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </TableRow>
 
         <!-- tableRowAccount5 -->

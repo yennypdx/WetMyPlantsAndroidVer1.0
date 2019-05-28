@@ -147,5 +147,6 @@
     <string name="newPassTwoHint">Confirm</string>
 
     <string name="title_add_plant_activity">Add New Plant</string>
+    <string name="activate">ACTIVATE</string>
 
 </resources>

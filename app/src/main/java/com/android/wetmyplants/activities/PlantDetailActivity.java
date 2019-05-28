@@ -77,18 +77,18 @@ public class PlantDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isFABOpen){
-                    menuFabLabel.setVisibility(View.GONE);
-                    showFabMenu();
-                } else {
-                    menuFabLabel.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            menuFabLabel.setVisibility(View.VISIBLE);
-                        }
-                    }, 500);
-                    closeFabMenu();
-                }
+            if(!isFABOpen){
+                menuFabLabel.setVisibility(View.GONE);
+                showFabMenu();
+            } else {
+                menuFabLabel.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        menuFabLabel.setVisibility(View.VISIBLE);
+                    }
+                }, 500);
+                closeFabMenu();
+            }
             }
         });
 
@@ -102,37 +102,36 @@ public class PlantDetailActivity extends AppCompatActivity {
         fabedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(
-                        PlantDetailActivity.this, PlantEditActivity.class);
-                intent.putExtra("userEmail", userEmail);
-                intent.putExtra("plantName", plantName);
-                intent.putExtra("sensorId", sensorId);
-                startActivity(intent);
+            Intent intent = new Intent(
+                    PlantDetailActivity.this, PlantEditActivity.class);
+            intent.putExtra("userEmail", userEmail);
+            intent.putExtra("plantName", plantName);
+            intent.putExtra("sensorId", sensorId);
+            startActivity(intent);
             }
         });
 
         fabdel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch(which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                attemptDeletePlant(storedToken, sensorId);
-                                closeFabMenu();
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                startActivity(new Intent(
-                                        PlantDetailActivity.this, PlantsActivity.class));
-                                break;
-                        }
-                    }
-                };
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        attemptDeletePlant(storedToken, sensorId, userEmail);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        startActivity(new Intent(
+                                PlantDetailActivity.this, PlantsActivity.class));
+                        break;
+                }
+                }
+            };
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(PlantDetailActivity.this);
-                builder.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(PlantDetailActivity.this);
+            builder.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
             }
         });
 
@@ -140,9 +139,9 @@ public class PlantDetailActivity extends AppCompatActivity {
         homePlantEditFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(PlantDetailActivity.this, DashboardActivity.class);
-                intent2.putExtra("userEmail", userEmail);
-                startActivity(intent2);
+            Intent intent2 = new Intent(PlantDetailActivity.this, DashboardActivity.class);
+            intent2.putExtra("userEmail", userEmail);
+            startActivity(intent2);
             }
         });
     }
@@ -164,13 +163,16 @@ public class PlantDetailActivity extends AppCompatActivity {
         database.close();
     }
 
-    public void attemptDeletePlant(String inToken, String plantId){
+    public void attemptDeletePlant(String inToken, String plantId, final String userEmail){
         communicator.plantDelete(inToken, plantId, new Callback<ResponseBody>(){
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),"Plant deleted",
                             Toast.LENGTH_LONG).show();
+                    Intent intent3 = new Intent(PlantDetailActivity.this, PlantsActivity.class);
+                    intent3.putExtra("userEmail", userEmail);
+                    startActivity(intent3);
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));

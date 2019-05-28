@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.model.Plant;
 import com.android.wetmyplants.model.PlantRow;
+import com.android.wetmyplants.model.Plants;
 
 import java.util.ArrayList;
 import java.util.List;

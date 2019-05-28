@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.android.wetmyplants.R;
 import com.android.wetmyplants.restAdapter.Communicator;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //attempt sending request for recovery text with PIN via SendGrid
-                sendPinViaEmail(emailOut);
+                requestPinViaEmail(emailOut);
             }
         });
 
@@ -46,7 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //attempt sending request for recovery text with PIN via SendGrid
-                sendPinViaText(emailOut);
+                requestPinViaText(emailOut);
             }
         });
 
@@ -59,12 +60,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
-    private void sendPinViaEmail(String inEmail){
-        communicator.forgotPasswordSendGridPost(inEmail, new Callback<okhttp3.Response>(){
+    private void requestPinViaEmail(String inEmail){
+        communicator.forgotPasswordSendGridPost(inEmail, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Sending email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Email sent", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -75,18 +76,18 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void sendPinViaText(String inEmail){
-        communicator.forgotPasswordRabbitmqPost(inEmail, new Callback<okhttp3.Response>(){
+    private void requestPinViaText(String inEmail){
+        communicator.forgotPasswordRabbitmqPost(inEmail, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<okhttp3.Response> call, Response<okhttp3.Response> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Sending text",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Text sent",Toast.LENGTH_LONG).show();
                 }
                 else {
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -97,16 +98,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<okhttp3.Response> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void attemptSubmitPin(String inPin, final String inEmail){
-        communicator.submitPinPost(inPin, new Callback<JsonObject>(){
+    private void attemptSubmitPin(int inPin, final String inEmail){
+        communicator.submitPinPost(inPin, inEmail, new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
                     Intent intent = new Intent(ForgotPasswordActivity.this, NewPasswordActivity.class);
                     intent.putExtra("userEmail", inEmail);
@@ -121,7 +122,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(),
                         "Confirmation failed", Toast.LENGTH_LONG).show();
             }

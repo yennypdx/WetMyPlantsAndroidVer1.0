@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.wetmyplants.helperClasses.DbHelper;
 import com.android.wetmyplants.model.PlantRow;
+import com.android.wetmyplants.model.Plants;
 import com.android.wetmyplants.model.UserCredentials;
 import com.google.gson.Gson;
 import com.android.wetmyplants.R;
@@ -41,8 +42,9 @@ public class PlantsActivity extends AppCompatActivity {
 
     SwipeRefreshLayout pullToRefresh;
     String storedToken;
-    List<Plant> plantList;
+    List<Plant> storedPlants;
     ListView plantListView;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -50,40 +52,40 @@ public class PlantsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plant);
         communicator = new Communicator();
         database = new DbHelper(getApplicationContext());
+        storedPlants = new ArrayList<>();
+
         plantListView = findViewById(R.id.plantListView);
-        plantList = new ArrayList<>();
         pullToRefresh = findViewById(R.id.pullToRefresh);
 
         Intent getEmail = getIntent();
-        final String userEmail = getEmail.getStringExtra("userEmail");
+        userEmail = getEmail.getStringExtra("userEmail");
         final UserCredentials user = database.getUserCredential(userEmail);
         storedToken = user.getToken();
 
         pullPlantDataFromServer(storedToken, userEmail);
-        plantList = database.getAllPlants(userEmail);
+        storedPlants = database.getAllPlants(userEmail);
 
-        final PlantRowAdapter plantRowAdapter = new PlantRowAdapter(getApplicationContext(), plantList);
+        final PlantRowAdapter plantRowAdapter = new PlantRowAdapter(getApplicationContext(), storedPlants);
         plantListView.setAdapter(plantRowAdapter);
         plantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                TextView temp = view.findViewById(R.id.plantNameTextView);
-                final String plantName = temp.getText().toString();
+            TextView temp = view.findViewById(R.id.plantNameTextView);
+            final String plantName = temp.getText().toString();
 
-                Intent intent = new Intent(PlantsActivity.this, PlantDetailActivity.class);
-                intent.putExtra("userEmail", userEmail);
-                intent.putExtra("plantName", plantName);
-                startActivity(intent);
+            Intent intent = new Intent(PlantsActivity.this, PlantDetailActivity.class);
+            intent.putExtra("userEmail", userEmail);
+            intent.putExtra("plantName", plantName);
+            startActivity(intent);
             }
         });
 
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                plantList = pullPlantDataFromServer(storedToken, userEmail);
-                plantRowAdapter.notifyDataSetChanged();
-                pullToRefresh.setRefreshing(false);
+            plantRowAdapter.notifyDataSetChanged();
+            pullToRefresh.setRefreshing(false);
             }
         });
 
@@ -91,9 +93,9 @@ public class PlantsActivity extends AppCompatActivity {
         addPlantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(PlantsActivity.this, PlantAddActivity.class);
-                intent1.putExtra("userEmail", userEmail);
-                startActivity(intent1);
+            Intent intent1 = new Intent(PlantsActivity.this, PlantAddActivity.class);
+            intent1.putExtra("userEmail", userEmail);
+            startActivity(intent1);
             }
         });
 
@@ -101,25 +103,23 @@ public class PlantsActivity extends AppCompatActivity {
         homePlantFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(PlantsActivity.this, DashboardActivity.class);
-                intent2.putExtra("userEmail", userEmail);
-                startActivity(intent2);
+            Intent intent2 = new Intent(PlantsActivity.this, DashboardActivity.class);
+            intent2.putExtra("userEmail", userEmail);
+            startActivity(intent2);
             }
         });
     }
 
-    public List<Plant> pullPlantDataFromServer(String inToken, final String userEmail){
-        final List<Plant> outPlantList = new ArrayList<>();
+    public void pullPlantDataFromServer(String inToken, final String userEmail){
         communicator.plantListGet(inToken, new Callback<List<Plant>>(){
             @Override
             public void onResponse(Call<List<Plant>> call, Response<List<Plant>> response){
                 if(response.isSuccessful()) {
-                    List<Plant> plantsNew = response.body();
-                    int listLength = plantsNew.size();
-
+                    List<Plant> newList = response.body();
+                    int listLength = newList.size();
                     database.deletePlants(userEmail);
                     for(int p = 0; p < listLength; p++){
-                        database.insertPlant(plantsNew.get(p), userEmail);
+                        database.insertPlant(newList.get(p), userEmail);
                     }
                 }
                 else{
@@ -135,6 +135,5 @@ public class PlantsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        return outPlantList;
     }
 }

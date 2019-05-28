@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/std_16"
-    android:paddingRight="@dimen/std_16"
+    android:paddingEnd="@dimen/std_16"
     android:paddingBottom="@dimen/std_16"
     android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.RegisterActivity">
@@ -64,7 +64,7 @@
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_register"
                 android:imeOptions="actionUnspecified"
-                android:inputType="text"
+                android:inputType="phone"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
 

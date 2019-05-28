@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Callback;
 
@@ -33,7 +34,17 @@ public class Plant {
 
     private String emailRef;
 
-    public Plant() {}
+    public Plant(){}
+
+    public Plant(Plant newPlant)
+    {
+        this.Id = newPlant.getId();
+        this.Nickname = newPlant.getNickname();
+        this.SpeciesId = newPlant.getSpeciesId();
+        this.CurrentWater = newPlant.getCurrentWater();
+        this.CurrentLight = newPlant.getCurrentLight();
+        this.emailRef = newPlant.getEmailRef();
+    }
 
     public Plant(String inNickname, int inSpeciesId)
     {

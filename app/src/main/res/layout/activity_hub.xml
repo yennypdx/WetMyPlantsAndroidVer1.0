@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,4 +8,28 @@
     android:background="@drawable/wmp_xxdpi"
     tools:context=".activities.HubActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/hubListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/plant_homeFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        app:fabSize="auto"
+        android:layout_margin="16dp"
+        android:src="@drawable/homie"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabHub_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/plussign"
+        app:layout_anchorGravity="bottom|right|end" />
+
+</android.support.design.widget.CoordinatorLayout>
