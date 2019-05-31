@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                          token = token.substring(1, token.length()-1);
 
                         //storing token to db
+                        database.deleteCredential(email);
                         UserCredentials user = new UserCredentials(email, token);
                         database.insertCredential(user);
 

@@ -134,6 +134,13 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteCredential(String inEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(STORAGE_TABLE, STORAGE_COLUMN_EMAIL + " = ?", new String[] {String.valueOf(inEmail)});
+        db.close();
+    }
+
     /* Handle all Plants queries */
     public void insertPlant(Plant inPlant, String inEmail)
     {
