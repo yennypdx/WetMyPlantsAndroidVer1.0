@@ -9,15 +9,20 @@ public class Hub {
     @Expose
     private String Id;
 
-    @SerializedName("Status")
+    @SerializedName("Address")
     @Expose
-    private boolean Status;
+    private String Address;
+
+    @SerializedName("PlantId")
+    @Expose
+    private String PlantId;
 
     public Hub(){}
 
-    public Hub(String newId, boolean newStatus){
+    public Hub(String newId, String inAddress, String inPlantId){
         this.Id = newId;
-        this.Status = newStatus;
+        this.Address = inAddress;
+        this.PlantId = inPlantId;
     }
 
     public String getId() {
@@ -27,11 +32,19 @@ public class Hub {
         Id = id;
     }
 
-    public boolean isStatus() {
-        return Status;
+    public String getAddress() {
+        return Address;
     }
 
-    public void setStatus(boolean status) {
-        Status = status;
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getPlantId() {
+        return PlantId;
+    }
+
+    public void setPlantId(String userId) {
+        PlantId = userId;
     }
 }

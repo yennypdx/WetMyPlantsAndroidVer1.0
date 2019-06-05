@@ -7,8 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.android.wetmyplants.model.Hub;
 import com.android.wetmyplants.model.Plant;
-import com.android.wetmyplants.model.PlantRow;
+import com.android.wetmyplants.model.Setting;
 import com.android.wetmyplants.model.UserCredentials;
 
 import java.util.ArrayList;
@@ -37,6 +38,16 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PLANT_COLUMN_CURR_LIGHT = "curr_light";
     private static final String STORAGE_REF_COLUMN = "sto_id";
 
+    private static final String HUB_TABLE = "hub";
+    private static final String HUB_ID = "id";
+    private static final String HUB_COLUMN_HUB_ID = "hub_id";
+    private static final String PLANT_REF_COLUMN = "hub_plant_id";
+
+    private static final String NOTIFICATION_TABLE = "notification";
+    private static final String NOTIFICATION_ID = "id";
+    private static final String NOTIFICATION_COLUMN_PREF = "notif_pref";
+    private static final String NOTIFICATION_STORAGE_REF_COLUMN = "notif_storage_email";
+
     private static final String CREATE_STORAGE_TABLE =
             "CREATE TABLE " + STORAGE_TABLE + "("
                     + STORAGE_ID + " INTEGER PRIMARY KEY, "
@@ -54,6 +65,19 @@ public class DbHelper extends SQLiteOpenHelper {
                     + STORAGE_REF_COLUMN + " INTEGER, FOREIGN KEY (" + STORAGE_ID + ") REFERENCES "
                     + STORAGE_TABLE + "( " + STORAGE_ID + ")" + ")";
 
+    private static final String CREATE_HUB_TABLE =
+            "CREATE TABLE " + HUB_TABLE + "("
+                    + HUB_ID + " INTEGER PRIMARY KEY, "
+                    + HUB_COLUMN_HUB_ID + " TEXT, "
+                    + PLANT_REF_COLUMN + " INTEGER, FOREIGN KEY (" + PLANT_ID + ") REFERENCES "
+                    + PLANT_TABLE + "( " + PLANT_ID + ")" + ")";
+
+    private static final String CREATE_NOTIFICATION_TABLE =
+            "CREATE TABLE " + NOTIFICATION_TABLE + "("
+                    + NOTIFICATION_ID + " INTEGER PRIMARY KEY, "
+                    + NOTIFICATION_COLUMN_PREF + " INTEGER, "
+                    + NOTIFICATION_STORAGE_REF_COLUMN + " TEXT " +")";
+
     public DbHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
     }
@@ -62,6 +86,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_STORAGE_TABLE);
         db.execSQL(CREATE_PLANT_TABLE);
+        //db.execSQL(CREATE_HUB_TABLE);
+        //db.execSQL(CREATE_NOTIFICATION_TABLE);
     }
 
     @Override
@@ -303,4 +329,82 @@ public class DbHelper extends SQLiteOpenHelper {
         return found;
     }
 
+    /* Handle all Hub queries */
+    public void insertHub(Hub userHub){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        try{
+            values.put(HUB_COLUMN_HUB_ID, userHub.getId());
+            values.put(PLANT_REF_COLUMN, userHub.getPlantId());
+
+            db.insert(HUB_TABLE, null, values);
+        } catch(Exception e){
+            Log.e(LOG, e.getMessage());
+        } finally {
+            db.close();
+        }
+    }
+
+    public void deleteHub(String inPlantId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(HUB_TABLE, PLANT_REF_COLUMN + " = ?", new String[] {String.valueOf(inPlantId)});
+        db.close();
+    }
+
+    public Hub getHub(String inEmail){
+
+        Hub outHub = new Hub();
+
+        return outHub;
+    }
+
+    /* Handle all Notification Setting queries */
+    public void insertNotificationStatus (int status, String inEmail){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues value = new ContentValues();
+
+        try{
+            value.put(NOTIFICATION_COLUMN_PREF, status);
+            value.put(NOTIFICATION_STORAGE_REF_COLUMN, inEmail);
+
+            db.insert(NOTIFICATION_TABLE, null, value);
+        } catch(Exception e){
+            Log.e(LOG, e.getMessage());
+        } finally {
+            db.close();
+        }
+    }
+
+    public void deleteNotificationStatusFromDb(String inEmail){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(NOTIFICATION_TABLE, NOTIFICATION_COLUMN_PREF + " = ?",
+                new String[] {String.valueOf(inEmail)});
+        db.close();
+    }
+
+    public int getNotificationStatus(String inEmail){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Setting notif = new Setting();
+
+        String selectQuery =
+                "SELECT * FROM " + NOTIFICATION_TABLE + " WHERE "
+                        + NOTIFICATION_COLUMN_PREF + " = \'" + inEmail + "\'";
+        Log.e(LOG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try{
+
+            if(cursor != null && cursor.moveToFirst()){
+                notif.setMessageType(cursor.getInt(cursor.getColumnIndex(NOTIFICATION_COLUMN_PREF)));
+            }
+        } catch (Exception e){
+            Log.e(LOG, e.getMessage());
+        }finally {
+            cursor.close();
+            db.close();
+        }
+
+        return notif.getMessageType();
+    }
 }

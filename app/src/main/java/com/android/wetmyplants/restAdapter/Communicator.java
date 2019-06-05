@@ -26,7 +26,6 @@ public class Communicator {
 
     private static final String TAG = "Communicator";
     private static final String HOME_SERVER_URL = "http://192.168.1.6:5000/api/";
-    private static final String SCHOOL_SERVER_URL = "http://10.220.10.106:5000/api/";
     private static final String TEAM_SERVER_URL = "https://wetmyplants.azurewebsites.net/api/";
     private static Retrofit retrofit;
 
@@ -44,7 +43,7 @@ public class Communicator {
             retrofit = new Retrofit.Builder()
                     .client(httpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(HOME_SERVER_URL)
+                    .baseUrl(TEAM_SERVER_URL)
                     .build();
         }
         return retrofit;
@@ -158,6 +157,13 @@ public class Communicator {
         getRetrofitInstance();
         UtilityServiceInterface service = retrofit.create(UtilityServiceInterface.class);
         Call<ResponseBody> call = service.postNotifStatus(token, status);
+        call.enqueue(callback);
+    }
+
+    public void notificationPreferenceGet(String token, Callback<ResponseBody> callback){
+        getRetrofitInstance();
+        UtilityServiceInterface service = retrofit.create(UtilityServiceInterface.class);
+        Call<ResponseBody> call = service.getNotificationPref(token);
         call.enqueue(callback);
     }
 

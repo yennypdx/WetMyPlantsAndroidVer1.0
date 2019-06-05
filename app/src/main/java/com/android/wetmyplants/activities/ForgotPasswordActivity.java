@@ -30,9 +30,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         EditText emailInput = findViewById(R.id.email_pinconfirm);
         final String emailOut = emailInput.getText().toString();
-        EditText pinInput = findViewById(R.id.pinconfirm);
-        String tempPin = pinInput.getText().toString();
-        final int pinOut = Integer.parseInt(tempPin);
 
         Button emailOutBtn = findViewById(R.id.emailBtn_pin);
         emailOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +53,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         submitPinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText pinInput = findViewById(R.id.pinconfirm);
+                String tempPin = pinInput.getText().toString();
+                int pinOut = Integer.parseInt(tempPin);
                 attemptSubmitPin(pinOut, emailOut);
             }
         });

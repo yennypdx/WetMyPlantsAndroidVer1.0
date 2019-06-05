@@ -2,18 +2,20 @@ package com.android.wetmyplants.model;
 
 public class Setting {
 
-    private String MessageType;     //TODO: create ENUM
-    private String ColorTheme;      //TODO: create Theme Object
+    private int MessageType;
+    //private String ColorTheme;
 
-    public Setting(String inType, String inColor)
+    public Setting() {}
+
+    public Setting(int inType)
     {
         this.MessageType = inType;
-        this.ColorTheme = inColor;
+        //this.ColorTheme = inColor;
     }
 
-    public String getMessageType() { return MessageType; }
-    public void setMessageType(String intType) { this.MessageType = intType; }
+    public int getMessageType() { return MessageType; }
+    public void setMessageType(int intType) { this.MessageType = intType; }
 
-    public String getColorTheme() { return ColorTheme; }
-    public void setColorTheme(String inColor) { this.ColorTheme = inColor; }
+    //public String getColorTheme() { return ColorTheme; }
+    //public void setColorTheme(String inColor) { this.ColorTheme = inColor; }
 }

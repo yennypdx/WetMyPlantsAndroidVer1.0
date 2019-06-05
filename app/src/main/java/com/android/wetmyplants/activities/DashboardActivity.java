@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.android.wetmyplants.LoginActivity;
 import com.android.wetmyplants.R;
-import com.android.wetmyplants.model.Notification;
 
 public class DashboardActivity extends AppCompatActivity {
 

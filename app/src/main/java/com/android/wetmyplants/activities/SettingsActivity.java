@@ -45,26 +45,65 @@ public class SettingsActivity extends AppCompatActivity
         UserCredentials user = database.getUserCredential(userEmail);
         String storedToken = user.getToken();
 
+        //syncing with website preference
+        setLatestNotificationSetting(storedToken, userEmail);
+        //get latest status from db
+        int latestStatus = database.getNotificationStatus(userEmail);
+        switch (latestStatus){
+            case 0:
+                emailCb.setChecked(true);
+                textCb.setChecked(false);
+                noneCb.setChecked(false);
+            case 1:
+                emailCb.setChecked(false);
+                textCb.setChecked(true);
+                noneCb.setChecked(false);
+                break;
+            case 2:
+                emailCb.setChecked(true);
+                textCb.setChecked(true);
+                noneCb.setChecked(false);
+                break;
+            case 3:
+                emailCb.setChecked(false);
+                textCb.setChecked(false);
+                noneCb.setChecked(true);
+                break;
+        }
+
         emailCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                emailCb.setChecked(true);
+                if(isChecked){
+                    emailCb.setChecked(true);
+                } else{
+                    emailCb.setChecked(false);
+                }
             }
         });
 
         textCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                textCb.setChecked(true);
+                if(isChecked){
+                    textCb.setChecked(true);
+                } else{
+                    textCb.setChecked(false);
+                }
             }
         });
 
         noneCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                noneCb.setChecked(true);
-                emailCb.setChecked(false);
-                textCb.setChecked(false);
+                if(isChecked){
+                    noneCb.setChecked(true);
+                    emailCb.setChecked(false);
+                    textCb.setChecked(false);
+                }
+                else{
+                    noneCb.setChecked(false);
+                }
             }
         });
 
@@ -78,6 +117,7 @@ public class SettingsActivity extends AppCompatActivity
             notifStatus = 3;
         }
 
+        //when modification were made, this method should run
         attemptSetNotificationMode(storedToken, notifStatus);
     }
 
@@ -87,7 +127,7 @@ public class SettingsActivity extends AppCompatActivity
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),
-                            "Notification preference set", Toast.LENGTH_LONG).show();
+                            "MessageLog preference set", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Log.e("Error Code", String.valueOf(response.code()));
@@ -100,6 +140,31 @@ public class SettingsActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void setLatestNotificationSetting(String token, final String userEmail){
+        communicator.notificationPreferenceGet(token, new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()) {
+                    String content = response.body().toString();
+                    int status = Integer.parseInt(content);
+                    database.deleteNotificationStatusFromDb(userEmail);
+                    database.insertNotificationStatus(status, userEmail);
+                }
+                else{
+                    Log.e("Error Code", String.valueOf(response.code()));
+                    Log.e("Error Body", response.errorBody().toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Unable to connect to Server", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }

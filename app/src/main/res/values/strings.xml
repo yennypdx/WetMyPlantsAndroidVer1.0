@@ -113,7 +113,7 @@
     <string name="update_plant_icon">  Submit Update  </string>
     <string name="update_id_plant_label">Plant ID :</string>
 
-    <!-- Strings related to Notification Alert -->
+    <!-- Strings related to MessageLog Alert -->
     <string name="alertVersionMssg">This feature will be available in WetMyPlant Ver2.0</string>
     <string name="title_notif_activity">Notification Log</string>
 

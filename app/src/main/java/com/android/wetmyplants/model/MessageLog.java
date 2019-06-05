@@ -3,15 +3,15 @@ package com.android.wetmyplants.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class Notification {
+public class MessageLog {
 
     private String PlantId;
     private String SensorId;
     private Date SentDate;
     private Timestamp SentTime;
 
-    public Notification(String inPlantId, String inSensorId,
-                        Date inDate, Timestamp inTime)
+    public MessageLog(String inPlantId, String inSensorId,
+                      Date inDate, Timestamp inTime)
     {
         this.PlantId = inPlantId;
         this.SensorId = inSensorId;
